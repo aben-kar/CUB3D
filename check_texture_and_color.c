@@ -3,43 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   check_texture_and_color.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/08 19:04:26 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/09 21:01:48 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void check_texture_and_color(int fd)
+void parsing_cub(t_data *data, int fd)
 {
     char *line;
     while ((line = get_next_line(fd)) != NULL)
     {
-        if (!line)
-            return ;
-        // valid texture and color
-        if (ft_strncmp(line, "NO", 2) == 0 || ft_strncmp(line, "SO", 2) == 0 || 
-        ft_strncmp(line, "WE", 2) == 0 || ft_strncmp(line, "EA", 2) == 0)
+        if (is_valid_texture(line) == 1)
         {
-            if (is_valid_texture(line))
-            {
-                // store texture in struct
-                
-                printf("Valid texture\n");
-            }
-            else
-            {
-                printf("Error\n  Invalid texture line\n");
-                // free(line);
-                // exit(1);
-            }
-            
+            printf ("2\n");
+            // Store the texture path in the data structure
+            if (ft_strncmp(line, "NO ", 3) == 0)
+                data->path_no = ft_strdup(line + 3);
+            else if (ft_strncmp(line, "SO ", 3) == 0)
+                data->path_so = ft_strdup(line + 3);
+            else if (ft_strncmp(line, "WE ", 3) == 0)
+                data->path_we = ft_strdup(line + 3);
+            else if (ft_strncmp(line, "EA ", 3) == 0)
+                data->path_ea = ft_strdup(line + 3);
         }
-        else 
-            printf ("makayench\n");
-
+        else
+        {
+            printf("Error: Invalid texture line\n");
+            free(line);
+            return;
+        }
         free(line);
     }
 }

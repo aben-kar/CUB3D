@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:19 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/08 17:54:13 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:56:35 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int main(int ac, char **av)
 {
+    t_data data;
     if (ac != 2)
     {
         printf("Error\n  Usage: ./cub3d <map.cub>\n");
@@ -33,7 +34,7 @@ int main(int ac, char **av)
         return 1;
     }
     
-    check_texture_and_color(fd);
+    parsing_cub(&data, fd);
     close(fd);
     return 0;
 }
