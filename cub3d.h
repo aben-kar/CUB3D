@@ -15,13 +15,12 @@ typedef struct s_data
     char *path_so;
     char *path_we;
     char *path_ea;
+    int floor_color;
+    int ceiling_color;
 } t_data;
 
 
 // Function declarations
 void parsing_cub(t_data *data, int fd);
-int is_valid_texture(char *line);
-int is_valid_space(char *line);
-int is_valid_path(char *line);
 
 #endif

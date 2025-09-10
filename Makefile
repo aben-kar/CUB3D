@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_DIR = libs/libft
 
-SRC = main.c check_texture_and_color.c check_T_and_C_utils.c libs/get_next_line/get_next_line_bonus.c libs/get_next_line/get_next_line_utils_bonus.c
+SRC = main.c texture.c libs/get_next_line/get_next_line_bonus.c libs/get_next_line/get_next_line_utils_bonus.c
 OBJ = $(SRC:.c=.o)
 
 # MLX = ./mlx
