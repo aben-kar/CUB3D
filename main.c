@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:19 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/09 20:56:35 by achraf           ###   ########.fr       */
+/*   Updated: 2025/09/14 16:29:39 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int main(int ac, char **av)
         return 1;
     }
 
-    parsing_cub(&data, fd);
+    parsing_textute_and_color(&data, fd);
+    // validate_parsing(&data);
     close(fd);
     return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/11 16:09:53 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/14 16:31:23 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,10 @@ int is_valid_space(char *line)
     return 0;
 }
 
-// int parse_texture(char *line)
-// {
-//     int result = 0;
-//     if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0 ||
-//         ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0 || ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
-//     {
-//         if (is_valid_space(line))
-//             return 0;
-//         result = 1;
-//     }
-//     return result;
-// }
 char *parse_texture(char *line)
 {
     char *path;
 
-    // Skip the identifier (e.g., "NO ", "SO ", etc.)
     path = ft_strtrim(line + 3, " \n");
     if (!path || *path == '\0') // Check if path is empty or invalid
     {
@@ -51,14 +38,11 @@ char *parse_texture(char *line)
         free(path);
         return NULL;
     }
-
     return path; // Return the valid path
 }
 
 int store_texture(t_data *data, char *line)
 {
-    printf("Debug: Parsing line -> %s\n", line); // Debug line
-
     if (ft_strncmp(line, "NO ", 3) == 0)
         data->path_no = parse_texture(line);
     else if (ft_strncmp(line, "SO ", 3) == 0)
@@ -93,14 +77,12 @@ void free_split(char **split)
 
 int parse_color(char *line)
 {
-    printf("alooooooooo\n");
     char **rgb_values;
     int r, g, b;
     int color;
 
     line += 2;
     rgb_values = ft_split(line, ',');
-    printf("rgb ==> %s\n", rgb_values[0]);
     if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3])
     {
         printf("Error\n  Invalid color format\n");
@@ -114,7 +96,6 @@ int parse_color(char *line)
 
     if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
     {
-        printf("dkhol\n");
         printf("Error\n  Color values must be between 0 and 255\n");
         free_split(rgb_values);
         exit(1);
@@ -138,27 +119,10 @@ void store_colors(t_data *data, char *line)
     }
 }
 
-// void parsing_cub(t_data *data, int fd)
-// {
-//     char *line;
-//     while ((line = get_next_line(fd)) != NULL)
-//     {
-//         if (*line == '\n')
-//         {
-//             free(line);
-//             continue;
-//         }
-//         printf("Valid texture line: %s", line);
-//         store_texture(data, line);
-//         store_colors(data, line);
-//         free(line);
-//     }
-// }
-
-void parsing_cub(t_data *data, int fd)
+void parsing_textute_and_color(t_data *data, int fd)
 {
+    printf ("halawa\n");
     char *line;
-    int texture_stored = 0;
 
     while ((line = get_next_line(fd)) != NULL)
     {
@@ -168,37 +132,40 @@ void parsing_cub(t_data *data, int fd)
             continue;
         }
 
-        // Check if the line is a texture line
         if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0 ||
             ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0)
         {
-            if (store_texture(data, line) == 0) // Store texture
-                texture_stored = 1;
-            else
+            if (store_texture(data, line) != 0)
             {
                 printf("Error\n  Invalid texture line\n");
                 free(line);
                 exit(1);
             }
         }
-        // Check if the line is a color line
         else if (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
+            store_colors(data, line);
+        // parsing map
+        else if (ft_strchr(" 01", line[0]))
         {
-            store_colors(data, line); // Store floor/ceiling colors
-        }
-        else
-        {
-            printf("Error\n  Invalid line: %s\n", line);
+            // free(line);
+            // parsing_map(data, fd, line);
+            // break;
+            printf("Map parsing not implemented yet.\n");
             free(line);
             exit(1);
         }
-
+        else
+        {
+            printf("Error\n  Invalid line: %s", line);
+            free(line);
+            exit(1);
+        }
+        
+        // if (data->path_no && data->path_so && data->path_we && data->path_ea &&
+        //     data->floor_color != -1 && data->ceiling_color != -1)
+        //     break;
+        
         free(line);
     }
 
-    if (!texture_stored) // Ensure at least one texture is stored
-    {
-        printf("Error\n  No valid texture found\n");
-        exit(1);
-    }
 }
