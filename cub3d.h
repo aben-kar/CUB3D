@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/14 16:29:47 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/17 17:15:04 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef struct s_data
 
 
 // Function declarations
-void parsing_textute_and_color(t_data *data, int fd);
+void parsing_texture_and_color(t_data *data, int fd);
+int parse_color(char *line);
 // void validate_parsing(t_data *data);
 // void parsing_map(t_data *data, int fd);
 
