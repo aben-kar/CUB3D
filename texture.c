@@ -1,160 +1,263 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   texture.c                                          :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
-// /*   Updated: 2025/09/17 15:31:19 by achraf           ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
+/*   Updated: 2025/09/20 17:54:59 by acben-ka         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// #include "cub3d.h"
+#include "cub3d.h"
 
-// int is_valid_space(char *line)
-// {
-//     int i = 0;
-//     while (line[i])
-//     {
-//         if (line[i] == ' ')
-//             i++;
-//         else
-//             break;
-//     }
-//     if (i > 2)
-//         return 1;
-//     return 0;
-// }
+int is_map_line(char *line)
+{
+    int i = 0;
 
-// char *parse_texture(char *line)
-// {
-//     char *path;
+    while (line[i] && line[i] == ' ')
+        i++;
 
-//     path = ft_strtrim(line + 3, " \n");
-//     if (!path || *path == '\0') // Check if path is empty or invalid
-//     {
-//         printf("Error\n  Invalid texture path: %s\n", line);
-//         free(path);
-//         return NULL;
-//     }
-//     return path; // Return the valid path
-// }
+    if (!line[i] || line[i] == '\n')
+        return 0;
 
-// int store_texture(t_data *data, char *line)
-// {
-//     if (ft_strncmp(line, "NO ", 3) == 0)
-//         data->path_no = parse_texture(line);
-//     else if (ft_strncmp(line, "SO ", 3) == 0)
-//         data->path_so = parse_texture(line);
-//     else if (ft_strncmp(line, "WE ", 3) == 0)
-//         data->path_we = parse_texture(line);
-//     else if (ft_strncmp(line, "EA ", 3) == 0)
-//         data->path_ea = parse_texture(line);
-//     else
-//     {
-//         printf("Error\n  Invalid texture line: %s\n", line); // Show invalid line
-//         return -1;
-//     }
+    while (line[i])
+    {
+        if (line[i] == '\n')
+            break;
+        if (!ft_strchr("01NSEW ", line[i]))
+            return 0;
+        i++;
+    }
+    return 1;
+}
 
-//     return 0;
-// }
+void free_split(char **split)
+{
+    int i = 0;
 
-// void free_split(char **split)
-// {
-//     int i = 0;
+    if (!split)
+        return;
 
-//     if (!split)
-//         return;
+    while (split[i])
+    {
+        free(split[i]);
+        i++;
+    }
+    free(split);
+}
 
-//     while (split[i])
-//     {
-//         free(split[i]);
-//         i++;
-//     }
-//     free(split);
-// }
+int parse_color(char *line)
+{
+    char **rgb_values;
+    int r, g, b;
+    int color;
 
-// int parse_color(char *line)
-// {
-//     char **rgb_values;
-//     int r, g, b;
-//     int color;
+    rgb_values = ft_split(line, ',');
+    if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3])
+    {
+        printf("Error\n  Invalid color format\n");
+        free_split(rgb_values);
+        exit(1);
+    }
 
-//     line += 2;
-//     rgb_values = ft_split(line, ',');
-//     if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3])
-//     {
-//         printf("Error\n  Invalid color format\n");
-//         free_split(rgb_values);
-//         exit(1);
-//     }
+    r = ft_atoi(rgb_values[0]);
+    g = ft_atoi(rgb_values[1]);
+    b = ft_atoi(rgb_values[2]);
 
-//     r = ft_atoi(rgb_values[0]);
-//     g = ft_atoi(rgb_values[1]);
-//     b = ft_atoi(rgb_values[2]);
+    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+    {
+        printf("Error\n  Color values must be between 0 and 255\n");
+        free_split(rgb_values);
+        exit(1);
+    }
+    color = (r << 16) | (g << 8) | b;
+    free_split(rgb_values);
 
-//     if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-//     {
-//         printf("Error\n  Color values must be between 0 and 255\n");
-//         free_split(rgb_values);
-//         exit(1);
-//     }
-//     color = (r << 16) | (g << 8) | b;
-//     free_split(rgb_values);
+    return color;
+}
 
-//     return color;
-// }
+int parse_config_file(t_data *data, char *line)
+{
+    // printf("line ==> %s", line);
+    if (ft_strncmp(line, "NO ", 3) == 0)
+    {
+        data->path_no = ft_strtrim(line + 3, " \n");
+        return 1;
+    }
+    else if (ft_strncmp(line, "SO ", 3) == 0)
+    {
+        data->path_so = ft_strtrim(line + 3, " \n");
+        return 1;
+    }
+    else if (ft_strncmp(line, "WE ", 3) == 0)
+    {
+        data->path_we = ft_strtrim(line + 3, " \n");
+        return 1;
+    }
+    else if (ft_strncmp(line, "EA ", 3) == 0)
+    {
+        data->path_ea = ft_strtrim(line + 3, " \n");
+        return 1;
+    }
+    else if (ft_strncmp(line, "F ", 2) == 0)
+    {
+        data->floor_color = parse_color(line + 2);
+        return 1;
+    }
+    else if (ft_strncmp(line, "C ", 2) == 0)
+    {
+        data->ceiling_color = parse_color(line + 2);
+        return 1;
+    }
+    return 0;
+}
 
-// void store_colors(t_data *data, char *line)
-// {
-//     if (ft_strncmp(line, "F ", 2) == 0)
-//         data->floor_color = parse_color(line);
-//     else if (ft_strncmp(line, "C ", 2) == 0)
-//         data->ceiling_color = parse_color(line);
-//     else
-//     {
-//         printf("Error\n  Invalid color identifier\n");
-//         exit(1);
-//     }
-// }
+int all_config_parsed(t_data *data)
+{
+    return (data->path_no && data->path_so &&
+            data->path_we && data->path_ea &&
+            data->floor_color != 0 && data->ceiling_color != 0);
+}
 
-// void parsing_textute_and_color(t_data *data, int fd)
-// {
-//     char *line;
+void parse_map_line(t_data *data, char *line)
+{
+    char *map_line = ft_strdup(line);
 
-//     while ((line = get_next_line(fd)) != NULL)
-//     {
-//         if (*line == '\n') // Skip empty lines
-//         {
-//             free(line);
-//             continue;
-//         }
+    if (!map_line)
+    {
+        printf("Memory allocation error\n");
+        exit(1);
+    }
 
-//         if (ft_strncmp(line, "NO ", 3) == 0 || ft_strncmp(line, "SO ", 3) == 0 ||
-//             ft_strncmp(line, "WE ", 3) == 0 || ft_strncmp(line, "EA ", 3) == 0)
-//         {
-//             if (store_texture(data, line) != 0)
-//             {
-//                 printf("Error\n  Invalid texture line\n");
-//                 free(line);
-//                 exit(1);
-//             }
-//         }
-//         else if (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0)
-//             store_colors(data, line);
-//         else
-//         {
-//             printf("Error\n  Invalid line: %s", line);
-//             free(line);
-//             exit(1);
-//         }
-        
-//         // if (data->path_no && data->path_so && data->path_we && data->path_ea &&
-//         //     data->floor_color != -1 && data->ceiling_color != -1)
-//         //     break;
-        
-//         free(line);
-//     }
+    int len = ft_strlen(map_line);
+    if (len > 0 && map_line[len - 1] == '\n')
+        map_line[len - 1] = '\0';
 
-// }
+    int map_size = 0;
+    if (data->map)
+    {
+        while (data->map[map_size])
+            map_size++;
+    }
+
+    char **new_map = (char **)malloc(sizeof(char *) * (map_size + 2));
+    if (!new_map)
+    {
+        printf("Memory allocation error\n");
+        free(map_line);
+        exit(1);
+    }
+
+    for (int i = 0; i < map_size; i++)
+        new_map[i] = data->map[i];
+    new_map[map_size] = map_line;
+    new_map[map_size + 1] = NULL;
+
+    free(data->map);
+    data->map = new_map;
+}
+
+void parsing_texture_and_color(t_data *data, int fd)
+{
+    char *line;
+    int config_phase = 1; // 1 = parsing config, 0 = parsing map
+
+    // Initialize data
+    data->path_no = NULL;
+    data->path_so = NULL;
+    data->path_we = NULL;
+    data->path_ea = NULL;
+    data->floor_color = 0;
+    data->ceiling_color = 0;
+    data->map = NULL;
+
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        int only_spaces = 1;
+        for (int i = 0; line[i]; i++)
+        {
+            if (line[i] != '\n')
+            {
+                only_spaces = 0;
+                break;
+            }
+        }
+
+        if (only_spaces && config_phase)
+        {
+            free(line);
+            continue;
+        }
+        else if (only_spaces && !config_phase)
+        {
+            continue;
+        }
+
+        if (config_phase)
+        {
+            if (parse_config_file(data, line))
+            {
+                if (all_config_parsed(data))
+                    config_phase = 0;
+            }
+            else if (is_map_line(line))
+                config_phase = 0;
+            else
+            {
+                printf("ERROR: Invalid config line: %s", line);
+                free(line);
+                exit(1);
+            }
+        }
+        else
+        {
+            
+            if (is_map_line(line))
+                parse_map_line(data, line);
+            else
+            {
+                printf("ERROR: Invalid map line: %s", line);
+                free(line);
+                exit(1);
+            }
+        }
+        free(line);
+    }
+}
+
+void check_multiple_players(t_data *data)
+{
+    int i = 0;
+    int count = 0;
+    while (data->map[i])
+    {
+        int j = 0;
+        while (data->map[i][j])
+        {
+            if (data->map[i][j] == 'N' || data->map[i][j] == 'S' ||
+                data->map[i][j] == 'E' || data->map[i][j] == 'W')
+                count++;
+            j++;
+        }
+        i++;
+    }
+    if (count == 0)
+    {
+        printf("Error\n  No player start position found\n");
+        exit(1);
+    }
+    if (count > 1)
+    {
+        printf("Error\n  Multiple player start positions found\n");
+        exit(1);
+    }
+}
+
+void is_map_valid(t_data *data)
+{
+    for (int i = 0; data->map[i]; i++)
+        printf("%s\n", data->map[i]);
+    check_multiple_players(data);
+}
