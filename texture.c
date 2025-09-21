@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/20 17:54:59 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/21 23:19:20 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ void parsing_texture_and_color(t_data *data, int fd)
     char *line;
     int config_phase = 1; // 1 = parsing config, 0 = parsing map
 
-    // Initialize data
     data->path_no = NULL;
     data->path_so = NULL;
     data->path_we = NULL;
@@ -191,9 +190,7 @@ void parsing_texture_and_color(t_data *data, int fd)
             continue;
         }
         else if (only_spaces && !config_phase)
-        {
             continue;
-        }
 
         if (config_phase)
         {
@@ -227,37 +224,10 @@ void parsing_texture_and_color(t_data *data, int fd)
     }
 }
 
-void check_multiple_players(t_data *data)
-{
-    int i = 0;
-    int count = 0;
-    while (data->map[i])
-    {
-        int j = 0;
-        while (data->map[i][j])
-        {
-            if (data->map[i][j] == 'N' || data->map[i][j] == 'S' ||
-                data->map[i][j] == 'E' || data->map[i][j] == 'W')
-                count++;
-            j++;
-        }
-        i++;
-    }
-    if (count == 0)
-    {
-        printf("Error\n  No player start position found\n");
-        exit(1);
-    }
-    if (count > 1)
-    {
-        printf("Error\n  Multiple player start positions found\n");
-        exit(1);
-    }
-}
-
 void is_map_valid(t_data *data)
 {
-    for (int i = 0; data->map[i]; i++)
-        printf("%s\n", data->map[i]);
+    // for (int i = 0; data->map[i]; i++)
+    //     printf("%s\n", data->map[i]);
     check_multiple_players(data);
+    
 }
