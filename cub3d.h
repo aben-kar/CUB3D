@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/18 16:26:03 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/22 21:56:28 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ typedef struct s_data
 
 // Function declarations
 void parsing_texture_and_color(t_data *data, int fd);
-int parse_color(char *line);
-void is_map_valid(t_data *data);
-// void validate_parsing(t_data *data);
-// void parsing_map(t_data *data, int fd);
+void parse_texture_and_color(t_data *data, int fd);
+void    parse_config_file(t_data *data, char *line);
+int all_config_parsed(t_data *data);
+int extract_rgb_color(char *line);
+void free_split(char **split);
 
 #endif
