@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/22 19:00:29 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:10:09 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 void print_error_and_exit(const char *msg)
 {
@@ -90,9 +87,14 @@ void parse_texture_and_color(t_data *data, int fd)
             line = get_next_line(fd);
             continue;
         }
+        char *clean_line;
+        int len = ft_strlen(line);
+        clean_line = ft_strdup(line);
+        if (len > 0 && clean_line[len - 1] == '\n')
+            clean_line[len - 1] = '\0';
 
-        parse_config_file(data, line);
-        // free(line);
+        parse_config_file(data, clean_line);
+        free(clean_line);
         line = get_next_line(fd);
     }
     free(line);

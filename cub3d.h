@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/22 21:56:28 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:14:58 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void    parse_config_file(t_data *data, char *line);
 int all_config_parsed(t_data *data);
 int extract_rgb_color(char *line);
 void free_split(char **split);
+void print_error_and_exit(const char *msg);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 23:18:43 by achraf            #+#    #+#             */
-/*   Updated: 2025/09/22 14:39:28 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/23 00:15:43 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,3 +37,19 @@
 //     }
 // }
 
+void parse_map(t_data *data, int fd)
+{
+    char *line;
+    
+    line = get_next_line(fd);
+    while (line)
+    {
+        if (line[0] == '\n')
+        {
+            free(line);
+            print_error_and_exit("Map contains empty lines");
+        }
+        
+        line = get_next_line(fd);
+    }
+}
