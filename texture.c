@@ -6,7 +6,7 @@
 /*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/23 00:10:09 by achraf           ###   ########.fr       */
+/*   Updated: 2025/09/23 21:23:02 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void parse_config_file(t_data *data, char *line)
     }
     parse_texture(data, split);
     parse_color(data, split);
-    
+
     if (!all_config_parsed(data) &&
         ft_strncmp(split[0], "NO", 3) != 0 &&
         ft_strncmp(split[0], "SO", 3) != 0 &&
@@ -92,8 +92,12 @@ void parse_texture_and_color(t_data *data, int fd)
         clean_line = ft_strdup(line);
         if (len > 0 && clean_line[len - 1] == '\n')
             clean_line[len - 1] = '\0';
-
         parse_config_file(data, clean_line);
+        if (all_config_parsed(data))
+        {
+            free(clean_line);
+            break;
+        }
         free(clean_line);
         line = get_next_line(fd);
     }

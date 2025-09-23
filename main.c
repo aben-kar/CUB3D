@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:19 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/22 17:45:18 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/23 22:52:38 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,12 @@ int main(int ac, char **av)
     }
 
     parsing_texture_and_color(&data, fd);
-    // is_map_valid(&data);
-    printf ("no ==> %s\n", data.path_no);
-    printf ("so ==> %s\n", data.path_so);
-    printf ("we ==> %s\n", data.path_we);
-    printf ("ea ==> %s\n", data.path_ea);
-    printf ("f ==> %d\n", data.floor_color);
-    printf ("c ==> %d\n", data.ceiling_color);
+    // printf ("no ==> %s\n", data.path_no);
+    // printf ("so ==> %s\n", data.path_so);
+    // printf ("we ==> %s\n", data.path_we);
+    // printf ("ea ==> %s\n", data.path_ea);
+    // printf ("f ==> %d\n", data.floor_color);
+    // printf ("c ==> %d\n", data.ceiling_color);
     // // print map
     // int i = 0;
     // while (data.map[i])
