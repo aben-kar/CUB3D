@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/23 22:52:46 by achraf           ###   ########.fr       */
+/*   Updated: 2025/09/24 17:39:23 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void init_data(t_data *data)
     data->map = NULL;
 }
 
-void parsing_texture_and_color(t_data *data, int fd)
+void parsing_cub(t_data *data, int fd)
 {
     init_data(data);
     parse_texture_and_color(data, fd);

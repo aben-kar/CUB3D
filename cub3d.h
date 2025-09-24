@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/23 22:43:32 by achraf           ###   ########.fr       */
+/*   Updated: 2025/09/24 17:39:15 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_data
 
 
 // Function declarations
-void parsing_texture_and_color(t_data *data, int fd);
+void parsing_cub(t_data *data, int fd);
 void parse_texture_and_color(t_data *data, int fd);
 void parse_config_file(t_data *data, char *line);
 int all_config_parsed(t_data *data);
@@ -46,5 +46,8 @@ void free_map(t_data *data);
 int is_map_line(char *line);
 void parse_map_line(t_data *data, char *line);
 void is_map_valid(t_data *data);
+void check_multiple_player(t_data *data);
+void is_map_closed(t_data *data);
+void complete_validation_map(t_data *data);
 
 #endif

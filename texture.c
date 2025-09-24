@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/23 21:23:02 by achraf           ###   ########.fr       */
+/*   Updated: 2025/09/24 17:54:09 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void print_error_and_exit(const char *msg)
 {
-    printf("Error\n%s\n", msg);
+    printf("Error\n   %s\n", msg);
     exit(1);
 }
 
@@ -41,7 +41,6 @@ void parse_color(t_data *data, char **str)
 {
     if (ft_strncmp(str[0], "F", 2) == 0 && str[1] && !str[2])
         data->floor_color = extract_rgb_color(str[1]);
-
     else if (ft_strncmp(str[0], "C", 2) == 0 && str[1] && !str[2])
         data->ceiling_color = extract_rgb_color(str[1]);
 }
@@ -76,22 +75,25 @@ void parse_config_file(t_data *data, char *line)
 void parse_texture_and_color(t_data *data, int fd)
 {
     char *line;
+    char *clean_line;
 
     line = get_next_line(fd);
     while (line)
     {
-        // skip empty lines
+        int len;
+
         if (line[0] == '\n')
         {
             free(line);
             line = get_next_line(fd);
             continue;
         }
-        char *clean_line;
-        int len = ft_strlen(line);
+        
+        len = ft_strlen(line);
         clean_line = ft_strdup(line);
         if (len > 0 && clean_line[len - 1] == '\n')
             clean_line[len - 1] = '\0';
+        
         parse_config_file(data, clean_line);
         if (all_config_parsed(data))
         {

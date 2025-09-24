@@ -1,3 +1,0 @@
-// step 1 : copier map.
-// step 2 : check is map colsed.
-// step 3 : ???
