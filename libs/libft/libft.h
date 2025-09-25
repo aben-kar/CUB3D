@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:04:10 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/07 14:38:19 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/25 21:22:39 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-
 // void
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t num, size_t size);

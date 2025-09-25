@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:19 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/24 17:51:34 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/25 15:41:37 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int main(int ac, char **av)
     }
 
     parsing_cub(&data, fd);
-    printf ("no ==> %s\n", data.path_no);
-    printf ("so ==> %s\n", data.path_so);
-    printf ("we ==> %s\n", data.path_we);
-    printf ("ea ==> %s\n", data.path_ea);
-    printf ("f ==> %d\n", data.floor_color);
-    printf ("c ==> %d\n", data.ceiling_color);
+    // printf ("no ==> %s\n", data.path_no);
+    // printf ("so ==> %s\n", data.path_so);
+    // printf ("we ==> %s\n", data.path_we);
+    // printf ("ea ==> %s\n", data.path_ea);
+    // printf ("f ==> %d\n", data.floor_color);
+    // printf ("c ==> %d\n", data.ceiling_color);
     // // print map
     // int i = 0;
     // while (data.map[i])

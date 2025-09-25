@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/24 17:39:15 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/25 22:50:58 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int is_map_line(char *line);
 void parse_map_line(t_data *data, char *line);
 void is_map_valid(t_data *data);
 void check_multiple_player(t_data *data);
-void is_map_closed(t_data *data);
-void complete_validation_map(t_data *data);
+void is_map_closed(char **map);
+void resize_map_rows(char **map);
+void validation_map(char **map);
 
 #endif

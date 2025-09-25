@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 23:18:43 by achraf            #+#    #+#             */
-/*   Updated: 2025/09/24 18:15:43 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/25 22:53:23 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 int is_map_line(char *line)
 {
@@ -71,7 +71,7 @@ void parse_map_line(t_data *data, char *line)
 void free_map(t_data *data)
 {
     int i = 0;
-    
+
     if (!data->map)
         return;
     while (data->map[i])
@@ -86,7 +86,7 @@ void free_map(t_data *data)
 void map(t_data *data, char *line)
 {
     int i = 0;
-    
+
     if (!is_map_line(line))
     {
         free(line);
@@ -102,39 +102,71 @@ void map(t_data *data, char *line)
     parse_map_line(data, line);
 }
 
+static char *skip_empty_lines(int fd)
+{
+    char *line;
+
+    line = get_next_line(fd);
+    while (line[0] == '\n')
+    {
+        free(line);
+        line = get_next_line(fd);
+    }
+    return (line);
+}
+
 void parse_map(t_data *data, int fd)
 {
     char *line;
-    int map_started = 0;  // flag bach n3raf wash l-map bdat
-    
-    line = get_next_line(fd);
+
+    line = skip_empty_lines(fd);
     while (line)
     {
+        if (!line)
+        {
+            print_error_and_exit("Empty line found inside the map");
+        }
         if (line[0] == '\n')
         {
-            if (map_started)
-            {
-                free(line);
-                free_map(data);
-                print_error_and_exit("Empty line found inside the map");
-            }
             free(line);
-            line = get_next_line(fd);
-            continue;
+            free_map(data);
+            print_error_and_exit("Empty line found inside the map");
         }
-        map_started = 1;
         map(data, line);
+        free(line);
         line = get_next_line(fd);
     }
     free(line);
+}
+
+char **map_copier(t_data *data)
+{
+    char **copier_line;
+    int line = 0;
+
+    while (data->map[line])
+        line++;
+    
+    copier_line = (char **)malloc((line + 1) * sizeof(char *));
+    if (!copier_line)
+        return NULL;
+    
+    int i = 0;
+    while (data->map[i])
+    {
+        copier_line[i] = ft_strdup(data->map[i]);
+        if (!copier_line[i])
+            print_error_and_exit("Memory allocation error in map_copier");
+        i++;
+    }
+    copier_line[i] = NULL;
+    return (copier_line);
 }
 
 void is_map_valid(t_data *data)
 {
     if (!data->map || !data->map[0])
         print_error_and_exit("Map is empty");
-    
-    check_multiple_player(data);
-    is_map_closed(data);
-    complete_validation_map(data);
+    char **copier_map = map_copier(data); 
+    validation_map(copier_map);
 }
