@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/24 13:58:55 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/25 22:34:03 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/26 22:58:44 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void check_multiple_player(t_data *data)
 
 void is_map_closed(char **map)
 {
-    // for(int i = 0; map[i]; i++)
+    // for (int i = 0; map[i]; i++)
     //     printf ("%s\n", map[i]);
     if (!map || !map[0])
         return;
@@ -60,7 +60,16 @@ void is_map_closed(char **map)
     while (i < first_row_len)
     {
         if (map[0][i] != '1')
-            print_error_and_exit("Map is not enclosed by walls (top row)");
+            print_error_and_exit("Map not closeeeeeee");
+        // else
+        // {
+        //     printf ("1\n");
+        //     if (map[0][i] == '?')
+        //     {
+        //         if ((map[1][i] != '1' && map[1][i] != '?') && map[1][i])
+        //             print_error_and_exit("Map not close");
+        //     }
+        // }
         i++;
     }
     
@@ -86,40 +95,40 @@ void is_map_closed(char **map)
     }
 }
 
-void resize_map_rows(char **map)
-{
-    int i;
-    int rows = 0;
-    int cols = 0;
+// void resize_map_rows(char **map)
+// {
+//     int i;
+//     int rows = 0;
+//     int cols = 0;
 
-    while (map[rows])
-    {
-        int len = ft_strlen(map[rows]);
-        if (len > cols)
-            cols = len;
-        rows++;
-    }
+//     while (map[rows])
+//     {
+//         int len = ft_strlen(map[rows]);
+//         if (len > cols)
+//             cols = len;
+//         rows++;
+//     }
     
-    i = 0;
-    while (map[i])
-    {
-        int len = ft_strlen(map[i]);
-        if (len < cols)
-        {
-            char *new_line = (char *)malloc(sizeof(char) * (cols + 1));
-            if (!new_line)
-                print_error_and_exit("Memory allocation error");
-            for (int j = 0; j < cols; j++)
-            {
-                if (j < len)
-                    new_line[j] = map[i][j];
-                else
-                    new_line[j] = '?';
-            }
-            new_line[cols] = '\0';
-            free(map[i]);
-            map[i] = new_line;
-        }
-        i++;
-    }
-}
+//     i = 0;
+//     while (map[i])
+//     {
+//         int len = ft_strlen(map[i]);
+//         if (len < cols)
+//         {
+//             char *new_line = (char *)malloc(sizeof(char) * (cols + 1));
+//             if (!new_line)
+//                 print_error_and_exit("Memory allocation error");
+//             for (int j = 0; j < cols; j++)
+//             {
+//                 if (j < len)
+//                     new_line[j] = map[i][j];
+//                 else
+//                     new_line[j] = '?';
+//             }
+//             new_line[cols] = '\0';
+//             free(map[i]);
+//             map[i] = new_line;
+//         }
+//         i++;
+//     }
+// }

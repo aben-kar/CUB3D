@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/24 17:54:09 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/26 21:00:32 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void print_error_and_exit(const char *msg)
 {
-    printf("Error\n   %s\n", msg);
+    printf("Error\n%s\n", msg);
     exit(1);
 }
 
@@ -72,35 +72,40 @@ void parse_config_file(t_data *data, char *line)
     free_split(split);
 }
 
+char *clean_line(char *line)
+{
+    int len;
+    char    *cleand;
+
+    len = ft_strlen(line);
+    cleand = ft_strdup(line);
+    if (len > 0 && cleand[len - 1] == '\n')
+        cleand[len - 1] = '\0';
+    return (cleand);
+}
+
 void parse_texture_and_color(t_data *data, int fd)
 {
     char *line;
-    char *clean_line;
+    char *cleand;
 
     line = get_next_line(fd);
     while (line)
     {
-        int len;
-
         if (line[0] == '\n')
         {
             free(line);
             line = get_next_line(fd);
             continue;
         }
-        
-        len = ft_strlen(line);
-        clean_line = ft_strdup(line);
-        if (len > 0 && clean_line[len - 1] == '\n')
-            clean_line[len - 1] = '\0';
-        
-        parse_config_file(data, clean_line);
+        cleand = clean_line(line);
+        parse_config_file(data, cleand);
         if (all_config_parsed(data))
         {
-            free(clean_line);
+            free(cleand);
             break;
         }
-        free(clean_line);
+        free(line);
         line = get_next_line(fd);
     }
     free(line);

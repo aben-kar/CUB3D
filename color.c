@@ -6,13 +6,13 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:49:10 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/24 18:08:21 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/26 20:45:28 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void check_is_rgb_isdigit(char **rgb_values)
+void check_is_rgb_digit(char **rgb_values)
 {
     int i;
 
@@ -35,22 +35,16 @@ void check_is_rgb_isdigit(char **rgb_values)
     }
 }
 
-
 int extract_rgb_color(char *line)
 {
     char **rgb_values;
     int r, g, b;
     int color;
-    char *clean_line;
-    int len;
+    char *cleand;
 
-    len = ft_strlen(line);
-    clean_line = ft_strdup(line);
-    if (len > 0 && clean_line[len - 1] == '\n')
-        clean_line[len - 1] = '\0';
-
-    rgb_values = ft_split(clean_line, ',');
-    free(clean_line);
+    cleand = clean_line(line);
+    rgb_values = ft_split(cleand, ',');
+    free(cleand);
     
     if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3] != NULL)
     {
@@ -58,7 +52,7 @@ int extract_rgb_color(char *line)
         free_split(rgb_values);
         exit(1);
     }
-    check_is_rgb_isdigit(rgb_values);
+    check_is_rgb_digit(rgb_values);
     r = ft_atoi(rgb_values[0]);
     g = ft_atoi(rgb_values[1]);
     b = ft_atoi(rgb_values[2]);
@@ -70,5 +64,5 @@ int extract_rgb_color(char *line)
     }
     color = (r << 16) | (g << 8) | b;
     free_split(rgb_values);
-    return color;
+    return (color);
 }
