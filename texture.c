@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/26 21:00:32 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/28 20:26:11 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,58 @@ int all_config_parsed(t_data *data)
 
 void parse_texture(t_data *data, char **str)
 {
+    if (!str || !*str)
+        return;
     if (ft_strncmp(str[0], "NO", 3) == 0 && str[1] && !str[2])
+    {
+        if (data->path_no)
+            print_error_and_exit("Duplicate NO texture");
         data->path_no = ft_strdup(str[1]);
+    }
     else if (ft_strncmp(str[0], "SO", 3) == 0 && str[1] && !str[2])
+    {
+        if (data->path_so)
+            print_error_and_exit("Duplicate SO texture");
         data->path_so = ft_strdup(str[1]);
+    }
     else if (ft_strncmp(str[0], "WE", 3) == 0 && str[1] && !str[2])
+    {
+        if (data->path_we)
+            print_error_and_exit("Duplicate WE texture");
         data->path_we = ft_strdup(str[1]);
+    }
     else if (ft_strncmp(str[0], "EA", 3) == 0 && str[1] && !str[2])
+    {
+        if (data->path_ea)
+            print_error_and_exit("Duplicate EA texture");
         data->path_ea = ft_strdup(str[1]);
+    }
 }
 
 void parse_color(t_data *data, char **str)
 {
+    if (!str || !*str)
+        return;
+    
     if (ft_strncmp(str[0], "F", 2) == 0 && str[1] && !str[2])
+    {
+        if (data->floor_color != 0)
+            print_error_and_exit("Duplicate F color");
         data->floor_color = extract_rgb_color(str[1]);
+    }
     else if (ft_strncmp(str[0], "C", 2) == 0 && str[1] && !str[2])
+    {
+        if (data->ceiling_color != 0)
+            print_error_and_exit("Duplicate C color");
         data->ceiling_color = extract_rgb_color(str[1]);
+    }
 }
 
 void parse_config_file(t_data *data, char *line)
 {
+    if (!line || !line[0])
+        return;
+    
     char **split;
 
     split = ft_split(line, ' ');
@@ -72,18 +104,6 @@ void parse_config_file(t_data *data, char *line)
     free_split(split);
 }
 
-char *clean_line(char *line)
-{
-    int len;
-    char    *cleand;
-
-    len = ft_strlen(line);
-    cleand = ft_strdup(line);
-    if (len > 0 && cleand[len - 1] == '\n')
-        cleand[len - 1] = '\0';
-    return (cleand);
-}
-
 void parse_texture_and_color(t_data *data, int fd)
 {
     char *line;
@@ -98,7 +118,7 @@ void parse_texture_and_color(t_data *data, int fd)
             line = get_next_line(fd);
             continue;
         }
-        cleand = clean_line(line);
+        cleand = ft_strtrim(line, "\n");
         parse_config_file(data, cleand);
         if (all_config_parsed(data))
         {

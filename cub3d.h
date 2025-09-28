@@ -6,18 +6,22 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/26 20:43:18 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/28 20:56:52 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 #define CUB_H
 
+#include "minilibx-linux/mlx.h"
+# include <X11/keysym.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
+// #include "minilibx-linux/mlx.h"  // Temporarily disabled
 #include "libs/libft/libft.h"
 #include "libs/get_next_line/get_next_line_bonus.h"
 
@@ -42,14 +46,11 @@ int extract_rgb_color(char *line);
 void free_split(char **split);
 void print_error_and_exit(const char *msg);
 void parse_map(t_data *data, int fd);
-void free_map(t_data *data);
+// void free_map(t_data *data);
 int is_map_line(char *line);
-void parse_map_line(t_data *data, char *line);
 void is_map_valid(t_data *data);
 void check_multiple_player(t_data *data);
 void is_map_closed(char **map);
-void resize_map_rows(char **map);
-void validation_map(char **map);
-char *clean_line(char *line);
+bool is_player(char position);
 
 #endif

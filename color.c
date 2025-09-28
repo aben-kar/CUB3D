@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:49:10 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/26 20:45:28 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/28 17:39:12 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void check_is_rgb_digit(char **rgb_values)
 {
+    if (!rgb_values || !*rgb_values)
+        return;
     int i;
 
     i = 0;
@@ -37,20 +39,21 @@ void check_is_rgb_digit(char **rgb_values)
 
 int extract_rgb_color(char *line)
 {
+    if (!line || !line[0])
+        return (0);
     char **rgb_values;
     int r, g, b;
     int color;
     char *cleand;
 
-    cleand = clean_line(line);
+    cleand = ft_strtrim(line, "\n");
     rgb_values = ft_split(cleand, ',');
     free(cleand);
     
     if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3] != NULL)
     {
-        printf("Error\n  Invalid color format\n");
+        print_error_and_exit("Invalid color format");
         free_split(rgb_values);
-        exit(1);
     }
     check_is_rgb_digit(rgb_values);
     r = ft_atoi(rgb_values[0]);
