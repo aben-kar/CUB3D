@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/30 15:23:46 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/30 20:33:12 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,30 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
-// #include "minilibx-linux/mlx.h"  // Temporarily disabled
 #include "libs/libft/libft.h"
 #include "libs/get_next_line/get_next_line_bonus.h"
 
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH 1000
+#define SCREEN_HEIGHT 500
+
+typedef struct s_data t_data;
+
 
 typedef struct s_game
 {
     void    *mlx;
-    void    *win;
+    void    *mlx_win;
+    void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
     double  player_x;
     double  player_y;
     double  dir_x;
     double  dir_y;
-    double  plane_x;
-    double  plane_y;
-    double  move_speed;
-    double  rot_speed;
+    t_data *data;
 }   t_game;
 
 typedef struct s_data
@@ -73,5 +77,6 @@ bool is_player(char position);
 
 // function raycasting
 void init_game(t_game *game);
+void draw_mini_map(t_game *game);
 
 #endif
