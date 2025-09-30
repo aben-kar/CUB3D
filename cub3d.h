@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/29 18:00:31 by achraf           ###   ########.fr       */
+/*   Updated: 2025/09/30 15:23:46 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_H
 #define CUB_H
 
-#include "minilibx-linux/mlx.h"
+#include "libs/minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -28,7 +28,6 @@
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-#define FOV 1.0472  // 60 degrés en radians
 
 typedef struct s_game
 {
