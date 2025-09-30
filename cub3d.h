@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/30 20:33:12 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/30 22:12:31 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,16 @@
 
 typedef struct s_data t_data;
 
+typedef struct s_player {
+    double x;          // Position x dyal player
+    double y;          // Position y dyal player
+    double dir_x;      // Direction vector x
+    double dir_y;      // Direction vector y
+    double plane_x;    // Camera plane x (FOV)
+    double plane_y;    // Camera plane y (FOV)
+    double move_speed; // Vitesse dyal movement
+    double rot_speed;  // Vitesse dyal rotation
+} t_player;
 
 typedef struct s_game
 {
@@ -45,6 +55,7 @@ typedef struct s_game
     double  dir_x;
     double  dir_y;
     t_data *data;
+    t_player *player;;
 }   t_game;
 
 typedef struct s_data
@@ -78,5 +89,8 @@ bool is_player(char position);
 // function raycasting
 void init_game(t_game *game);
 void draw_mini_map(t_game *game);
+void init_player(t_game *game);
+int close_window(t_game *game);
+int key_press(int keycode, t_game *game);
 
 #endif

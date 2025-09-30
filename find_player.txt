@@ -1,0 +1,23 @@
+Next étapes li khassek tdirhom:
+Initialiser les données dyal player:
+
+Position initiale (x, y) mn la carte
+Direction (angle) hasab orientation (N, S, E, W)
+FOV w autres paramètres dyal raycasting
+Event handling:
+
+Key press/release (WASD ola arrows lel movement)
+ESC lel exit
+Mouse events ila bghiti
+Raycasting engine:
+
+Ray casting algorithm
+Wall detection
+Distance calculation
+Rendering dyal 3D view
+Game loop:
+
+Update player position
+Render frame
+Handle events
+Bghiti nbda b ashno? Player initialization ola event handling awalan?
