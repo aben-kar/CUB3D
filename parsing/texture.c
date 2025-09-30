@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/28 20:26:11 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:43:10 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void print_error_and_exit(const char *msg)
 {

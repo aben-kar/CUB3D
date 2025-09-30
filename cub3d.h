@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/28 20:56:52 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/29 18:00:31 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@
 #include "libs/libft/libft.h"
 #include "libs/get_next_line/get_next_line_bonus.h"
 
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+#define FOV 1.0472  // 60 degrés en radians
+
+typedef struct s_game
+{
+    void    *mlx;
+    void    *win;
+    double  player_x;
+    double  player_y;
+    double  dir_x;
+    double  dir_y;
+    double  plane_x;
+    double  plane_y;
+    double  move_speed;
+    double  rot_speed;
+}   t_game;
+
 typedef struct s_data
 {
     char *path_no;
@@ -37,7 +56,7 @@ typedef struct s_data
 } t_data;
 
 
-// Function declarations
+// Function parsing
 void parsing_cub(t_data *data, int fd);
 void parse_texture_and_color(t_data *data, int fd);
 void parse_config_file(t_data *data, char *line);
@@ -52,5 +71,8 @@ void is_map_valid(t_data *data);
 void check_multiple_player(t_data *data);
 void is_map_closed(char **map);
 bool is_player(char position);
+
+// function raycasting
+void init_game(t_game *game);
 
 #endif

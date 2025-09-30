@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:19 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/28 20:54:46 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/29 18:04:20 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int main(int ac, char **av)
 {
     t_data data;
+    t_game game;
     if (ac != 2)
     {
         printf("Error\n  Usage: ./cub3d <map.cub>\n");
@@ -33,14 +34,9 @@ int main(int ac, char **av)
         printf("Error\n  Cannot open file: %s\n", av[1]);
         return 1;
     }
-
     parsing_cub(&data, fd);
-    void	*mlx;
-	void	*mlx_win;
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 500, 500, "Hello world!");
-	mlx_loop(mlx);
     close(fd);
+    init_game(&game);
+    
     return 0;
 }

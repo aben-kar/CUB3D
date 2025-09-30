@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 23:18:43 by achraf            #+#    #+#             */
-/*   Updated: 2025/09/28 17:41:16 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:42:59 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 int is_map_line(char *line)
 {

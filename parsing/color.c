@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:49:10 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/28 17:39:12 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:57:00 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 void check_is_rgb_digit(char **rgb_values)
 {

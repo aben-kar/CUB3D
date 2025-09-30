@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 17:45:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/28 20:22:04 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/09/29 17:43:15 by achraf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../cub3d.h"
 
 bool is_player(char position)
 {
