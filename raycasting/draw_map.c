@@ -6,70 +6,101 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 17:17:39 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/30 22:41:40 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/01 23:50:07 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-
-int key_press(int keycode, t_game *game)
+int render_frame(t_game *game)
 {
-    if (keycode == 65307) // ESC key
-    {
-        mlx_destroy_window(game->mlx, game->mlx_win);
-        exit(0);
-    }
-    if (keycode == 119 || keycode == 65362) // W key ola UP arrow
-    {
-        // Move forward
-        double new_x = game->player->x + game->player->dir_x * game->player->move_speed;
-        double new_y = game->player->y + game->player->dir_y * game->player->move_speed;
-        
-        // Check collision m3a walls
-        if (game->data->map[(int)new_y][(int)new_x] != '1')
-        {
-            game->player->x = new_x;
-            game->player->y = new_y;
-        }
-    }
-    if (keycode == 115 || keycode == 65364) // S key ola DOWN arrow
-    {
-        // Move backward
-        double new_x = game->player->x - game->player->dir_x * game->player->move_speed;
-        double new_y = game->player->y - game->player->dir_y * game->player->move_speed;
-        
-        if (game->data->map[(int)new_y][(int)new_x] != '1')
-        {
-            game->player->x = new_x;
-            game->player->y = new_y;
-        }
-    }
-    if (keycode == 97 || keycode == 65361) // A key ola LEFT arrow
-    {
-        // Rotate left
-        double old_dir_x = game->player->dir_x;
-        game->player->dir_x = game->player->dir_x * cos(game->player->rot_speed) - game->player->dir_y * sin(game->player->rot_speed);
-        game->player->dir_y = old_dir_x * sin(game->player->rot_speed) + game->player->dir_y * cos(game->player->rot_speed);
-        
-        double old_plane_x = game->player->plane_x;
-        game->player->plane_x = game->player->plane_x * cos(game->player->rot_speed) - game->player->plane_y * sin(game->player->rot_speed);
-        game->player->plane_y = old_plane_x * sin(game->player->rot_speed) + game->player->plane_y * cos(game->player->rot_speed);
-    }
-    if (keycode == 100 || keycode == 65363) // D key ola RIGHT arrow
-    {
-        // Rotate right
-        double old_dir_x = game->player->dir_x;
-        game->player->dir_x = game->player->dir_x * cos(-game->player->rot_speed) - game->player->dir_y * sin(-game->player->rot_speed);
-        game->player->dir_y = old_dir_x * sin(-game->player->rot_speed) + game->player->dir_y * cos(-game->player->rot_speed);
-        
-        double old_plane_x = game->player->plane_x;
-        game->player->plane_x = game->player->plane_x * cos(-game->player->rot_speed) - game->player->plane_y * sin(-game->player->rot_speed);
-        game->player->plane_y = old_plane_x * sin(-game->player->rot_speed) + game->player->plane_y * cos(-game->player->rot_speed);
-    }
+    // Clear screen
+    ft_memset(game->addr, 0, SCREEN_WIDTH * SCREEN_HEIGHT * (game->bits_per_pixel / 8));
     
-    // Redraw la scene ba3d kol movement
-    mlx_clear_window(game->mlx, game->mlx_win);
+    // Redessiner tout
+    draw_mini_map(game);
+    
+    return (0);
+}
+
+int is_wall(t_game *game, double x, double y)
+{
+    int map_x;
+    int map_y;
+
+    map_x = (int)x;
+    map_y = (int)y;
+
+    // Vérifier hors carte
+    if (map_y < 0 || map_y >= game->map_rows ||
+        map_x < 0 || map_x >= (int)ft_strlen(game->data->map[map_y]))
+        return (1);
+
+    // Vérifier mur
+    if (game->data->map[map_y][map_x] == '1')
+        return (1);
+
+    return (0);
+}
+
+void rotate_player(t_player *player, double rot_speed)
+{
+    double old_dir_x = player->dir_x;
+    double old_plane_x = player->plane_x;
+
+    // Rotation du vecteur direction
+    player->dir_x = player->dir_x * cos(rot_speed) - player->dir_y * sin(rot_speed);
+    player->dir_y = old_dir_x * sin(rot_speed) + player->dir_y * cos(rot_speed);
+    
+    // Rotation du plan camera
+    player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
+    player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
+}
+
+int key_press(int key, t_game *game)
+{
+    if (!game || !game->player)
+        return (0);
+    double new_x = game->player->x;
+    double new_y = game->player->y;
+    double move_speed = game->player->move_speed;
+
+    if (key == 65307) // ESC key
+        close_window(game);
+    if (key == KEY_W)
+    {
+        new_x = game->player->x + game->player->dir_x * move_speed;
+        new_y = game->player->y + game->player->dir_y * move_speed;
+    }
+    if (key == KEY_S)
+    {
+        new_x = game->player->x - game->player->dir_x * move_speed;
+        new_y = game->player->y - game->player->dir_y * move_speed;
+    }
+    if (key == KEY_A)
+    {
+        new_x = game->player->x - game->player->plane_y * move_speed;
+        new_y = game->player->y + game->player->plane_x * move_speed;
+    }
+    if (key == KEY_D)
+    {
+        new_x = game->player->x + game->player->plane_y * move_speed;
+        new_y = game->player->y - game->player->plane_x * move_speed;
+    }
+     if (key == KEY_LEFT)  // Flèche gauche
+    {
+        rotate_player(game->player, -game->player->rot_speed);
+    }
+    if (key == KEY_RIGHT) // Flèche droite
+    {
+        rotate_player(game->player, game->player->rot_speed);
+    }
+    // Vérifier collision avant de mettre à jour
+    if (!is_wall(game, new_x, new_y))
+    {
+        game->player->x = new_x;
+        game->player->y = new_y;
+    }
     draw_mini_map(game);
     
     return (0);
@@ -108,17 +139,15 @@ void init_player(t_game *game)
                 break;
             }
         }
-        // if (player_char)
-        //     break;
+        if (player_char)
+            break;
     }
-    printf ("Player position: (%.2f, %.2f)\n", game->player->x, game->player->y);
     
-    // Set direction hasab orientation
     if (player_char == 'N')
     {
         game->player->dir_x = 0;
         game->player->dir_y = -1;
-        game->player->plane_x = 0.66; // FOV
+        game->player->plane_x = 0.66;
         game->player->plane_y = 0;
     }
     else if (player_char == 'S')
@@ -142,8 +171,8 @@ void init_player(t_game *game)
         game->player->plane_x = 0;
         game->player->plane_y = -0.66;
     }
-    
-    // Set movement speeds
+
+    // movement
     game->player->move_speed = 0.05;
     game->player->rot_speed = 0.03;
 }
@@ -178,11 +207,12 @@ void draw_mini_map(t_game *game)
     int map_rows = 0;
     while (game->data->map[map_rows])
         map_rows++;
-    int cell_size = 5;
+    game->map_rows = map_rows;
+    int cell_size = 5; // Size dyal kol cell f mini-map and bach converti position dyal player l pixels
     int i, j;
     int color;
 
-    for (i = 0; i < map_rows; i++)
+    for (i = 0; i < game->map_rows; i++)
     {
         int row_len = ft_strlen(game->data->map[i]);
         for (j = 0; j < row_len; j++)
@@ -198,13 +228,11 @@ void draw_mini_map(t_game *game)
         }
     }
     
-    printf ("Player position: (%.2f, %.2f)\n", game->player->x, game->player->y);
-
     if (game->player)
     {
         int player_x = (int)(game->player->x * cell_size);
         int player_y = (int)(game->player->y * cell_size);
-        draw_rectangle(game, player_x - 2, player_y - 2, 4, 0xFF0000); // red circle sghir
+        draw_rectangle(game, player_x - 2, player_y - 2, 4, 0xFF0000);
     }
     
     mlx_put_image_to_window(game->mlx, game->mlx_win, game->img, 0, 0);

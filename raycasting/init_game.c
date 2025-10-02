@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:05:00 by achraf            #+#    #+#             */
-/*   Updated: 2025/09/30 22:11:56 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/01 23:50:27 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 void init_mlx_game(t_game *game)
 {
+    if (!game)
+        return;
     game->mlx = mlx_init();
     if (!game->mlx)
     {
@@ -42,6 +44,7 @@ void init_mlx_game(t_game *game)
     }
     mlx_hook(game->mlx_win, 2, 1L<<0, key_press, game); // Key press
     mlx_hook(game->mlx_win, 17, 1L<<17, close_window, game); // Close button
+    mlx_loop_hook(game->mlx, render_frame, game);
     draw_mini_map(game);
     mlx_loop(game->mlx);
 }
@@ -51,5 +54,4 @@ void init_game(t_game *game)
 {
     init_player(game);
     init_mlx_game(game);
-    
 }

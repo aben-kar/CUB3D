@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/30 22:12:31 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/01 23:47:17 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 500
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363
 
 typedef struct s_data t_data;
 
@@ -50,6 +56,7 @@ typedef struct s_game
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+    int     map_rows;
     double  player_x;
     double  player_y;
     double  dir_x;
@@ -92,5 +99,6 @@ void draw_mini_map(t_game *game);
 void init_player(t_game *game);
 int close_window(t_game *game);
 int key_press(int keycode, t_game *game);
+int render_frame(t_game *game);
 
 #endif
