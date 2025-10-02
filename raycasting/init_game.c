@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:05:00 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/01 23:50:27 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/02 16:53:01 by aben-kar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
 
 void init_mlx_game(t_game *game)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/01 23:47:17 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/02 17:46:16 by aben-kar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 #define KEY_D 100
 #define KEY_LEFT 65361
 #define KEY_RIGHT 65363
+#define FOV 1,0472
 
 typedef struct s_data t_data;
 
@@ -45,6 +46,7 @@ typedef struct s_player {
     double plane_y;    // Camera plane y (FOV)
     double move_speed; // Vitesse dyal movement
     double rot_speed;  // Vitesse dyal rotation
+    double angle;      // Angle dyal player
 } t_player;
 
 typedef struct s_game

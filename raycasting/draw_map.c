@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 17:17:39 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/01 23:50:07 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/02 18:19:18 by aben-kar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include <math.h>
 
 int render_frame(t_game *game)
 {
@@ -43,18 +44,22 @@ int is_wall(t_game *game, double x, double y)
     return (0);
 }
 
-void rotate_player(t_player *player, double rot_speed)
+void rotate_player_left(t_player *player)
 {
-    double old_dir_x = player->dir_x;
-    double old_plane_x = player->plane_x;
+    double speed_rotation = player->rot_speed;
 
-    // Rotation du vecteur direction
-    player->dir_x = player->dir_x * cos(rot_speed) - player->dir_y * sin(rot_speed);
-    player->dir_y = old_dir_x * sin(rot_speed) + player->dir_y * cos(rot_speed);
-    
-    // Rotation du plan camera
-    player->plane_x = player->plane_x * cos(rot_speed) - player->plane_y * sin(rot_speed);
-    player->plane_y = old_plane_x * sin(rot_speed) + player->plane_y * cos(rot_speed);
+    player->angle -= speed_rotation;
+    player->dir_x = cos(player->angle);
+    player->dir_y = sin(player->angle);
+}
+
+void rotate_player_right(t_player *player)
+{
+    double speed_rotation = player->rot_speed;
+
+    player->angle += speed_rotation;
+    player->dir_x = cos(player->angle);
+    player->dir_y = sin(player->angle);
 }
 
 int key_press(int key, t_game *game)
@@ -87,14 +92,11 @@ int key_press(int key, t_game *game)
         new_x = game->player->x + game->player->plane_y * move_speed;
         new_y = game->player->y - game->player->plane_x * move_speed;
     }
-     if (key == KEY_LEFT)  // Flèche gauche
-    {
-        rotate_player(game->player, -game->player->rot_speed);
-    }
+    if (key == KEY_LEFT)  // Flèche gauche
+        rotate_player_left(game->player);
     if (key == KEY_RIGHT) // Flèche droite
-    {
-        rotate_player(game->player, game->player->rot_speed);
-    }
+        rotate_player_right(game->player);
+
     // Vérifier collision avant de mettre à jour
     if (!is_wall(game, new_x, new_y))
     {
@@ -144,35 +146,16 @@ void init_player(t_game *game)
     }
     
     if (player_char == 'N')
-    {
-        game->player->dir_x = 0;
-        game->player->dir_y = -1;
-        game->player->plane_x = 0.66;
-        game->player->plane_y = 0;
-    }
+        game->player->angle = -M_PI / 2.0;
     else if (player_char == 'S')
-    {
-        game->player->dir_x = 0;
-        game->player->dir_y = 1;
-        game->player->plane_x = -0.66;
-        game->player->plane_y = 0;
-    }
-    else if (player_char == 'E')
-    {
-        game->player->dir_x = 1;
-        game->player->dir_y = 0;
-        game->player->plane_x = 0;
-        game->player->plane_y = 0.66;
-    }
+        game->player->angle = M_PI / 2.0;
     else if (player_char == 'W')
-    {
-        game->player->dir_x = -1;
-        game->player->dir_y = 0;
-        game->player->plane_x = 0;
-        game->player->plane_y = -0.66;
-    }
+        game->player->angle = M_PI;
+    else if (player_char == 'E')
+        game->player->angle = 0.0;
 
-    // movement
+    game->dir_x = cos(game->player->angle);
+    game->dir_y = sin(game->player->angle);
     game->player->move_speed = 0.05;
     game->player->rot_speed = 0.03;
 }
