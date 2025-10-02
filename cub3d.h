@@ -6,7 +6,7 @@
 /*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/02 17:46:16 by aben-kar         ###   ########.fr       */
+/*   Updated: 2025/10/02 22:17:54 by aben-kar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int extract_rgb_color(char *line);
 void free_split(char **split);
 void print_error_and_exit(const char *msg);
 void parse_map(t_data *data, int fd);
-// void free_map(t_data *data);
 int is_map_line(char *line);
 void is_map_valid(t_data *data);
 void check_multiple_player(t_data *data);
@@ -102,5 +101,8 @@ void init_player(t_game *game);
 int close_window(t_game *game);
 int key_press(int keycode, t_game *game);
 int render_frame(t_game *game);
-
+// void rotation_player(int key, t_player *player);
+void movment_player(int key, t_game *game);
+void rotate_player_right(t_player *player);
+void rotate_player_left(t_player *player);
 #endif
