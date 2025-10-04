@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_rotation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:11:02 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/02 22:17:21 by aben-kar         ###   ########.fr       */
+/*   Updated: 2025/10/03 16:52:09 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,3 @@ void rotate_player_right(t_player *player)
     player->dir_x = cos(player->angle);
     player->dir_y = sin(player->angle);
 }
-
-// void rotation_player(int key, t_player *player)
-// {
-//     if (key == KEY_LEFT)  // Flèche gauche
-//         rotate_player_left(player);
-//     if (key == KEY_RIGHT) // Flèche droite
-//         rotate_player_right(player);
-// }

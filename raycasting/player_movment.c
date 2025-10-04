@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movment.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 19:59:33 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/02 22:23:53 by aben-kar         ###   ########.fr       */
+/*   Updated: 2025/10/03 18:03:55 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,24 @@ void movment_player(int key, t_game *game)
         new_x = game->player->x + game->player->dir_x * move_speed;
         new_y = game->player->y + game->player->dir_y * move_speed;
     }
-    if (key == KEY_S)
+    else if (key == KEY_S)
     {
         new_x = game->player->x - game->player->dir_x * move_speed;
         new_y = game->player->y - game->player->dir_y * move_speed;
     }
-    if (key == KEY_A)
+    else if (key == KEY_D)
     {
         new_x = game->player->x - game->player->dir_y * move_speed;
         new_y = game->player->y + game->player->dir_x * move_speed;
     }
-    if (key == KEY_D)
+    else if (key == KEY_A)
     {
         new_x = game->player->x + game->player->dir_y * move_speed;
         new_y = game->player->y - game->player->dir_x * move_speed;
     }
-    if (key == KEY_LEFT)  // Flèche gauche
+    else if (key == KEY_LEFT)  // Flèche gauche
         rotate_player_left(game->player);
-    if (key == KEY_RIGHT) // Flèche droite
+    else if (key == KEY_RIGHT) // Flèche droite
         rotate_player_right(game->player);
     if (!is_wall(game, new_x, game->player->y)) // Check x direction
     {

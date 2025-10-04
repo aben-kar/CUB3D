@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/02 22:17:54 by aben-kar         ###   ########.fr       */
+/*   Updated: 2025/10/03 16:52:28 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 #define SCREEN_WIDTH 1000
 #define SCREEN_HEIGHT 500
+#define KEY_ESC 65307
 #define KEY_W 119
 #define KEY_A 97
 #define KEY_S 115
@@ -61,8 +62,6 @@ typedef struct s_game
     int     map_rows;
     double  player_x;
     double  player_y;
-    double  dir_x;
-    double  dir_y;
     t_data *data;
     t_player *player;;
 }   t_game;
@@ -105,4 +104,5 @@ int render_frame(t_game *game);
 void movment_player(int key, t_game *game);
 void rotate_player_right(t_player *player);
 void rotate_player_left(t_player *player);
+
 #endif

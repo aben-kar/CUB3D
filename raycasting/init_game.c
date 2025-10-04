@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:05:00 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/02 16:53:01 by aben-kar         ###   ########.fr       */
+/*   Updated: 2025/10/03 16:52:41 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void init_mlx_game(t_game *game)
     }
     mlx_hook(game->mlx_win, 2, 1L<<0, key_press, game); // Key press
     mlx_hook(game->mlx_win, 17, 1L<<17, close_window, game); // Close button
-    mlx_loop_hook(game->mlx, render_frame, game);
+    // mlx_loop_hook(game->mlx, render_frame, game);
     draw_mini_map(game);
     mlx_loop(game->mlx);
 }

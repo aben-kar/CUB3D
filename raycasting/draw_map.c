@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 17:17:39 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/02 20:30:49 by aben-kar         ###   ########.fr       */
+/*   Updated: 2025/10/03 15:42:13 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int render_frame(t_game *game)
-{
-    // Clear screen
-    ft_memset(game->addr, 0, SCREEN_WIDTH * SCREEN_HEIGHT * (game->bits_per_pixel / 8));
+// int render_frame(t_game *game)
+// {
+//     // Clear screen
+//     ft_memset(game->addr, 0, SCREEN_WIDTH * SCREEN_HEIGHT * (game->bits_per_pixel / 8));
     
-    // Redessiner tout
-    draw_mini_map(game);
+//     // Redessiner tout
+//     draw_mini_map(game);
     
-    return (0);
-}
+//     return (0);
+// }
 
 int close_window(t_game *game)
 {
@@ -61,7 +61,7 @@ void draw_mini_map(t_game *game)
     while (game->data->map[map_rows])
         map_rows++;
     game->map_rows = map_rows;
-    int cell_size = 5; // Size dyal kol cell f mini-map and bach converti position dyal player l pixels
+    int cell_size = 5; // Size dyal kol cell f mini-map
     int i, j;
     int color;
 

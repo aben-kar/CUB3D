@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aben-kar <aben-kar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:23:04 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/02 22:44:22 by aben-kar         ###   ########.fr       */
+/*   Updated: 2025/10/03 17:17:14 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int key_press(int key, t_game *game)
 {
     if (!game || !game->player)
         return (0);
+    if (key == KEY_ESC)
+        close_window(game);
     movment_player(key, game);
-    // rotation_player(key, game->player);
     draw_mini_map(game);
     return (0);
 }
@@ -49,16 +50,16 @@ void init_player(t_game *game)
     char player_char = find_position_player(game);
     
     if (player_char == 'N')
-        game->player->angle = M_PI / 2.0;
+        game->player->angle = -M_PI / 2.0;
     else if (player_char == 'S')
-        game->player->angle = 3 * M_PI / 2.0;
+        game->player->angle = (3 * M_PI) / 2.0;
     else if (player_char == 'W')
         game->player->angle = M_PI;
     else if (player_char == 'E')
         game->player->angle = 0.0;
 
-    game->dir_x = cos(game->player->angle);
-    game->dir_y = sin(game->player->angle);
+    game->player->dir_x = cos(game->player->angle);
+    game->player->dir_y = sin(game->player->angle);
     game->player->move_speed = 0.05;
     game->player->rot_speed = 0.03; 
 }
