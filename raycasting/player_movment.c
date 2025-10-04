@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 19:59:33 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/03 18:03:55 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/04 20:16:01 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void movment_player(int key, t_game *game)
     double new_x;
     double new_y;
     double move_speed;
+    double radius = 0.2;
 
     new_x = game->player->x;
     new_y = game->player->y;
@@ -66,7 +67,11 @@ void movment_player(int key, t_game *game)
         rotate_player_left(game->player);
     else if (key == KEY_RIGHT) // Flèche droite
         rotate_player_right(game->player);
-    if (!is_wall(game, new_x, game->player->y)) // Check x direction
+        
+    if (!is_wall(game, new_x + radius, new_y) && 
+        !is_wall(game, new_x - radius, new_y) &&
+        !is_wall(game, new_x, new_y + radius) && 
+        !is_wall(game, new_x, new_y - radius))
     {
         game->player->x = new_x;
         game->player->y = new_y;

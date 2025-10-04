@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/03 16:52:28 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/04 17:56:22 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,16 @@ typedef struct s_game
     int     map_rows;
     double  player_x;
     double  player_y;
+    //////////
+    int mv_forward;
+    int mv_backward;
+    int mv_left;
+    int mv_right;
+    int rot_left;
+    int rot_right;
+    ////////////
     t_data *data;
-    t_player *player;;
+    t_player *player;
 }   t_game;
 
 typedef struct s_data
@@ -104,5 +112,7 @@ int render_frame(t_game *game);
 void movment_player(int key, t_game *game);
 void rotate_player_right(t_player *player);
 void rotate_player_left(t_player *player);
+
+int key_release(int key, t_game *game);
 
 #endif

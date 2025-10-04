@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:23:04 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/03 17:17:14 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/04 18:51:54 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,62 @@ int key_press(int key, t_game *game)
         return (0);
     if (key == KEY_ESC)
         close_window(game);
-    movment_player(key, game);
-    draw_mini_map(game);
+
+    if (key == KEY_W) 
+        game->mv_forward = 1;
+    if (key == KEY_S) 
+        game->mv_backward = 1;
+    if (key == KEY_A) 
+        game->mv_left = 1;
+    if (key == KEY_D) 
+        game->mv_right = 1;
+    if (key == KEY_LEFT) 
+        game->rot_left = 1;
+    if (key == KEY_RIGHT) 
+        game->rot_right = 1;
     return (0);
+}
+
+
+int key_release(int key, t_game *game)
+{
+    if (!game) return 0;
+    if (key == KEY_W) 
+        game->mv_forward = 0;
+    if (key == KEY_S) 
+        game->mv_backward = 0;
+    if (key == KEY_A) 
+        game->mv_left = 0;
+    if (key == KEY_D) 
+        game->mv_right = 0;
+    if (key == KEY_LEFT) 
+        game->rot_left = 0;
+    if (key == KEY_RIGHT) 
+        game->rot_right = 0;
+
+    return 0;
+}
+
+int render_frame(t_game *game)
+{
+    if (!game) return 0;
+
+    if (game->mv_forward)
+        movment_player(KEY_W, game);
+    if (game->mv_backward)
+        movment_player(KEY_S, game);
+    if (game->mv_left)
+        movment_player(KEY_A, game);
+    if (game->mv_right)
+        movment_player(KEY_D, game);
+    if (game->rot_left)
+        movment_player(KEY_LEFT, game);
+    if (game->rot_right)
+        movment_player(KEY_RIGHT, game);
+
+    draw_mini_map(game);
+
+    return 0;
 }
 
 char find_position_player(t_game *game)
@@ -60,6 +113,6 @@ void init_player(t_game *game)
 
     game->player->dir_x = cos(game->player->angle);
     game->player->dir_y = sin(game->player->angle);
-    game->player->move_speed = 0.05;
-    game->player->rot_speed = 0.03; 
+    game->player->move_speed = 0.019;
+    game->player->rot_speed = 0.01; 
 }
