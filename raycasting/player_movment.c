@@ -6,74 +6,125 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 19:59:33 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/04 20:16:01 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/06 22:34:19 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int is_wall(t_game *game, double x, double y)
+int is_valid_position(t_game *game, double x, double y)
 {
     int map_x;
     int map_y;
-
+    
     map_x = (int)x;
     map_y = (int)y;
-
-    // Vérifier hors carte
-    if (map_y < 0 || map_y >= game->map_rows ||
-        map_x < 0 || map_x >= (int)ft_strlen(game->data->map[map_y]))
-        return (1);
-
-    // Vérifier mur
+    
+    if (map_x < 0 || map_y < 0)
+        return (0);
+    if (map_y >= game->map_rows)
+        return (0);
+    if (map_x >= (int)ft_strlen(game->data->map[map_y]))
+        return (0);
+    
     if (game->data->map[map_y][map_x] == '1')
-        return (1);
+        return (0);
+    
+    return (1);  // Position valid, momken temchi
+}
 
-    return (0);
+int is_valid_position_with_buffer(t_game *game, double x, double y)
+{
+    double buffer = 0.2;  // Buffer zone (momken tbeddel had l valeur)
+    
+    // Check 4 corners dyal player (hit box)
+    if (!is_valid_position(game, x - buffer, y - buffer))
+        return (0);
+    if (!is_valid_position(game, x + buffer, y - buffer))
+        return (0);
+    if (!is_valid_position(game, x - buffer, y + buffer))
+        return (0);
+    if (!is_valid_position(game, x + buffer, y + buffer))
+        return (0);
+    
+    return (1);
+}
+
+void move_forward(t_game *game)
+{
+    double new_x;
+    double new_y;
+    
+    new_x = game->player->x + game->player->dir_x * game->player->move_speed;
+    new_y = game->player->y + game->player->dir_y * game->player->move_speed;
+    
+    if (is_valid_position_with_buffer(game, new_x, game->player->y))
+        game->player->x = new_x;
+    if (is_valid_position_with_buffer(game, game->player->x, new_y))
+        game->player->y = new_y;
+}
+
+void move_backward(t_game *game)
+{
+    double new_x;
+    double new_y;
+    
+    new_x = game->player->x - game->player->dir_x * game->player->move_speed;
+    new_y = game->player->y - game->player->dir_y * game->player->move_speed;
+    
+    if (is_valid_position_with_buffer(game, new_x, game->player->y))
+        game->player->x = new_x;
+    if (is_valid_position_with_buffer(game, game->player->x, new_y))
+        game->player->y = new_y;
+}
+
+void move_left(t_game *game)
+{
+    double new_x;
+    double new_y;
+    
+    new_x = game->player->x - game->player->plane_x * game->player->move_speed;
+    new_y = game->player->y - game->player->plane_y * game->player->move_speed;
+    
+    if (is_valid_position_with_buffer(game, new_x, game->player->y))
+        game->player->x = new_x;
+    if (is_valid_position_with_buffer(game, game->player->x, new_y))
+        game->player->y = new_y;
+}
+
+void move_right(t_game *game)
+{
+    double new_x;
+    double new_y;
+    
+    new_x = game->player->x + game->player->plane_x * game->player->move_speed;
+    new_y = game->player->y + game->player->plane_y * game->player->move_speed;
+    
+    if (is_valid_position_with_buffer(game, new_x, game->player->y))
+        game->player->x = new_x;
+    if (is_valid_position_with_buffer(game, game->player->x, new_y))
+        game->player->y = new_y;
 }
 
 void movment_player(int key, t_game *game)
 {
-    double new_x;
-    double new_y;
-    double move_speed;
-    double radius = 0.2;
-
-    new_x = game->player->x;
-    new_y = game->player->y;
-    move_speed = game->player->move_speed;
-
-    if (key == KEY_W)
-    {
-        new_x = game->player->x + game->player->dir_x * move_speed;
-        new_y = game->player->y + game->player->dir_y * move_speed;
-    }
-    else if (key == KEY_S)
-    {
-        new_x = game->player->x - game->player->dir_x * move_speed;
-        new_y = game->player->y - game->player->dir_y * move_speed;
-    }
-    else if (key == KEY_D)
-    {
-        new_x = game->player->x - game->player->dir_y * move_speed;
-        new_y = game->player->y + game->player->dir_x * move_speed;
-    }
-    else if (key == KEY_A)
-    {
-        new_x = game->player->x + game->player->dir_y * move_speed;
-        new_y = game->player->y - game->player->dir_x * move_speed;
-    }
-    else if (key == KEY_LEFT)  // Flèche gauche
+    (void)key;
+    
+    if (game->mv_forward)
+        move_forward(game);
+    
+    if (game->mv_backward)
+        move_backward(game);
+    
+    if (game->mv_left)
+        move_left(game);
+    
+    if (game->mv_right)
+        move_right(game);
+    
+    if (game->rot_left)
         rotate_player_left(game->player);
-    else if (key == KEY_RIGHT) // Flèche droite
+    
+    if (game->rot_right)
         rotate_player_right(game->player);
-        
-    if (!is_wall(game, new_x + radius, new_y) && 
-        !is_wall(game, new_x - radius, new_y) &&
-        !is_wall(game, new_x, new_y + radius) && 
-        !is_wall(game, new_x, new_y - radius))
-    {
-        game->player->x = new_x;
-        game->player->y = new_y;
-    }
 }

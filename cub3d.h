@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/04 17:56:22 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/06 23:45:29 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,45 @@
 #define KEY_D 100
 #define KEY_LEFT 65361
 #define KEY_RIGHT 65363
-#define FOV 1,0472
+#define FOV 0.66
 
 typedef struct s_data t_data;
+
+typedef struct s_ray
+{
+    // Ray direction
+    double ray_dir_x;           // Direction X dyal ray
+    double ray_dir_y;           // Direction Y dyal ray
+    
+    // Map position (cell li fih player)
+    int map_x;              // X coordinate f map
+    int map_y;              // Y coordinate f map
+    
+    // Side distance (distance mn player l next grid line)
+    double side_dist_x;     // Distance l vertical grid line
+    double side_dist_y;     // Distance l horizontal grid line
+    
+    // Delta distance (distance bin grid lines)
+    double delta_dist_x;    // Distance bin vertical lines
+    double delta_dist_y;    // Distance bin horizontal lines
+    
+    // Step direction (-1 or +1)
+    int step_x;             // Direction f X (-1 = shimale, +1 = limen)
+    int step_y;             // Direction f Y (-1 = lfou9, +1 = louta7)
+    
+    // Wall hit info
+    int hit;                // Wach l9a wall? (0 = no, 1 = yes)
+    int side;               // Ashmen side hit? (0 = vertical, 1 = horizontal)
+    
+    // Distance to wall
+    double perp_wall_dist;  // Perpendicular distance l wall
+    
+    // Wall rendering info
+    int line_height;        // Height dyal wall line f screen
+    int draw_start;         // Fin tبدا ترسم wall (pixel Y)
+    int draw_end;           // Fin تسالي ترسم wall (pixel Y)
+    
+} t_ray;
 
 typedef struct s_player {
     double x;          // Position x dyal player
@@ -72,7 +108,10 @@ typedef struct s_game
     ////////////
     t_data *data;
     t_player *player;
+    t_ray *ray;
 }   t_game;
+
+
 
 typedef struct s_data
 {
@@ -112,7 +151,13 @@ int render_frame(t_game *game);
 void movment_player(int key, t_game *game);
 void rotate_player_right(t_player *player);
 void rotate_player_left(t_player *player);
-
 int key_release(int key, t_game *game);
+void raycast_3d(t_game *game);
+void my_mlx_pixel_put(t_game *game, int x, int y, int color);
+
+
+void ray_mlx_pixel_put(t_game *game, int x, int y, int color);
+void draw_wall_column(t_game *game, int x);
+void cast_single_ray(t_game *game, double camera_x);
 
 #endif

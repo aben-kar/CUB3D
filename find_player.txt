@@ -1,85 +1,185 @@
-int key_press(int keycode, t_game *game)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    find_player.txt                                    :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/10/06 18:08:28 by acben-ka          #+#    #+#              #
+#    Updated: 2025/10/06 22:49:21 by acben-ka         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#include "../cub3d.h"
+
+void raycast_3d(t_game *game)
 {
-    if (keycode == 65307) // ESC key
-    {
-        mlx_destroy_window(game->mlx, game->mlx_win);
-        exit(0);
-    }
-    if (keycode == 119 || keycode == 65362) // W key ola UP arrow
-    {
-        // Move forward
-        double new_x = game->player->x + game->player->dir_x * game->player->move_speed;
-        double new_y = game->player->y + game->player->dir_y * game->player->move_speed;
-        
-        // Check collision m3a walls
-        if (game->data->map[(int)new_y][(int)new_x] != '1')
-        {
-            game->player->x = new_x;
-            game->player->y = new_y;
-        }
-    }
-    if (keycode == 115 || keycode == 65364) // S key ola DOWN arrow
-    {
-        // Move backward
-        double new_x = game->player->x - game->player->dir_x * game->player->move_speed;
-        double new_y = game->player->y - game->player->dir_y * game->player->move_speed;
-        
-        if (game->data->map[(int)new_y][(int)new_x] != '1')
-        {
-            game->player->x = new_x;
-            game->player->y = new_y;
-        }
-    }
-    if (keycode == 97 || keycode == 65361) // A key ola LEFT arrow
-    {
-        // Rotate left
-        double old_dir_x = game->player->dir_x;
-        game->player->dir_x = game->player->dir_x * cos(game->player->rot_speed) - game->player->dir_y * sin(game->player->rot_speed);
-        game->player->dir_y = old_dir_x * sin(game->player->rot_speed) + game->player->dir_y * cos(game->player->rot_speed);
-        
-        double old_plane_x = game->player->plane_x;
-        game->player->plane_x = game->player->plane_x * cos(game->player->rot_speed) - game->player->plane_y * sin(game->player->rot_speed);
-        game->player->plane_y = old_plane_x * sin(game->player->rot_speed) + game->player->plane_y * cos(game->player->rot_speed);
-    }
-    if (keycode == 100 || keycode == 65363) // D key ola RIGHT arrow
-    {
-        // Rotate right
-        double old_dir_x = game->player->dir_x;
-        game->player->dir_x = game->player->dir_x * cos(-game->player->rot_speed) - game->player->dir_y * sin(-game->player->rot_speed);
-        game->player->dir_y = old_dir_x * sin(-game->player->rot_speed) + game->player->dir_y * cos(-game->player->rot_speed);
-        
-        double old_plane_x = game->player->plane_x;
-        game->player->plane_x = game->player->plane_x * cos(-game->player->rot_speed) - game->player->plane_y * sin(-game->player->rot_speed);
-        game->player->plane_y = old_plane_x * sin(-game->player->rot_speed) + game->player->plane_y * cos(-game->player->rot_speed);
-    }
+    int x;
+
+    x = 0;
     
-    // Redraw la scene ba3d kol movement
-    mlx_clear_window(game->mlx, game->mlx_win);
-    draw_mini_map(game);
-    
-    return (0);
+
+    // function li singl ray.
+     // 
+    while (x < SCREEN_WIDTH)
+    {
+        // ==================== STEP 1: Calculate Ray Direction ====================
+        double camera_x = 2 * x / (double)SCREEN_WIDTH - 1;
+        
+        game->ray->ray_dir_x = game->player->dir_x + game->player->plane_x * camera_x;
+        game->ray->ray_dir_y = game->player->dir_y + game->player->plane_y * camera_x;
+        
+        // ==================== STEP 2: Which box of the map we're in ====================
+        game->ray->ray_map_x = (int)game->player->x;
+        game->ray->ray_map_y = (int)game->player->y;
+        
+        // ==================== STEP 3: Calculate Delta Distance ====================
+        // Chhal khass nmchiw f ray bash n9et3o grid line jdida?
+        game->ray->delta_dist_x = fabs(1 / game->ray->ray_dir_x);
+        game->ray->delta_dist_y = fabs(1 / game->ray->ray_dir_y);
+        
+        // ==================== STEP 4: Calculate Step Direction & Initial Side Distance ====================
+        // F anahi direction ghadi nmchiw? w chhal ba9i lina?
+        
+        if (game->ray->ray_dir_x < 0)
+        {
+            game->ray->step_x = -1;  // Nemchiw l ysar
+            game->ray->side_dist_x = (game->player->x - game->ray->ray_map_x) * game->ray->delta_dist_x;
+        }
+        else
+        {
+            game->ray->step_x = 1;   // Nemchiw l ymin
+            game->ray->side_dist_x = (game->ray->ray_map_x + 1.0 - game->player->x) * game->ray->delta_dist_x;
+        }
+        
+        if (game->ray->ray_dir_y < 0)
+        {
+            game->ray->step_y = -1;  // Nemchiw l fo9
+            game->ray->side_dist_y = (game->player->y - game->ray->ray_map_y) * game->ray->delta_dist_y;
+        }
+        else
+        {
+            game->ray->step_y = 1;   // Nemchiw l te7t
+            game->ray->side_dist_y = (game->ray->ray_map_y + 1.0 - game->player->y) * game->ray->delta_dist_y;
+        }
+        
+        // ==================== STEP 5: Perform DDA (Ray Marching) ====================
+        // Nmchiw step by step hta nderbo f wall
+        game->ray->hit = 0;
+        
+        while (game->ray->hit == 0)
+        {
+            // Nchofo: X wla Y 9rib?
+            if (game->ray->side_dist_x < game->ray->side_dist_y)
+            {
+                // X 9rib, nemchiw f direction X
+                game->ray->side_dist_x += game->ray->delta_dist_x;
+                game->ray->ray_map_x += game->ray->step_x;
+                game->ray->side = 0;  // Vertical wall
+            }
+            else
+            {
+                // Y 9rib, nemchiw f direction Y
+                game->ray->side_dist_y += game->ray->delta_dist_y;
+                game->ray->ray_map_y += game->ray->step_y;
+                game->ray->side = 1;  // Horizontal wall
+            }
+            
+            // Nchofo: wach drebna f wall?
+            if (game->data->map[game->ray->ray_map_y][game->ray->ray_map_x] == '1')
+                game->ray->hit = 1;
+        }
+        
+        // ==================== STEP 6: Calculate Perpendicular Wall Distance ====================
+        // Bach maneb9awch n3endo fisheye effect
+        if (game->ray->side == 0)
+        {
+            // Vertical wall
+            game->ray->perp_wall_dist = (game->ray->ray_map_x - game->player->x + 
+                                        (1 - game->ray->step_x) / 2) / game->ray->ray_dir_x;
+        }
+        else
+        {
+            // Horizontal wall
+            game->ray->perp_wall_dist = (game->ray->ray_map_y - game->player->y + 
+                                        (1 - game->ray->step_y) / 2) / game->ray->ray_dir_y;
+        }
+        
+        // ==================== STEP 7: Calculate Wall Height on Screen ====================
+        // Chhal ghadi tkoun wall kbira f screen?
+        game->ray->line_height = (int)(SCREEN_HEIGHT / game->ray->perp_wall_dist);
+        
+        // ==================== STEP 8: Calculate Drawing Start & End Points ====================
+        // Fin ghadi nebdaw w nsaliw nresmo wall?
+        game->ray->draw_start = -game->ray->line_height / 2 + SCREEN_HEIGHT / 2;
+        if (game->ray->draw_start < 0)
+            game->ray->draw_start = 0;
+            
+        game->ray->draw_end = game->ray->line_height / 2 + SCREEN_HEIGHT / 2;
+        if (game->ray->draw_end >= SCREEN_HEIGHT)
+            game->ray->draw_end = SCREEN_HEIGHT - 1;
+        
+        // ==================== STEP 9: Draw the Wall Column ====================
+        draw_wall_column(game, x);
+        
+        x++;
+    }
 }
 
-
-
-
-
-
-///// frame rate independent movement
-
-// F main loop
-double oldTime = 0;
-double currentTime = 0;
-
-while (game_running)
+// ==================== Helper Function: Put Pixel ====================
+void ray_mlx_pixel_put(t_game *game, int x, int y, int color)
 {
-    currentTime = get_current_time();  // Fonction li traja3 l time
-    double frameTime = (currentTime - oldTime) / 1000.0;  // Convertir l seconds
-    oldTime = currentTime;
+    char *dst;
+
+    // Verifi belli ma khrejnach men screen
+    if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
+        return;
     
-    double moveSpeed = 5.0 * frameTime;      // 5.0 = vitesse de base
-    double rotSpeed = 3.0 * frameTime;       // 3.0 = rotation de base
+    // N7esbo position f memory buffer
+    dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
+
+// ==================== Draw Wall Column Function ====================
+void draw_wall_column(t_game *game, int x)
+{
+    int y;
+    int color;
     
-    // Appliquer l mouvement
-    handle_movement(moveSpeed, rotSpeed);
+    // ========== 1. Draw Ceiling (fo9 wall) ==========
+    y = 0;
+    while (y < game->ray->draw_start)
+    {
+        my_mlx_pixel_put(game, x, y, game->data->ceiling_color);
+        y++;
+    }
+    
+    // ========== 2. Draw Wall ==========
+    // N7esbo color dyal wall (vertical wla horizontal)
+    if (game->ray->side == 0)
+    {
+        // Vertical wall - loun fa7
+        color = 0x00FF0000;  // Red (example)
+    }
+    else
+    {
+        // Horizontal wall - loun gham9
+        color = 0x00AA0000;  // Dark red (example)
+    }
+    
+    // Nresmo l wall column
+    y = game->ray->draw_start;
+    while (y <= game->ray->draw_end)
+    {
+        my_mlx_pixel_put(game, x, y, color);
+        y++;
+    }
+    
+    // ========== 3. Draw Floor (te7t wall) ==========
+    y = game->ray->draw_end + 1;
+    while (y < SCREEN_HEIGHT)
+    {
+        my_mlx_pixel_put(game, x, y, game->data->floor_color);
+        y++;
+    }
 }

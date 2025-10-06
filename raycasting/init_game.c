@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:05:00 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/04 18:06:17 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/05 16:18:21 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void init_mlx_game(t_game *game)
         printf("Error\nFailed to get image data address\n");
         exit(1);
     }
-    mlx_hook(game->mlx_win, 2, 1L<<0, key_press, game);    // key press
+    mlx_hook(game->mlx_win, 2, 1L<<0, key_press, game);
     mlx_hook(game->mlx_win, 3, 1L<<1, key_release, game); 
     mlx_loop_hook(game->mlx, render_frame, game);
-    mlx_hook(game->mlx_win, 17, 1L<<17, close_window, game); // close (X)
+    mlx_hook(game->mlx_win, 17, 1L<<17, close_window, game);
     draw_mini_map(game);
     mlx_loop(game->mlx);
 }

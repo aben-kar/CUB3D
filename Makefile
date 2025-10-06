@@ -22,6 +22,8 @@ SRC = main.c \
 	$(RAYCASTING_DIR)/player_rotation.c \
 	$(RAYCASTING_DIR)/player_movment.c \
 	$(RAYCASTING_DIR)/init_player.c \
+	$(RAYCASTING_DIR)/raycasting.c \
+	$(RAYCASTING_DIR)/raycasting_utils.c \
 	libs/get_next_line/get_next_line_bonus.c \
 	libs/get_next_line/get_next_line_utils_bonus.c
 OBJ = $(SRC:.c=.o)

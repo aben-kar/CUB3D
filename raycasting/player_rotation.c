@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:11:02 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/03 16:52:09 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/06 16:50:11 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void rotate_player_left(t_player *player)
     player->angle -= speed_rotation;
     player->dir_x = cos(player->angle);
     player->dir_y = sin(player->angle);
+
+    player->plane_x = -player->dir_y * FOV;
+    player->plane_y = player->dir_x * FOV;
 }
 
 void rotate_player_right(t_player *player)
@@ -28,4 +31,7 @@ void rotate_player_right(t_player *player)
     player->angle += speed_rotation;
     player->dir_x = cos(player->angle);
     player->dir_y = sin(player->angle);
+
+    player->plane_x = -player->dir_y * FOV;
+    player->plane_y = player->dir_x * FOV;
 }

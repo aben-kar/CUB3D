@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:19 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/04 18:11:45 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:12:08 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int main(int ac, char **av)
 {
-    t_data data;
-    t_game game;
-    ft_bzero(&game, sizeof(t_game));
+    t_data data = {0};
+    t_player player = {0};
+    t_ray ray = {0};
+    t_game game = {0};
+    
     if (ac != 2)
     {
         printf("Error\n  Usage: ./cub3d <map.cub>\n");
@@ -38,16 +40,8 @@ int main(int ac, char **av)
     parsing_cub(&data, fd);
     close(fd);
     game.data = &data;
-    /* Ensure player structure is allocated before initializing the game.
-       Use malloc + ft_bzero instead of calloc. */
-    game.player = (t_player *)malloc(sizeof(t_player));
-    if (!game.player)
-    {
-        printf("Error\n  Memory allocation failed for player\n");
-        return 1;
-    }
-    ft_bzero(game.player, sizeof(t_player));
+    game.player = &player;
+    game.ray = &ray;
     init_game(&game);
-    /* Note: program exits inside MLX loop; free allocated player on return if needed. */
     return 0;
 }

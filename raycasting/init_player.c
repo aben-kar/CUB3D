@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:23:04 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/04 18:51:54 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/06 23:32:05 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,15 @@ int render_frame(t_game *game)
     if (game->rot_right)
         movment_player(KEY_RIGHT, game);
 
+    game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+    game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel,
+                                    &game->line_length, &game->endian);
+    raycast_3d(game);
     draw_mini_map(game);
+    mlx_put_image_to_window(game->mlx, game->mlx_win, game->img, 0, 0);
+    
+    // 4. Destroy image (bach maneb9awch n leak memory)
+    mlx_destroy_image(game->mlx, game->img);
 
     return 0;
 }
@@ -113,6 +121,9 @@ void init_player(t_game *game)
 
     game->player->dir_x = cos(game->player->angle);
     game->player->dir_y = sin(game->player->angle);
-    game->player->move_speed = 0.019;
-    game->player->rot_speed = 0.01; 
+    game->player->plane_x = -game->player->dir_y * FOV;
+    game->player->plane_y = game->player->dir_x * FOV;
+    // TO
+    game->player->move_speed = 0.1;
+    game->player->rot_speed = 0.04; 
 }
