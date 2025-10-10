@@ -14,36 +14,36 @@
 
 int is_map_line(char *line)
 {
-    int i = 0;
+	int i = 0;
 
-    while (line[i] && line[i] == ' ')
-        i++;
+	while (line[i] && line[i] == ' ')
+		i++;
 
-    if (!line[i] || line[i] == '\n')
-        return 0;
+	if (!line[i] || line[i] == '\n')
+		return 0;
 
-    while (line[i])
-    {
-        if (line[i] == '\n')
-            break;
-        if (!ft_strchr("01NSEW ", line[i]))
-            return 0;
-        i++;
-    }
-    return 1;
+	while (line[i])
+	{
+		if (line[i] == '\n')
+			break;
+		if (!ft_strchr("01NSEW ", line[i]))
+			return 0;
+		i++;
+	}
+	return 1;
 }
 
 static char *skip_empty_lines(int fd)
 {
-    char *line;
+	char *line;
 
-    line = get_next_line(fd);
-    while (line && line[0] == '\n')
-    {
-        free(line);
-        line = get_next_line(fd);
-    }
-    return (line);
+	line = get_next_line(fd);
+	while (line && line[0] == '\n')
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (line);
 }
 
 // void free_map(t_data *data)
@@ -61,49 +61,49 @@ static char *skip_empty_lines(int fd)
 //     data->map = NULL;
 // }
 
-char *map(char *map_joined, char *line)
+char *map(char *map_joined, char *line, t_gc **gc)
 {
-    int i = 0;
-    char *tmp;
-    if (!is_map_line(line))
-    {
-        free(line);
-        free(map_joined);
-        print_error_and_exit("Invalid map line");
-    }
-    while (line[i])
-    {
-        if (line[i] == ' ')
-            line[i] = '1';
-        i++;
-    }
-    tmp = map_joined;
-    map_joined = ft_strjoin(map_joined, line);
-    free(tmp);
-    return (map_joined);
+	int i = 0;
+	char *tmp;
+	if (!is_map_line(line))
+	{
+		free(line);
+		free(map_joined);
+		print_error_and_exit("Invalid map line");
+	}
+	while (line[i])
+	{
+		if (line[i] == ' ')
+			line[i] = '1';
+		i++;
+	}
+	tmp = map_joined;
+	map_joined = ft_strjoin_gc(map_joined, line, gc);
+	free(tmp);
+	return (map_joined);
 }
 
-void parse_map(t_data *data, int fd)
+void parse_map(t_data *data, int fd, t_gc **gc)
 {
-    char *line;
-    char *map_joined;
+	char *line;
+	char *map_joined;
 
-    map_joined = NULL;
-    line = skip_empty_lines(fd);
-    while (line)
-    {
-        if (line[0] == '\n')
-        {
-            free(line);
-            free(map_joined);
-            print_error_and_exit("Empty line found inside the map");
-        }
-        map_joined = map(map_joined, line);
-        free(line);
-        line = get_next_line(fd);
-    }
-    data->map = ft_split(map_joined, '\n');
-    if (!data->map)
-        print_error_and_exit("Memory allocation error in parse_map");
-    free(map_joined);
+	map_joined = NULL;
+	line = skip_empty_lines(fd);
+	while (line)
+	{
+		if (line[0] == '\n')
+		{
+			free(line);
+			free(map_joined);
+			print_error_and_exit("Empty line found inside the map");
+		}
+		map_joined = map(map_joined, line, gc);
+		free(line);
+		line = get_next_line(fd);
+	}
+	data->map = ft_split_gc(map_joined, '\n', gc);
+	if (!data->map)
+		print_error_and_exit("Memory allocation error in parse_map");
+	free(map_joined);
 }

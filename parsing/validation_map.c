@@ -12,7 +12,7 @@
 
 #include "../cub3d.h"
 
-char **map_copier(t_data *data)
+char **map_copier(t_data *data, t_gc **gc)
 {
     char **copier_line;
     int line = 0;
@@ -27,7 +27,8 @@ char **map_copier(t_data *data)
         line++;
     }
 
-    copier_line = (char **)malloc((line + 1) * sizeof(char *));
+    // copier_line = (char **)malloc((line + 1) * sizeof(char *));
+    copier_line = gc_alloc((line + 1) * sizeof(char *), gc);
     if (!copier_line)
         return NULL;
 
@@ -56,10 +57,10 @@ char **map_copier(t_data *data)
     return (copier_line);
 }
 
-void is_map_valid(t_data *data)
+void is_map_valid(t_data *data, t_gc **gc)
 {
     if (!data->map || !data->map[0])
         print_error_and_exit("Map is empty");
-    char **copier_map = map_copier(data);
+    char **copier_map = map_copier(data, gc);
     is_map_closed(copier_map);
 }

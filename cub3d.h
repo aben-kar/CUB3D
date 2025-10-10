@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include "garbage_collector/gc.h"
 #include "libs/libft/libft.h"
 #include "libs/get_next_line/get_next_line_bonus.h"
 
@@ -126,16 +127,16 @@ typedef struct s_data
 
 
 // Function parsing
-void parsing_cub(t_data *data, int fd);
-void parse_texture_and_color(t_data *data, int fd);
-void parse_config_file(t_data *data, char *line);
+void parsing_cub(t_data *data, int fd, t_gc **gc);
+void parse_texture_and_color(t_data *data, int fd, t_gc **gc);
+void parse_config_file(t_data *data, char *line, t_gc **gc);
 int all_config_parsed(t_data *data);
 int extract_rgb_color(char *line);
 void free_split(char **split);
 void print_error_and_exit(const char *msg);
-void parse_map(t_data *data, int fd);
+void parse_map(t_data *data, int fd, t_gc **gc);
 int is_map_line(char *line);
-void is_map_valid(t_data *data);
+void is_map_valid(t_data *data, t_gc **gc);
 void check_multiple_player(t_data *data);
 void is_map_closed(char **map);
 bool is_player(char position);

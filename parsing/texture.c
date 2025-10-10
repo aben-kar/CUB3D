@@ -25,7 +25,7 @@ int all_config_parsed(t_data *data)
             data->floor_color != 0 && data->ceiling_color != 0);
 }
 
-void parse_texture(t_data *data, char **str)
+void parse_texture(t_data *data, char **str, t_gc **gc)
 {
     if (!str || !*str)
         return;
@@ -33,25 +33,25 @@ void parse_texture(t_data *data, char **str)
     {
         if (data->path_no)
             print_error_and_exit("Duplicate NO texture");
-        data->path_no = ft_strdup(str[1]);
+        data->path_no = ft_strdup_gc(str[1], gc);
     }
     else if (ft_strncmp(str[0], "SO", 3) == 0 && str[1] && !str[2])
     {
         if (data->path_so)
             print_error_and_exit("Duplicate SO texture");
-        data->path_so = ft_strdup(str[1]);
+        data->path_so = ft_strdup_gc(str[1], gc);
     }
     else if (ft_strncmp(str[0], "WE", 3) == 0 && str[1] && !str[2])
     {
         if (data->path_we)
             print_error_and_exit("Duplicate WE texture");
-        data->path_we = ft_strdup(str[1]);
+        data->path_we = ft_strdup_gc(str[1], gc);
     }
     else if (ft_strncmp(str[0], "EA", 3) == 0 && str[1] && !str[2])
     {
         if (data->path_ea)
             print_error_and_exit("Duplicate EA texture");
-        data->path_ea = ft_strdup(str[1]);
+        data->path_ea = ft_strdup_gc(str[1], gc);
     }
 }
 
@@ -74,7 +74,7 @@ void parse_color(t_data *data, char **str)
     }
 }
 
-void parse_config_file(t_data *data, char *line)
+void parse_config_file(t_data *data, char *line, t_gc **gc)
 {
     if (!line || !line[0])
         return;
@@ -87,7 +87,7 @@ void parse_config_file(t_data *data, char *line)
         free_split(split);
         return;
     }
-    parse_texture(data, split);
+    parse_texture(data, split, gc);
     parse_color(data, split);
 
     if (!all_config_parsed(data) &&
@@ -104,7 +104,7 @@ void parse_config_file(t_data *data, char *line)
     free_split(split);
 }
 
-void parse_texture_and_color(t_data *data, int fd)
+void parse_texture_and_color(t_data *data, int fd, t_gc **gc)
 {
     char *line;
     char *cleand;
@@ -119,7 +119,7 @@ void parse_texture_and_color(t_data *data, int fd)
             continue;
         }
         cleand = ft_strtrim(line, "\n");
-        parse_config_file(data, cleand);
+        parse_config_file(data, cleand, gc);
         if (all_config_parsed(data))
         {
             free(cleand);

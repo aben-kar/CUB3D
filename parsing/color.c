@@ -29,7 +29,7 @@ void check_is_rgb_digit(char **rgb_values)
             if (!ft_isdigit(rgb_values[i][j]))
             {
                 print_error_and_exit("RGB values must contain only digits");
-                free_split(rgb_values);
+                // free_split(rgb_values);
             }
             j++;
         }
