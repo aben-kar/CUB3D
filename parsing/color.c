@@ -44,7 +44,18 @@ int extract_rgb_color(char *line)
     char **rgb_values;
     int r, g, b;
     int color;
+    int count_virgule = 0;
     char *cleand;
+
+    int i = 0;
+    while (line[i])
+    {
+        if (line[i] == ',')
+            count_virgule++;
+        i++;
+    }
+    if (count_virgule > 2)
+        print_error_and_exit("Invalid color format");
 
     cleand = ft_strtrim(line, "\n");
     rgb_values = ft_split(cleand, ',');
