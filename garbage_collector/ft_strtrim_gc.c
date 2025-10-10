@@ -15,7 +15,7 @@ char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc)
 		i++;
 	if (i == (int)ft_strlen(s1))
 	{
-		dest = gc_alloc(1, sizeof(char), gc);
+		dest = gc_alloc(1, gc);
 		if (!dest)
 			return (NULL);
 		return (dest);
@@ -23,7 +23,7 @@ char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc)
 	j = ft_strlen(s1) - 1;
 	while (j >= 0 && ft_strchr(set, s1[j]))
 		j--;
-	dest = gc_alloc((j - i + 2), sizeof(char), gc);
+	dest = gc_alloc((j - i + 2), gc);
 	if (!dest)
 		return (NULL);
 	return (ft_memcpy(dest, s1 + i, j - i + 1));

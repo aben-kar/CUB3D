@@ -102,7 +102,7 @@ void parse_map(t_data *data, int fd, t_gc **gc)
 		free(line);
 		line = get_next_line(fd);
 	}
-	data->map = ft_split_gc(map_joined, '\n', gc);
+	data->map = ft_split_gc(map_joined, "\n", gc);
 	if (!data->map)
 		print_error_and_exit("Memory allocation error in parse_map");
 	free(map_joined);

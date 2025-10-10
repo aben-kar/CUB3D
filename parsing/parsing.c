@@ -43,5 +43,5 @@ void parsing_cub(t_data *data, int fd, t_gc **gc)
     init_data(data);
     parse_texture_and_color(data, fd, gc);
     parse_map(data, fd, gc);
-    is_map_valid(data);
+    is_map_valid(data, gc);
 }

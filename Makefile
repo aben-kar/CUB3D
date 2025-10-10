@@ -9,6 +9,7 @@ MLX_DIR = libs/minilibx-linux
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 PARSER_DIR = parsing
 RAYCASTING_DIR = raycasting
+GC_DIR = garbage_collector
 
 SRC = main.c \
 	$(PARSER_DIR)/parsing.c \
@@ -24,11 +25,21 @@ SRC = main.c \
 	$(RAYCASTING_DIR)/init_player.c \
 	$(RAYCASTING_DIR)/raycasting.c \
 	$(RAYCASTING_DIR)/raycasting_utils.c \
+	$(GC_DIR)/gc.c \
+	$(GC_DIR)/ft_calloc_gc.c \
+	$(GC_DIR)/ft_itoa_gc.c \
+	$(GC_DIR)/ft_split_gc.c \
+	$(GC_DIR)/ft_strdup_gc.c \
+	$(GC_DIR)/ft_strndup.c \
+	$(GC_DIR)/ft_strjoin_char_gc.c \
+	$(GC_DIR)/ft_strjoin_gc.c \
+	$(GC_DIR)/ft_strtrim_gc.c \
+	$(GC_DIR)/ft_substr_gc.c \
 	libs/get_next_line/get_next_line_bonus.c \
 	libs/get_next_line/get_next_line_utils_bonus.c
 OBJ = $(SRC:.c=.o)
 
-INCLUDES = -I. -I$(PARSER_DIR) -I$(RAYCASTING_DIR)
+INCLUDES = -I. -I$(PARSER_DIR) -I$(RAYCASTING_DIR) -I$(GC_DIR)
 
 HEADER = cub3d.h
 

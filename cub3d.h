@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB_H
-#define CUB_H
+#ifndef CUB3D_H
+#define CUB3D_H
 
 #include "libs/minilibx-linux/mlx.h"
 # include <X11/keysym.h>

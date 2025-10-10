@@ -124,6 +124,6 @@ void init_player(t_game *game)
     game->player->plane_x = -game->player->dir_y * FOV;
     game->player->plane_y = game->player->dir_x * FOV;
     // TO
-    game->player->move_speed = 0.1;
-    game->player->rot_speed = 0.03; 
+    game->player->move_speed = 0.05;
+    game->player->rot_speed = 0.02; 
 }

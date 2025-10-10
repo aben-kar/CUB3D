@@ -24,4 +24,18 @@ typedef struct s_gc
 void	*gc_alloc(size_t size, t_gc **gc);
 void	gc_free_all(t_gc **gc);
 
+// Prototypes
+
+void	*ft_calloc_gc(size_t nelem, size_t size, t_gc **gc);
+char	*ft_itoa_gc(int n, t_gc **gc);
+char	**ft_split_gc(char const *s, char *c, t_gc **gc);
+char	*ft_strdup_gc(const char *s1, t_gc **gc);
+char	*ft_strjoin_char_gc(const char *s, char c, t_gc **gc);
+char	*ft_strjoin_gc(const char *s1, const char *s2, t_gc **gc);
+char	*my_strjoin(char *s1, char *s2, t_gc **gc);
+char	*ft_strndup(const char *s, size_t n, t_gc **gc);
+char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc);
+char	*ft_substr_gc(const char *s, unsigned int start, size_t len, t_gc **gc);
+
+
 #endif
