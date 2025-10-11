@@ -12,27 +12,27 @@
 
 #include "../cub3d.h"
 
-void free_split(char **split)
-{
-    int i = 0;
+// void free_split(char **split)
+// {
+//     int i = 0;
 
-    if (!split)
-        return;
+//     if (!split)
+//         return;
 
-    while (split[i])
-    {
-        free(split[i]);
-        i++;
-    }
-    free(split);
-}
+//     while (split[i])
+//     {
+//         free(split[i]);
+//         i++;
+//     }
+//     free(split);
+// }
 
 void init_data(t_data *data)
 {
-    data->path_no = NULL; // TODO
-    data->path_so = NULL; // TODO
-    data->path_we = NULL; // TODO
-    data->path_ea = NULL; // TODO
+    data->path_no = NULL;
+    data->path_so = NULL;
+    data->path_we = NULL;
+    data->path_ea = NULL;
     data->floor_color = 0;
     data->ceiling_color = 0;
     data->map = NULL;

@@ -55,7 +55,7 @@ void parse_texture(t_data *data, char **str, t_gc **gc)
     }
 }
 
-void parse_color(t_data *data, char **str)
+void parse_color(t_data *data, char **str, t_gc **gc)
 {
     if (!str || !*str)
         return;
@@ -64,13 +64,13 @@ void parse_color(t_data *data, char **str)
     {
         if (data->floor_color != 0)
             print_error_and_exit("Duplicate F color");
-        data->floor_color = extract_rgb_color(str[1]);
+        data->floor_color = extract_rgb_color(str[1], gc);
     }
     else if (ft_strncmp(str[0], "C", 2) == 0 && str[1] && !str[2])
     {
         if (data->ceiling_color != 0)
             print_error_and_exit("Duplicate C color");
-        data->ceiling_color = extract_rgb_color(str[1]);
+        data->ceiling_color = extract_rgb_color(str[1], gc);
     }
 }
 
@@ -81,14 +81,14 @@ void parse_config_file(t_data *data, char *line, t_gc **gc)
     
     char **split;
 
-    split = ft_split(line, ' ');
+    split = ft_split_gc(line, " ", gc);
     if (!split || !split[0])
     {
-        free_split(split);
+        // free_split(split);
         return;
     }
     parse_texture(data, split, gc);
-    parse_color(data, split);
+    parse_color(data, split, gc);
 
     if (!all_config_parsed(data) &&
         ft_strncmp(split[0], "NO", 3) != 0 &&
@@ -98,10 +98,10 @@ void parse_config_file(t_data *data, char *line, t_gc **gc)
         ft_strncmp(split[0], "F", 2) != 0 &&
         ft_strncmp(split[0], "C", 2) != 0)
     {
-        free_split(split);
+        // free_split(split);
         print_error_and_exit("Invalid config line");
     }
-    free_split(split);
+    // free_split(split);
 }
 
 void parse_texture_and_color(t_data *data, int fd, t_gc **gc)
@@ -118,11 +118,11 @@ void parse_texture_and_color(t_data *data, int fd, t_gc **gc)
             line = get_next_line(fd);
             continue;
         }
-        cleand = ft_strtrim(line, "\n");
+        cleand = ft_strtrim_gc(line, "\n", gc);
         parse_config_file(data, cleand, gc);
         if (all_config_parsed(data))
         {
-            free(cleand);
+            // free(cleand);
             break;
         }
         free(line);

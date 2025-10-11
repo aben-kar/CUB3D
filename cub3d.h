@@ -146,7 +146,7 @@ void parsing_cub(t_data *data, int fd, t_gc **gc);
 void parse_texture_and_color(t_data *data, int fd, t_gc **gc);
 void parse_config_file(t_data *data, char *line, t_gc **gc);
 int all_config_parsed(t_data *data);
-int extract_rgb_color(char *line);
+int extract_rgb_color(char *line, t_gc **gc);
 void free_split(char **split);
 void print_error_and_exit(const char *msg);
 void parse_map(t_data *data, int fd, t_gc **gc);
