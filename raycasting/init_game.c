@@ -46,11 +46,13 @@ void init_mlx_game(t_game *game)
     mlx_loop_hook(game->mlx, render_frame, game);
     mlx_hook(game->mlx_win, 17, 1L<<17, close_window, game);
     draw_mini_map(game);
+    init_textures(game);
     mlx_loop(game->mlx);
 }
 
 void init_game(t_game *game)
 {
     init_player(game);
+    // init_textures(game);
     init_mlx_game(game);
 }

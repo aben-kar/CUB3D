@@ -87,6 +87,17 @@ typedef struct s_player {
     double angle;      // Angle dyal player
 } t_player;
 
+typedef struct s_texture
+{
+    void    *img;
+    char    *addr;
+    int     width;
+    int     height;
+    int     bpp;
+    int     line_len;
+    int     endian;
+}   t_texture;
+
 typedef struct s_game
 {
     void    *mlx;
@@ -110,6 +121,10 @@ typedef struct s_game
     t_data *data;
     t_player *player;
     t_ray *ray;
+    t_texture north;
+    t_texture south;
+    t_texture east;
+    t_texture west;
 }   t_game;
 
 
@@ -145,6 +160,7 @@ bool is_player(char position);
 void init_game(t_game *game);
 void draw_mini_map(t_game *game);
 void init_player(t_game *game);
+void    init_textures(t_game *game);
 int close_window(t_game *game);
 int key_press(int keycode, t_game *game);
 int render_frame(t_game *game);

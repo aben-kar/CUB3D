@@ -36,18 +36,16 @@ void raycast_3d(t_game *game)
     }
 }
 
-void ray_mlx_pixel_put(t_game *game, int x, int y, int color)
+int	get_tex_pixel_color(t_texture *tex, int x, int y)
 {
-    char *dst;
+	char	*pixel;
 
-    // Verifi belli ma khrejnach men screen
-    if (x < 0 || x >= SCREEN_WIDTH || y < 0 || y >= SCREEN_HEIGHT)
-        return;
-    
-    // N7esbo position f memory buffer
-    dst = game->addr + (y * game->line_length + x * (game->bits_per_pixel / 8));
-    *(unsigned int*)dst = color;
+	if (x < 0 || x >= tex->width || y < 0 || y >= tex->height)
+		return (0);
+	pixel = tex->addr + (y * tex->line_len + x * (tex->bpp / 8));
+	return (*(unsigned int *)pixel);
 }
+
 
 void draw_wall_column(t_game *game, int x)
 {
@@ -60,23 +58,56 @@ void draw_wall_column(t_game *game, int x)
         my_mlx_pixel_put(game, x, y, game->data->ceiling_color);
         y++;
     }
+
+    // WE COMMENT THE USED SHADE COLOR RAYCASTING INTO TEXTURE PIXEL CASTING :
     
-    if (game->ray->side == 0)
-    {
-        color = 0x00FF0000;
-    }
+    t_texture *tex;
+    int tex_x;
+    int tex_y;
+    double step;
+    double tex_pos;
+    double wall_x;
+
+    // Choose texture based on side and direction
+    if (game->ray->side == 0 && game->ray->ray_dir_x > 0)
+        tex = &game->west;
+    else if (game->ray->side == 0 && game->ray->ray_dir_x < 0)
+        tex = &game->east;
+    else if (game->ray->side == 1 && game->ray->ray_dir_y > 0)
+        tex = &game->north;
     else
-    {
-        color = 0x00AA0000;
-    }
-    
+        tex = &game->south;
+
+    // Exact hit point on the wall (for horizontal texture mapping)
+    if (game->ray->side == 0)
+        wall_x = game->player->y + game->ray->perp_wall_dist * game->ray->ray_dir_y;
+    else
+        wall_x = game->player->x + game->ray->perp_wall_dist * game->ray->ray_dir_x;
+    wall_x -= floor(wall_x);
+
+    // X coordinate on texture
+    tex_x = (int)(wall_x * tex->width);
+    if ((game->ray->side == 0 && game->ray->ray_dir_x > 0)
+        || (game->ray->side == 1 && game->ray->ray_dir_y < 0))
+        tex_x = tex->width - tex_x - 1;
+
+    // Vertical scaling (how texture lines stretch)
+    step = 1.0 * tex->height / game->ray->line_height;
+    tex_pos = (game->ray->draw_start - SCREEN_HEIGHT / 2 + game->ray->line_height / 2) * step;
+
+    // Draw texture on wall
     y = game->ray->draw_start;
     while (y <= game->ray->draw_end)
     {
+        tex_y = (int)tex_pos & (tex->height - 1);
+        tex_pos += step;
+        color = get_tex_pixel_color(tex, tex_x, tex_y);
         my_mlx_pixel_put(game, x, y, color);
         y++;
     }
-    
+
+    // TEXTURE CASTING DONE.
+
     y = game->ray->draw_end + 1;
     while (y < SCREEN_HEIGHT)
     {

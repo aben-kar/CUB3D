@@ -23,6 +23,7 @@ SRC = main.c \
 	$(RAYCASTING_DIR)/player_rotation.c \
 	$(RAYCASTING_DIR)/player_movment.c \
 	$(RAYCASTING_DIR)/init_player.c \
+	$(RAYCASTING_DIR)/init_textures.c \
 	$(RAYCASTING_DIR)/raycasting.c \
 	$(RAYCASTING_DIR)/raycasting_utils.c \
 	$(GC_DIR)/gc.c \
