@@ -96,49 +96,37 @@ void cast_single_ray(t_game *game, double camera_x)
     }
 }
 
-void    draw_gun(t_game *game)
+void draw_gun(t_game *game)
 {
 	t_texture *gun;
+	int gx, gy;
+	int color;
 	int start_x;
 	int start_y;
-	int gx;
-	int gy;
-	int color;
-    int	sx;
-	int	sy;
 
 	// choose gun texture
 	if (game->shooting)
-    {
-        gun = &game->gun_idle;
-    }
-    else
-    {
-        gun = &game->gun_fire;
-    }
-	
-    if (!gun || !gun->img || !gun->addr)
+		gun = &game->gun_fire;
+	else
+		gun = &game->gun_idle;
+
+	if (!gun || !gun->img || !gun->addr)
 		return;
 
-    int scaled_width = gun->width * GUN_SCALE;
-	int scaled_height = gun->height * GUN_SCALE;
-	// position: bottom-centered
-	start_x = (SCREEN_WIDTH / 2) - (scaled_width / 2);
-	start_y = SCREEN_HEIGHT - scaled_height;
-	if (start_x < 0) start_x = 0;
-	if (start_y < 0) start_y = 0;
+	// bottom-center position (no scaling)
+	start_x = (SCREEN_WIDTH / 2) - (gun->width / 2);
+	start_y = SCREEN_HEIGHT - gun->height;
 
+	// draw gun pixel by pixel
 	gy = 0;
 	while (gy < gun->height)
 	{
 		gx = 0;
 		while (gx < gun->width)
 		{
-            sx = gx / (double)GUN_SCALE;
-			sy = gy / (double)GUN_SCALE;
 			color = get_tex_pixel_color(gun, gx, gy);
-			// skip transparent pixels (use color key)
-			if ((color & 0x00FFFFFF) != (GUN_TRANSPARENT & 0x00FFFFFF))
+			// skip transparent pixels (black = transparent)
+			if ((color & 0x00FFFFFF) != 0x000000)
 				my_mlx_pixel_put(game, start_x + gx, start_y + gy, color);
 			gx++;
 		}
