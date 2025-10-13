@@ -1,7 +1,7 @@
-NO ./textures/BluegreyL.xpm
-SO ./textures/BluegreyL.xpm
-WE ./textures/BluegreyL.xpm
-EA ./textures/BluegreyL.xpm
+NO ./textures/wall1.xpm
+SO ./textures/wall1.xpm
+WE ./textures/wall2.xpm
+EA ./textures/wall2.xpm
 F 179,179,179
 C 107,107,107
 
