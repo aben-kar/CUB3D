@@ -53,6 +53,25 @@ int key_release(int key, t_game *game)
 
     return 0;
 }
+// GUN ANIMATION
+int	mouse_press(int button, int x, int y, t_game *game)
+{
+	(void)x;
+	(void)y;
+	if (button == 1) // Left click
+		game->shooting = 1;
+	return (0);
+}
+
+int	mouse_release(int button, int x, int y, t_game *game)
+{
+	(void)x;
+	(void)y;
+	if (button == 1)
+		game->shooting = 0;
+	return (0);
+}
+//
 
 int render_frame(t_game *game)
 {
@@ -76,6 +95,7 @@ int render_frame(t_game *game)
                                     &game->line_length, &game->endian);
     raycast_3d(game);
     draw_mini_map(game);
+    draw_gun(game);
     mlx_put_image_to_window(game->mlx, game->mlx_win, game->img, 0, 0);
     
     // 4. Destroy image (bach maneb9awch n leak memory)

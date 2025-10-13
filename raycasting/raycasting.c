@@ -34,6 +34,7 @@ void raycast_3d(t_game *game)
         draw_wall_column(game, x);
         x++;            
     }
+    draw_gun(game);
 }
 
 int	get_tex_pixel_color(t_texture *tex, int x, int y)

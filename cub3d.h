@@ -36,6 +36,9 @@
 #define KEY_LEFT 65361
 #define KEY_RIGHT 65363
 #define FOV 0.66
+// gun
+#define GUN_TRANSPARENT 0x000000
+#define GUN_SCALE 3
 
 typedef struct s_data t_data;
 
@@ -121,10 +124,15 @@ typedef struct s_game
     t_data *data;
     t_player *player;
     t_ray *ray;
-    t_texture north;
-    t_texture south;
-    t_texture east;
-    t_texture west;
+	// wall texture
+    t_texture	north;
+    t_texture	south;
+    t_texture	east;
+    t_texture	west;
+	// gun texture:
+    t_texture	gun_idle;
+    t_texture	gun_fire;
+    int			shooting;
 }   t_game;
 
 
@@ -169,6 +177,8 @@ void movment_player(int key, t_game *game);
 void rotate_player_right(t_player *player);
 void rotate_player_left(t_player *player);
 int key_release(int key, t_game *game);
+int	mouse_press(int button, int x, int y, t_game *game);
+int	mouse_release(int button, int x, int y, t_game *game);
 void raycast_3d(t_game *game);
 void my_mlx_pixel_put(t_game *game, int x, int y, int color);
 
@@ -176,5 +186,7 @@ void my_mlx_pixel_put(t_game *game, int x, int y, int color);
 void ray_mlx_pixel_put(t_game *game, int x, int y, int color);
 void draw_wall_column(t_game *game, int x);
 void cast_single_ray(t_game *game, double camera_x);
+int	get_tex_pixel_color(t_texture *tex, int x, int y);
+void	draw_gun(t_game *game);
 
 #endif

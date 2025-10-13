@@ -42,7 +42,9 @@ void init_mlx_game(t_game *game)
         exit(1);
     }
     mlx_hook(game->mlx_win, 2, 1L<<0, key_press, game);
-    mlx_hook(game->mlx_win, 3, 1L<<1, key_release, game); 
+    mlx_hook(game->mlx_win, 3, 1L<<1, key_release, game);
+    mlx_hook(game->mlx_win, 4, 1L << 2, mouse_press, game);
+    mlx_hook(game->mlx_win, 5, 1L << 3, mouse_release, game);
     mlx_loop_hook(game->mlx, render_frame, game);
     mlx_hook(game->mlx_win, 17, 1L<<17, close_window, game);
     draw_mini_map(game);
@@ -53,6 +55,5 @@ void init_mlx_game(t_game *game)
 void init_game(t_game *game)
 {
     init_player(game);
-    // init_textures(game);
     init_mlx_game(game);
 }
