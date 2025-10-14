@@ -26,5 +26,8 @@ char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc)
 	dest = gc_alloc((j - i + 2), gc);
 	if (!dest)
 		return (NULL);
-	return (ft_memcpy(dest, s1 + i, j - i + 1));
+	ft_memcpy(dest, s1 + i, j - i + 1);
+	dest[j - i + 1] = '\0';
+
+	return (dest);
 }

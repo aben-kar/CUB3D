@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_gc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:29:02 by zaakrab           #+#    #+#             */
-/*   Updated: 2025/06/30 17:29:04 by zaakrab          ###   ########.fr       */
+/*   Updated: 2025/10/14 20:24:39 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	count_word(char const *s1, char *sp)
 	i = 0;
 	count = 0;
 	check = 1;
-	while (s1[i])
+	while (s1[i] != '\0')
 	{
 		if (!is_separator(s1[i], sp) && check == 1)
 		{
@@ -95,6 +95,7 @@ char	**ft_split_gc(char const *s, char *c, t_gc **gc)
 			if (!prr[i[1]])
 				return (NULL);
 		}
+		// prr[len_word] = "\0";
 	}
 	prr[len_word] = NULL;
 	return (prr);

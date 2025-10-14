@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:23:04 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/06 23:32:05 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/14 20:05:45 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void init_player(t_game *game)
     if (player_char == 'N')
         game->player->angle = -M_PI / 2.0;
     else if (player_char == 'S')
-        game->player->angle = (3 * M_PI) / 2.0;
+        game->player->angle = M_PI / 2.0;
     else if (player_char == 'W')
         game->player->angle = M_PI;
     else if (player_char == 'E')

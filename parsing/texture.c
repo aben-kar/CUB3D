@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/29 17:43:10 by achraf           ###   ########.fr       */
+/*   Updated: 2025/10/14 20:10:55 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void parse_config_file(t_data *data, char *line, t_gc **gc)
     split = ft_split_gc(line, " ", gc);
     if (!split || !split[0])
     {
-        // free_split(split);
         return;
     }
     parse_texture(data, split, gc);
