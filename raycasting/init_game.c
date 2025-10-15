@@ -45,6 +45,7 @@ void init_mlx_game(t_game *game)
     mlx_hook(game->mlx_win, 3, 1L<<1, key_release, game);
     mlx_hook(game->mlx_win, 4, 1L << 2, mouse_press, game);
     mlx_hook(game->mlx_win, 5, 1L << 3, mouse_release, game);
+    mlx_hook(game->mlx_win, 6, 1L<<6, mouse_move, game);
     mlx_loop_hook(game->mlx, render_frame, game);
     mlx_hook(game->mlx_win, 17, 1L<<17, close_window, game);
     draw_mini_map(game);

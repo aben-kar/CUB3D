@@ -179,6 +179,7 @@ void rotate_player_left(t_player *player);
 int key_release(int key, t_game *game);
 int	mouse_press(int button, int x, int y, t_game *game);
 int	mouse_release(int button, int x, int y, t_game *game);
+int mouse_move(int x, int y, t_game *game);
 void raycast_3d(t_game *game);
 void my_mlx_pixel_put(t_game *game, int x, int y, int color);
 

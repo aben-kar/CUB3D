@@ -73,6 +73,36 @@ int	mouse_release(int button, int x, int y, t_game *game)
 }
 //
 
+int mouse_move(int x, int y, t_game *game)
+{
+    static int last_x = -1;
+    double rot_amount;
+
+    (void)y; // we only rotate horizontally
+
+    if (last_x == -1)
+        last_x = x;
+
+    int delta_x = x - last_x;
+    last_x = x;
+
+    // adjust sensitivity — 0.002 or 0.003 is smooth
+    rot_amount = delta_x * 0.002;
+
+    // rotate player
+    game->player->angle += rot_amount;
+    game->player->dir_x = cos(game->player->angle);
+    game->player->dir_y = sin(game->player->angle);
+    game->player->plane_x = -game->player->dir_y * FOV;
+    game->player->plane_y = game->player->dir_x * FOV;
+
+    // recenter mouse so it never hits edges
+    mlx_mouse_move(game->mlx, game->mlx_win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+    last_x = SCREEN_WIDTH / 2;
+
+    return (0);
+}
+
 int render_frame(t_game *game)
 {
     if (!game) return 0;
