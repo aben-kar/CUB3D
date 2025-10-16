@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin_char_gc.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 21:47:00 by zaakrab           #+#    #+#             */
-/*   Updated: 2025/05/28 21:47:01 by zaakrab          ###   ########.fr       */
+/*   Updated: 2025/10/16 12:31:32 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 char	*ft_strjoin_char_gc(const char *s, char c, t_gc **gc)
 {

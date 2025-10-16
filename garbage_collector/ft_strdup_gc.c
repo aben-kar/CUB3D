@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup_gc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:29:08 by zaakrab           #+#    #+#             */
-/*   Updated: 2025/06/30 17:29:09 by zaakrab          ###   ########.fr       */
+/*   Updated: 2025/10/16 12:31:29 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 char	*ft_strdup_gc(const char *s1, t_gc **gc)
 {

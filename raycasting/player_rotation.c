@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:11:02 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/06 16:50:11 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:30:40 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 void rotate_player_left(t_player *player)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validation_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/28 17:29:22 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/29 17:43:19 by achraf           ###   ########.fr       */
+/*   Updated: 2025/10/16 12:29:53 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 char **map_copier(t_data *data, t_gc **gc)
 {

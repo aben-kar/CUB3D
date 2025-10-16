@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 19:59:33 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/06 22:34:19 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:30:36 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 int is_valid_position(t_game *game, double x, double y)
 {

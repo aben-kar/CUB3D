@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 char	*ft_strjoin_gc(const char *s1, const char *s2, t_gc **gc)
 {

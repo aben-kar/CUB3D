@@ -1,4 +1,4 @@
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc)
 {

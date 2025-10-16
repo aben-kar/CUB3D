@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:05:00 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/05 16:18:21 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:30:04 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 void init_mlx_game(t_game *game)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 void	*ft_calloc_gc(size_t nelem, size_t size, t_gc **gc)
 {

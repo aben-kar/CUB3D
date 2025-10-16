@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/06 22:46:15 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/06 23:48:42 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:30:43 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 void init_ray(t_game *game, double camera_x)
 {

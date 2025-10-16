@@ -2,7 +2,9 @@ NO ./textures/Texlibironcross1c.xpm
 SO ./textures/Texlibironcross1c.xpm
 WE ./textures/Texlibeagle2h.xpm
 EA ./textures/Texlibeagle2h.xpm
-F 179,179,179
+
+
+F 179,179,179  
 C 107,107,107
 
         1111111111111111111111111

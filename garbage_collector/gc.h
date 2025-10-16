@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   gc.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:48:20 by zaakrab           #+#    #+#             */
-/*   Updated: 2025/05/24 20:48:21 by zaakrab          ###   ########.fr       */
+/*   Updated: 2025/10/16 12:29:22 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GC_H
 # define GC_H
 
-# include "../cub3d.h"
+# include "../cub3D.h"
 
 typedef struct s_gc
 {

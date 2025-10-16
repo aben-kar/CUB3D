@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:29:02 by zaakrab           #+#    #+#             */
-/*   Updated: 2025/10/14 20:24:39 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:31:25 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 int	is_separator(char c, char *separators)
 {

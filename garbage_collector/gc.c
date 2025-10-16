@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gc.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:28:12 by zaakrab           #+#    #+#             */
-/*   Updated: 2025/06/30 17:28:13 by zaakrab          ###   ########.fr       */
+/*   Updated: 2025/10/16 12:31:57 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 void	*gc_alloc(size_t size, t_gc **gc)
 {

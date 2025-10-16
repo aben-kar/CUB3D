@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   color.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:49:10 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/29 17:57:00 by achraf           ###   ########.fr       */
+/*   Updated: 2025/10/16 12:34:28 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 void check_is_rgb_digit(char **rgb_values)
 {
@@ -37,6 +37,8 @@ void check_is_rgb_digit(char **rgb_values)
     }
 }
 
+
+
 int extract_rgb_color(char *line, t_gc **gc)
 {
     if (!line || !line[0])
@@ -59,12 +61,10 @@ int extract_rgb_color(char *line, t_gc **gc)
 
     cleand = ft_strtrim_gc(line, "\n", gc);
     rgb_values = ft_split_gc(cleand, ",", gc);
-    // free(cleand);
     
     if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3] != NULL)
     {
         print_error_and_exit("Invalid color format");
-        // free_split(rgb_values);
     }
     check_is_rgb_digit(rgb_values);
     r = ft_atoi(rgb_values[0]);
@@ -74,9 +74,7 @@ int extract_rgb_color(char *line, t_gc **gc)
     if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
     {
         print_error_and_exit("Color values must be between 0 and 255");
-        // free_split(rgb_values);
     }
     color = (r << 16) | (g << 8) | b;
-    // free_split(rgb_values);
     return (color);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 char	*ft_substr_gc(const char *s, unsigned int start, size_t len, t_gc **gc)
 {

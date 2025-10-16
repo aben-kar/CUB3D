@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/14 20:10:55 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:29:45 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 void print_error_and_exit(const char *msg)
 {
@@ -55,22 +55,42 @@ void parse_texture(t_data *data, char **str, t_gc **gc)
     }
 }
 
+char *build_rgb_string(char **str, t_gc **gc)
+{
+    char *result;
+    int i;
+
+    if (!str || !str[1])
+        return (NULL);
+    result = ft_strdup_gc("", gc);
+    i = 1;
+    while (str[i])
+    {
+        result = ft_strjoin_gc(result, str[i], gc);
+        i++;
+    }
+    return (result);
+}
+
 void parse_color(t_data *data, char **str, t_gc **gc)
 {
+    char *rgb_string;
+
     if (!str || !*str)
         return;
-    
-    if (ft_strncmp(str[0], "F", 2) == 0 && str[1] && !str[2])
+    if (ft_strncmp(str[0], "F", 2) == 0 && str[1])
     {
         if (data->floor_color != 0)
             print_error_and_exit("Duplicate F color");
-        data->floor_color = extract_rgb_color(str[1], gc);
+        rgb_string = build_rgb_string(str, gc);
+        data->floor_color = extract_rgb_color(rgb_string, gc);
     }
-    else if (ft_strncmp(str[0], "C", 2) == 0 && str[1] && !str[2])
+    else if (ft_strncmp(str[0], "C", 2) == 0 && str[1])
     {
         if (data->ceiling_color != 0)
             print_error_and_exit("Duplicate C color");
-        data->ceiling_color = extract_rgb_color(str[1], gc);
+        rgb_string = build_rgb_string(str, gc);
+        data->ceiling_color = extract_rgb_color(rgb_string, gc);
     }
 }
 
@@ -78,9 +98,8 @@ void parse_config_file(t_data *data, char *line, t_gc **gc)
 {
     if (!line || !line[0])
         return;
-    
-    char **split;
 
+    char **split;
     split = ft_split_gc(line, " ", gc);
     if (!split || !split[0])
     {

@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 17:17:39 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/03 15:42:13 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:30:00 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 // int render_frame(t_game *game)
 // {

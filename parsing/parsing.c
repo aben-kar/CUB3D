@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: achraf <achraf@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/29 17:43:04 by achraf           ###   ########.fr       */
+/*   Updated: 2025/10/16 12:29:38 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
-
-// void free_split(char **split)
-// {
-//     int i = 0;
-
-//     if (!split)
-//         return;
-
-//     while (split[i])
-//     {
-//         free(split[i]);
-//         i++;
-//     }
-//     free(split);
-// }
+#include "../cub3D.h"
 
 void init_data(t_data *data)
 {

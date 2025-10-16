@@ -6,11 +6,11 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:23:04 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/14 20:05:45 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/16 12:30:10 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "../cub3D.h"
 
 int key_press(int key, t_game *game)
 {
@@ -71,14 +71,13 @@ int	mouse_release(int button, int x, int y, t_game *game)
 		game->shooting = 0;
 	return (0);
 }
-//
 
 int mouse_move(int x, int y, t_game *game)
 {
     static int last_x = -1;
     double rot_amount;
 
-    (void)y; // we only rotate horizontally
+    (void)y;
 
     if (last_x == -1)
         last_x = x;
@@ -86,17 +85,14 @@ int mouse_move(int x, int y, t_game *game)
     int delta_x = x - last_x;
     last_x = x;
 
-    // adjust sensitivity — 0.002 or 0.003 is smooth
     rot_amount = delta_x * 0.002;
 
-    // rotate player
     game->player->angle += rot_amount;
     game->player->dir_x = cos(game->player->angle);
     game->player->dir_y = sin(game->player->angle);
     game->player->plane_x = -game->player->dir_y * FOV;
     game->player->plane_y = game->player->dir_x * FOV;
 
-    // recenter mouse so it never hits edges
     mlx_mouse_move(game->mlx, game->mlx_win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
     last_x = SCREEN_WIDTH / 2;
 
@@ -174,6 +170,6 @@ void init_player(t_game *game)
     game->player->plane_x = -game->player->dir_y * FOV;
     game->player->plane_y = game->player->dir_x * FOV;
     // TO
-    game->player->move_speed = 0.007;
+    game->player->move_speed = 0.005;
     game->player->rot_speed = 0.003; 
 }

@@ -1,4 +1,4 @@
-NAME = cub3d
+NAME = cub3D
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror 
@@ -42,7 +42,7 @@ OBJ = $(SRC:.c=.o)
 
 INCLUDES = -I. -I$(PARSER_DIR) -I$(RAYCASTING_DIR) -I$(GC_DIR)
 
-HEADER = cub3d.h
+HEADER = cub3D.h
 
 all: $(NAME)
 
