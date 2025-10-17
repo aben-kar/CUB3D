@@ -63,18 +63,14 @@ int extract_rgb_color(char *line, t_gc **gc)
     rgb_values = ft_split_gc(cleand, ",", gc);
     
     if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3] != NULL)
-    {
         print_error_and_exit("Invalid color format");
-    }
     check_is_rgb_digit(rgb_values);
     r = ft_atoi(rgb_values[0]);
     g = ft_atoi(rgb_values[1]);
     b = ft_atoi(rgb_values[2]);
 
     if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-    {
         print_error_and_exit("Color values must be between 0 and 255");
-    }
     color = (r << 16) | (g << 8) | b;
     return (color);
 }

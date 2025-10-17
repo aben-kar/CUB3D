@@ -79,7 +79,7 @@ char *map(char *map_joined, char *line, t_gc **gc)
 	}
 	tmp = map_joined;
 	map_joined = ft_strjoin_gc(map_joined, line, gc);
-	// free(tmp); // MAYBE SHOULD FREE
+	free(tmp); // MAYBE SHOULD FREE
 	return (map_joined);
 }
 

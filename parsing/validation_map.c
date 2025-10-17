@@ -37,7 +37,8 @@ char **map_copier(t_data *data, t_gc **gc)
     {
         int line_lenght = ft_strlen(data->map[i]);
 
-        copier_line[i] = (char *)malloc((cols + 1) * sizeof(char));
+        // copier_line[i] = (char *)malloc((cols + 1) * sizeof(char));
+        copier_line[i] = gc_alloc((cols + 1) * sizeof(char), gc);
         if (!copier_line[i])
             print_error_and_exit("Memory allocation error in map_copier");
 
