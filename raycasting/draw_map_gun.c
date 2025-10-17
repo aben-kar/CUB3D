@@ -12,14 +12,30 @@
 
 #include "../cub3D.h"
 
+void cleanup_and_exit(t_game *game, int exit_code)
+{
+    if (!game)
+        exit(exit_code);
+
+    destroy_textures(game);
+
+    if (game->mlx_win)
+        mlx_destroy_window(game->mlx, game->mlx_win);
+
+    if (game->mlx)
+    {
+        mlx_destroy_display(game->mlx);
+        free(game->mlx);
+    }
+
+    gc_free_all(game); // free everything GC-managed
+
+    exit(exit_code);
+}
+
 int close_window(t_game *game)
 {
-	destroy_textures(game);
-
-	mlx_destroy_window(game->mlx, game->mlx_win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	exit(0);
+    cleanup_and_exit(game, 0);
     return 0;
 }
 
@@ -47,7 +63,7 @@ void draw_mini_map(t_game *game)
 {
     if (!game || !game->data || !game->data->map)
     {
-        print_error_and_exit("Game is NULL");
+        print_error_and_exit("Game is NULL", game);
         return;
     }
     int map_rows = 0;

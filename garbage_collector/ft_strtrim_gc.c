@@ -1,6 +1,6 @@
 #include "../cub3D.h"
 
-char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc)
+char	*ft_strtrim_gc(char const *s1, char const *set, t_game *game)
 {
 	int		i;
 	int		j;
@@ -15,7 +15,7 @@ char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc)
 		i++;
 	if (i == (int)ft_strlen(s1))
 	{
-		dest = gc_alloc(1, gc);
+		dest = gc_alloc(1, game);
 		if (!dest)
 			return (NULL);
 		return (dest);
@@ -23,7 +23,7 @@ char	*ft_strtrim_gc(char const *s1, char const *set, t_gc **gc)
 	j = ft_strlen(s1) - 1;
 	while (j >= 0 && ft_strchr(set, s1[j]))
 		j--;
-	dest = gc_alloc((j - i + 2), gc);
+	dest = gc_alloc((j - i + 2), game);
 	if (!dest)
 		return (NULL);
 	ft_memcpy(dest, s1 + i, j - i + 1);

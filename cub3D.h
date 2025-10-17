@@ -133,6 +133,8 @@ typedef struct s_game
     t_texture	gun_idle;
     t_texture	gun_fire;
     int			shooting;
+    // gc
+    t_gc        *gc;
 }   t_game;
 
 
@@ -150,18 +152,18 @@ typedef struct s_data
 
 
 // Function parsing
-void parsing_cub(t_data *data, int fd, t_gc **gc);
-void parse_texture_and_color(t_data *data, int fd, t_gc **gc);
-void parse_config_file(t_data *data, char *line, t_gc **gc);
+void parsing_cub(t_data *data, int fd, t_game *game);
+void parse_texture_and_color(t_data *data, int fd, t_game *game);
+void parse_config_file(t_data *data, char *line, t_game *game);
 int all_config_parsed(t_data *data);
-int extract_rgb_color(char *line, t_gc **gc);
+int extract_rgb_color(char *line, t_game *game);
 void free_split(char **split);
-void print_error_and_exit(const char *msg);
-void parse_map(t_data *data, int fd, t_gc **gc);
+void print_error_and_exit(const char *msg, t_game *game);
+void parse_map(t_data *data, int fd, t_game *game);
 int is_map_line(char *line);
-void is_map_valid(t_data *data, t_gc **gc);
-void check_multiple_player(t_data *data);
-void is_map_closed(char **map);
+void is_map_valid(t_data *data, t_game *game);
+void check_multiple_player(t_data *data, t_game *game);
+void is_map_closed(char **map, t_game *game);
 bool is_player(char position);
 
 // function raycasting
@@ -184,11 +186,13 @@ void raycast_3d(t_game *game);
 void my_mlx_pixel_put(t_game *game, int x, int y, int color);
 
 
-void ray_mlx_pixel_put(t_game *game, int x, int y, int color);
+// void ray_mlx_pixel_put(t_game *game, int x, int y, int color);
 void draw_wall_column(t_game *game, int x);
 void cast_single_ray(t_game *game, double camera_x);
 int	get_tex_pixel_color(t_texture *tex, int x, int y);
 void	draw_gun(t_game *game);
 void	destroy_textures(t_game *game);
+void cleanup_and_exit(t_game *game, int exit_code);
+// char	**ft_split(char const *s, char *c);
 
 #endif

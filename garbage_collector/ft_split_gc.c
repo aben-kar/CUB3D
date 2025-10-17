@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-int	is_separator(char c, char *separators)
+int	is_separator_gc(char c, char *separators)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	is_separator(char c, char *separators)
 	return (0);
 }
 
-int	count_word(char const *s1, char *sp)
+int	count_word_gc(char const *s1, char *sp)
 {
 	int	i;
 	int	count;
@@ -37,28 +37,28 @@ int	count_word(char const *s1, char *sp)
 	check = 1;
 	while (s1[i] != '\0')
 	{
-		if (!is_separator(s1[i], sp) && check == 1)
+		if (!is_separator_gc(s1[i], sp) && check == 1)
 		{
 			count += 1;
 			check = 0;
 		}
-		else if (is_separator(s1[i], sp))
+		else if (is_separator_gc(s1[i], sp))
 			check = 1;
 		i++;
 	}
 	return (count);
 }
 
-char	*ft_strsdup(char const *s, size_t *j, char *sp, t_gc **gc)
+char	*ft_strsdup_gc(char const *s, size_t *j, char *sp, t_game *game)
 {
 	char	*result;
 	size_t	i;
 	size_t	k;
 
 	i = *j;
-	while (!is_separator(s[*j], sp) && s[*j])
+	while (!is_separator_gc(s[*j], sp) && s[*j])
 		(*j)++;
-	result = gc_alloc((*j - i + 1) * sizeof(char), gc);
+	result = gc_alloc((*j - i + 1) * sizeof(char), game);
 	if (!result)
 		return (NULL);
 	k = 0;
@@ -71,7 +71,7 @@ char	*ft_strsdup(char const *s, size_t *j, char *sp, t_gc **gc)
 	return (result);
 }
 
-char	**ft_split_gc(char const *s, char *c, t_gc **gc)
+char	**ft_split_gc(char const *s, char *c, t_game *game)
 {
 	size_t	i[2];
 	char	**prr;
@@ -79,19 +79,19 @@ char	**ft_split_gc(char const *s, char *c, t_gc **gc)
 
 	i[0] = 0;
 	i[1] = -1;
-	len_word = count_word(s, c);
+	len_word = count_word_gc(s, c);
 	if (!s || !len_word)
 		return (NULL);
-	prr = gc_alloc((len_word + 1) * sizeof(char *), gc);
+	prr = gc_alloc((len_word + 1) * sizeof(char *), game);
 	if (prr == NULL)
 		return (NULL);
 	while (++i[1] < len_word)
 	{
-		while (is_separator(s[i[0]], c) && s[i[0]])
+		while (is_separator_gc(s[i[0]], c) && s[i[0]])
 			i[0]++;
 		if (s[i[0]])
 		{
-			prr[i[1]] = ft_strsdup(s, &i[0], c, gc);
+			prr[i[1]] = ft_strsdup_gc(s, &i[0], c, game);
 			if (!prr[i[1]])
 				return (NULL);
 		}

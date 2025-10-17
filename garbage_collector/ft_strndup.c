@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-char	*ft_strndup(const char *s, size_t n, t_gc **gc)
+char	*ft_strndup(const char *s, size_t n, t_game *game)
 {
 	size_t	i;
 	size_t	j;
@@ -21,7 +21,7 @@ char	*ft_strndup(const char *s, size_t n, t_gc **gc)
 	i = 0;
 	while (s[i] && i < n)
 		i++;
-	dup = gc_alloc((i + 1), gc);
+	dup = gc_alloc((i + 1), game);
 	if (!dup)
 		return (NULL);
 	j = 0;

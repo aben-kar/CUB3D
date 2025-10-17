@@ -14,13 +14,12 @@
 
 int main(int ac, char **av)
 {
-    t_gc	*gc;
     t_data data = {0};
     t_player player = {0};
     t_ray ray = {0};
     t_game game = {0};
     
-    gc = NULL;
+    game.gc = NULL;
     if (ac != 2)
     {
         printf("Error\n  Usage: ./cub3d <map.cub>\n");
@@ -39,12 +38,11 @@ int main(int ac, char **av)
         printf("Error\n  Cannot open file: %s\n", av[1]);
         return 1;
     }
-    parsing_cub(&data, fd, &gc);
+    parsing_cub(&data, fd, &game);
     close(fd);
     game.data = &data;
     game.player = &player;
     game.ray = &ray;
     init_game(&game);
-    gc_free_all(&gc);
     return 0;
 }

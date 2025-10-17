@@ -26,10 +26,10 @@
 #  define BUFFER_SIZE 10
 # endif
 
-char	*ft_strjoin_get(char *s1, char *s2, t_gc **gc);
+char	*ft_strjoin_get(char *s1, char *s2);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strdup(const char *s1);
-char	*get_next_line(int fd, t_gc **gc);
+char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlen(const char *s);
 

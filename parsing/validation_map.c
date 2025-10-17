@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-char **map_copier(t_data *data, t_gc **gc)
+char **map_copier(t_data *data, t_game *game)
 {
     char **copier_line;
     int line = 0;
@@ -27,8 +27,8 @@ char **map_copier(t_data *data, t_gc **gc)
         line++;
     }
 
-    // copier_line = (char **)malloc((line + 1) * sizeof(char *));
-    copier_line = gc_alloc((line + 1) * sizeof(char *), gc);
+    // copier_line = gc_alloc((line + 1) * sizeof(char *), gc);
+    copier_line = (char **)gc_alloc((line + 1) * sizeof(char *), game);
     if (!copier_line)
         return NULL;
 
@@ -37,10 +37,10 @@ char **map_copier(t_data *data, t_gc **gc)
     {
         int line_lenght = ft_strlen(data->map[i]);
 
-        // copier_line[i] = (char *)malloc((cols + 1) * sizeof(char));
-        copier_line[i] = gc_alloc((cols + 1) * sizeof(char), gc);
+        // copier_line[i] = gc_alloc((cols + 1) * sizeof(char), gc);
+        copier_line[i] = (char *)gc_alloc((cols + 1) * sizeof(char), game);
         if (!copier_line[i])
-            print_error_and_exit("Memory allocation error in map_copier");
+            print_error_and_exit("Memory allocation error in map_copier", game);
 
         int j = 0;
         while (j < cols)
@@ -58,10 +58,10 @@ char **map_copier(t_data *data, t_gc **gc)
     return (copier_line);
 }
 
-void is_map_valid(t_data *data, t_gc **gc)
+void is_map_valid(t_data *data, t_game *game)
 {
     if (!data->map || !data->map[0])
-        print_error_and_exit("Map is empty");
-    char **copier_map = map_copier(data, gc);
-    is_map_closed(copier_map);
+        print_error_and_exit("Map is empty", game);
+    char **copier_map = map_copier(data, game);
+    is_map_closed(copier_map, game);
 }

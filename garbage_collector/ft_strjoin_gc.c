@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-char	*ft_strjoin_gc(const char *s1, const char *s2, t_gc **gc)
+char	*ft_strjoin_gc(const char *s1, const char *s2, t_game *game)
 {
 	char	*result;
 	int		i;
@@ -28,7 +28,7 @@ char	*ft_strjoin_gc(const char *s1, const char *s2, t_gc **gc)
 		return (ft_strdup(s1));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	result = gc_alloc(sizeof(char) * (s1_len + s2_len + 1), gc);
+	result = gc_alloc(sizeof(char) * (s1_len + s2_len + 1), game);
 	if (!result)
 		return (NULL);
 	i = -1;
@@ -41,7 +41,7 @@ char	*ft_strjoin_gc(const char *s1, const char *s2, t_gc **gc)
 	return (result);
 }
 
-char	*my_strjoin(char *s1, char *s2, t_gc **gc)
+char	*my_strjoin(char *s1, char *s2, t_game *game)
 {
 	size_t	s1_len;
 	size_t	s2_len;
@@ -55,7 +55,7 @@ char	*my_strjoin(char *s1, char *s2, t_gc **gc)
 		return (ft_strdup(s1));
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	result = gc_alloc(s1_len + s2_len + 1, gc);
+	result = gc_alloc(s1_len + s2_len + 1, game);
 	if (!result)
 		return (NULL);
 	ft_memcpy(result, s1, s1_len);

@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-char	*ft_substr_gc(const char *s, unsigned int start, size_t len, t_gc **gc)
+char	*ft_substr_gc(const char *s, unsigned int start, size_t len, t_game *game)
 {
 	char	*subs;
 	size_t	i;
@@ -22,10 +22,10 @@ char	*ft_substr_gc(const char *s, unsigned int start, size_t len, t_gc **gc)
 		return (NULL);
 	slen = ft_strlen(s);
 	if (start >= slen)
-		return (ft_strdup_gc("", gc));
+		return (ft_strdup_gc("", game));
 	if (start + len > slen)
 		len = slen - start;
-	subs = gc_alloc(len + 1, gc);
+	subs = gc_alloc(len + 1, game);
 	if (!subs)
 		return (NULL);
 	i = 0;

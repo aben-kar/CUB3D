@@ -28,7 +28,6 @@ SRC = main.c \
 	$(RAYCASTING_DIR)/raycasting_utils.c \
 	$(GC_DIR)/gc.c \
 	$(GC_DIR)/ft_calloc_gc.c \
-	$(GC_DIR)/ft_itoa_gc.c \
 	$(GC_DIR)/ft_split_gc.c \
 	$(GC_DIR)/ft_strdup_gc.c \
 	$(GC_DIR)/ft_strndup.c \

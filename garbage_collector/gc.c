@@ -10,38 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "../cub3D.h"
 
-void	*gc_alloc(size_t size, t_gc **gc)
+void	*gc_alloc(size_t size, t_game *game)
 {
 	void	*ptr;
-	t_gc	*new;
+	t_gc	*new_node;
 
-	if (!gc)
+	if (!game)
 		return (NULL);
 	ptr = malloc(size);
 	if (!ptr)
 		return (NULL);
-	new = malloc(sizeof(t_gc));
-	if (!new)
+	new_node = malloc(sizeof(t_gc));
+	if (!new_node)
 	{
 		free(ptr);
 		return (NULL);
 	}
-	new->ptr = ptr;
-	new->next = *gc;
-	*gc = new;
+	new_node->ptr = ptr;
+	new_node->next = game->gc; // insert at head
+	game->gc = new_node;
 	return (ptr);
 }
 
-void	gc_free_all(t_gc **gc)
+void	gc_free_all(t_game *game)
 {
 	t_gc	*tmp;
 
-	while (*gc)
+	if (!game)
+		return;
+	while (game->gc)
 	{
-		tmp = *gc;
-		*gc = (*gc)->next;
+		tmp = game->gc;
+		game->gc = game->gc->next;
 		free(tmp->ptr);
 		free(tmp);
 	}

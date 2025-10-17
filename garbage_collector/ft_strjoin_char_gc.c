@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-char	*ft_strjoin_char_gc(const char *s, char c, t_gc **gc)
+char	*ft_strjoin_char_gc(const char *s, char c, t_game *game)
 {
 	char	*result;
 	int		len;
@@ -22,7 +22,7 @@ char	*ft_strjoin_char_gc(const char *s, char c, t_gc **gc)
 		len = 0;
 	else
 		len = ft_strlen(s);
-	result = gc_alloc(sizeof(char) * (len + 2), gc);
+	result = gc_alloc(sizeof(char) * (len + 2), game);
 	if (!result)
 		return (NULL);
 	i = 0;

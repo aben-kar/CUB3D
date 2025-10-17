@@ -12,10 +12,11 @@
 
 #include "../cub3D.h"
 
-void print_error_and_exit(const char *msg)
+void print_error_and_exit(const char *msg, t_game *game)
 {
     printf("Error\n%s\n", msg);
     exit(1);
+    cleanup_and_exit(game, 1);
 }
 
 int all_config_parsed(t_data *data)
@@ -25,54 +26,58 @@ int all_config_parsed(t_data *data)
             data->floor_color != 0 && data->ceiling_color != 0);
 }
 
-void parse_texture(t_data *data, char **str, t_gc **gc)
+void parse_texture(t_data *data, char **str, t_game *game)
 {
     if (!str || !*str)
         return;
     if (ft_strncmp(str[0], "NO", 3) == 0 && str[1] && !str[2])
     {
         if (data->path_no)
-            print_error_and_exit("Duplicate NO texture");
-        data->path_no = ft_strdup_gc(str[1], gc);
+            print_error_and_exit("Duplicate NO texture", game);
+        data->path_no = ft_strdup_gc(str[1], game);
     }
     else if (ft_strncmp(str[0], "SO", 3) == 0 && str[1] && !str[2])
     {
         if (data->path_so)
-            print_error_and_exit("Duplicate SO texture");
-        data->path_so = ft_strdup_gc(str[1], gc);
+            print_error_and_exit("Duplicate SO texture", game);
+        data->path_so = ft_strdup_gc(str[1], game);
     }
     else if (ft_strncmp(str[0], "WE", 3) == 0 && str[1] && !str[2])
     {
         if (data->path_we)
-            print_error_and_exit("Duplicate WE texture");
-        data->path_we = ft_strdup_gc(str[1], gc);
+            print_error_and_exit("Duplicate WE texture", game);
+        data->path_we = ft_strdup_gc(str[1], game);
     }
     else if (ft_strncmp(str[0], "EA", 3) == 0 && str[1] && !str[2])
     {
         if (data->path_ea)
-            print_error_and_exit("Duplicate EA texture");
-        data->path_ea = ft_strdup_gc(str[1], gc);
+            print_error_and_exit("Duplicate EA texture", game);
+        data->path_ea = ft_strdup_gc(str[1], game);
     }
 }
 
-char *build_rgb_string(char **str, t_gc **gc)
+char *build_rgb_string(char **str, t_game *game)
 {
     char *result;
     int i;
 
     if (!str || !str[1])
         return (NULL);
-    result = ft_strdup_gc("", gc);
+    result = ft_strdup_gc("", game);
+    if (!result)
+        return (NULL);
     i = 1;
     while (str[i])
     {
-        result = ft_strjoin_gc(result, str[i], gc);
+        result = ft_strjoin_gc(result, str[i], game);
+        if (!result)
+            return (NULL);
         i++;
     }
     return (result);
 }
 
-void parse_color(t_data *data, char **str, t_gc **gc)
+void parse_color(t_data *data, char **str, t_game *game)
 {
     char *rgb_string;
 
@@ -81,32 +86,35 @@ void parse_color(t_data *data, char **str, t_gc **gc)
     if (ft_strncmp(str[0], "F", 2) == 0 && str[1])
     {
         if (data->floor_color != 0)
-            print_error_and_exit("Duplicate F color");
-        rgb_string = build_rgb_string(str, gc);
-        data->floor_color = extract_rgb_color(rgb_string, gc);
+            print_error_and_exit("Duplicate F color", game);
+        rgb_string = build_rgb_string(str, game);
+        data->floor_color = extract_rgb_color(rgb_string, game);
     }
     else if (ft_strncmp(str[0], "C", 2) == 0 && str[1])
     {
         if (data->ceiling_color != 0)
-            print_error_and_exit("Duplicate C color");
-        rgb_string = build_rgb_string(str, gc);
-        data->ceiling_color = extract_rgb_color(rgb_string, gc);
+            print_error_and_exit("Duplicate C color", game);
+        rgb_string = build_rgb_string(str, game);
+        data->ceiling_color = extract_rgb_color(rgb_string, game);
     }
 }
 
-void parse_config_file(t_data *data, char *line, t_gc **gc)
+void parse_config_file(t_data *data, char *line, t_game *game)
 {
     if (!line || !line[0])
         return;
 
     char **split;
-    split = ft_split_gc(line, " ", gc);
-    if (!split || !split[0])
+    split = ft_split(line, " ");
+    if (!split)
+        return;
+    if (!split[0])
     {
+        free_split(split);
         return;
     }
-    parse_texture(data, split, gc);
-    parse_color(data, split, gc);
+    parse_texture(data, split, game);
+    parse_color(data, split, game);
 
     if (!all_config_parsed(data) &&
         ft_strncmp(split[0], "NO", 3) != 0 &&
@@ -116,13 +124,13 @@ void parse_config_file(t_data *data, char *line, t_gc **gc)
         ft_strncmp(split[0], "F", 2) != 0 &&
         ft_strncmp(split[0], "C", 2) != 0)
     {
-        // free_split(split);
-        print_error_and_exit("Invalid config line");
+        free_split(split);
+        print_error_and_exit("Invalid config line", game);
     }
-    // free_split(split);
+    free_split(split);
 }
 
-void parse_texture_and_color(t_data *data, int fd, t_gc **gc)
+void parse_texture_and_color(t_data *data, int fd, t_game *game)
 {
     char *line;
     char *cleand;
@@ -136,15 +144,18 @@ void parse_texture_and_color(t_data *data, int fd, t_gc **gc)
             line = get_next_line(fd);
             continue;
         }
-        cleand = ft_strtrim_gc(line, "\n", gc);
-        parse_config_file(data, cleand, gc);
-        if (all_config_parsed(data))
+        cleand = ft_strtrim(line, "\n");
+        if(!cleand)
         {
-            // free(cleand);
-            break;
+            free(line);
+            print_error_and_exit("Memory allocation error", game);
         }
+        parse_config_file(data, cleand, game);
+        free(cleand);
         free(line);
+        if (all_config_parsed(data))
+            break;
         line = get_next_line(fd);
     }
-    free(line);
+    // free(line);
 }

@@ -17,7 +17,7 @@ void	init_textures(t_game *game)
 	game->north.img = mlx_xpm_file_to_image(game->mlx, game->data->path_no,
 		&game->north.width, &game->north.height);
 	if (!game->north.img)
-		print_error_and_exit("Failed to load north texture");
+		print_error_and_exit("Failed to load north texture", game);
 	game->north.addr = mlx_get_data_addr(game->north.img, &game->north.bpp,
 		&game->north.line_len, &game->north.endian);
 
@@ -25,7 +25,7 @@ void	init_textures(t_game *game)
 	game->south.img = mlx_xpm_file_to_image(game->mlx, game->data->path_so,
 		&game->south.width, &game->south.height);
 	if (!game->south.img)
-		print_error_and_exit("Failed to load south texture");
+		print_error_and_exit("Failed to load south texture", game);
 	game->south.addr = mlx_get_data_addr(game->south.img, &game->south.bpp,
 		&game->south.line_len, &game->south.endian);
 
@@ -33,7 +33,7 @@ void	init_textures(t_game *game)
 	game->west.img = mlx_xpm_file_to_image(game->mlx, game->data->path_we,
 		&game->west.width, &game->west.height);
 	if (!game->west.img)
-		print_error_and_exit("Failed to load west texture");
+		print_error_and_exit("Failed to load west texture", game);
 	game->west.addr = mlx_get_data_addr(game->west.img, &game->west.bpp,
 		&game->west.line_len, &game->west.endian);
 
@@ -41,7 +41,7 @@ void	init_textures(t_game *game)
 	game->east.img = mlx_xpm_file_to_image(game->mlx, game->data->path_ea,
 		&game->east.width, &game->east.height);
 	if (!game->east.img)
-		print_error_and_exit("Failed to load east texture");
+		print_error_and_exit("Failed to load east texture", game);
 	game->east.addr = mlx_get_data_addr(game->east.img, &game->east.bpp,
 		&game->east.line_len, &game->east.endian);
 
@@ -50,7 +50,7 @@ void	init_textures(t_game *game)
 	game->gun_idle.img = mlx_xpm_file_to_image(game->mlx, "textures/gun_idle.xpm",
         &game->gun_idle.width, &game->gun_idle.height);
 	if (!game->gun_idle.img)
-		print_error_and_exit("Failed to load gun_idle.xpm");
+		print_error_and_exit("Failed to load gun_idle.xpm", game);
 	game->gun_idle.addr = mlx_get_data_addr(game->gun_idle.img, &game->gun_idle.bpp,
 			&game->gun_idle.line_len, &game->gun_idle.endian);
 
@@ -58,7 +58,7 @@ void	init_textures(t_game *game)
 	game->gun_fire.img = mlx_xpm_file_to_image(game->mlx, "textures/gun_fire.xpm",
 			&game->gun_fire.width, &game->gun_fire.height);
 	if (!game->gun_fire.img)
-		print_error_and_exit("Failed to load gun_fire.xpm");
+		print_error_and_exit("Failed to load gun_fire.xpm", game);
 	game->gun_fire.addr = mlx_get_data_addr(game->gun_fire.img, &game->gun_fire.bpp,
 			&game->gun_fire.line_len, &game->gun_fire.endian);
 

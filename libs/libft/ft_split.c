@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_gc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 18:07:31 by acben-ka          #+#    #+#             */
-/*   Updated: 2024/11/13 18:07:32 by acben-ka         ###   ########.fr       */
+/*   Created: 2025/06/30 17:29:02 by zaakrab           #+#    #+#             */
+/*   Updated: 2025/10/16 12:31:25 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../cub3D.h"
 #include "libft.h"
 
-static int	count_word(char const *s1, char sp)
+int	is_separator(char c, char *separators)
+{
+	int	i;
+
+	i = 0;
+	while (separators[i])
+	{
+		if (c == separators[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	count_word(char const *s1, char *sp)
 {
 	int	i;
 	int	count;
@@ -21,30 +36,30 @@ static int	count_word(char const *s1, char sp)
 	i = 0;
 	count = 0;
 	check = 1;
-	while (s1[i])
+	while (s1[i] != '\0')
 	{
-		if (s1[i] != sp && check == 1)
+		if (!is_separator(s1[i], sp) && check == 1)
 		{
 			count += 1;
 			check = 0;
 		}
-		else if (s1[i] == sp)
+		else if (is_separator(s1[i], sp))
 			check = 1;
 		i++;
 	}
 	return (count);
 }
 
-static char	*ft_strsdup(char const *s, size_t *j, char sp)
+char	*ft_strsdup(char const *s, size_t *j, char *sp)
 {
 	char	*result;
 	size_t	i;
 	size_t	k;
 
 	i = *j;
-	while (s[*j] != sp && s[*j])
+	while (!is_separator(s[*j], sp) && s[*j])
 		(*j)++;
-	result = (char *)malloc((*j - i + 1) * sizeof(char));
+	result = malloc((*j - i + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
 	k = 0;
@@ -57,52 +72,32 @@ static char	*ft_strsdup(char const *s, size_t *j, char sp)
 	return (result);
 }
 
-static void	*ft_free(char **prr)
+char	**ft_split(char const *s, char *c)
 {
-	int	i;
-
-	i = 0;
-	while (prr[i])
-	{
-		free(prr[i]);
-		i++;
-	}
-	free(prr);
-	return (NULL);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	size_t	j;
-	size_t	i;
+	size_t	i[2];
 	char	**prr;
 	size_t	len_word;
 
-	i = 0;
-	j = 0;
-	if (!s)
-		return (NULL);
+	i[0] = 0;
+	i[1] = -1;
 	len_word = count_word(s, c);
-	prr = (char **)ft_calloc((len_word + 1), sizeof(char *));
+	if (!s || !len_word)
+		return (NULL);
+	prr = malloc((len_word + 1) * sizeof(char *));
 	if (prr == NULL)
 		return (NULL);
-	while (j < len_word)
+	while (++i[1] < len_word)
 	{
-		while (s[i] == c && s[i])
-			i++;
-		prr[j] = ft_strsdup(s, &i, c);
-		if (!prr[j])
-			return (ft_free(prr));
-		j++;
+		while (is_separator(s[i[0]], c) && s[i[0]])
+			i[0]++;
+		if (s[i[0]])
+		{
+			prr[i[1]] = ft_strsdup(s, &i[0], c);
+			if (!prr[i[1]])
+				return (NULL);
+		}
+		// prr[len_word] = "\0";
 	}
+	prr[len_word] = NULL;
 	return (prr);
 }
-
-// int	main(void)
-// {
-// 	char **arr;
-
-// 	arr = ft_split("hello world", 32);
-// 	for (int i = 0; i < 2; i++)
-// 		printf("%s\n", arr[i]);
-// }

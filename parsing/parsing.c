@@ -23,10 +23,10 @@ void init_data(t_data *data)
     data->map = NULL;
 }
 
-void parsing_cub(t_data *data, int fd, t_gc **gc)
+void parsing_cub(t_data *data, int fd, t_game *game)
 {
     init_data(data);
-    parse_texture_and_color(data, fd, gc);
-    parse_map(data, fd, gc);
-    is_map_valid(data, gc);
+    parse_texture_and_color(data, fd, game);
+    parse_map(data, fd, game);
+    is_map_valid(data, game);
 }
