@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_map.c                                         :+:      :+:    :+:   */
+/*   draw_map_gun.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,22 +12,15 @@
 
 #include "../cub3D.h"
 
-// int render_frame(t_game *game)
-// {
-//     // Clear screen
-//     ft_memset(game->addr, 0, SCREEN_WIDTH * SCREEN_HEIGHT * (game->bits_per_pixel / 8));
-    
-//     // Redessiner tout
-//     draw_mini_map(game);
-    
-//     return (0);
-// }
-
 int close_window(t_game *game)
 {
-    mlx_destroy_window(game->mlx, game->mlx_win);
-    exit(0);
-    return (0);
+	destroy_textures(game);
+
+	mlx_destroy_window(game->mlx, game->mlx_win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
+	exit(0);
+    return 0;
 }
 
 void my_mlx_pixel_put(t_game *game, int x, int y, int color)
@@ -89,4 +82,42 @@ void draw_mini_map(t_game *game)
     }
     
     mlx_put_image_to_window(game->mlx, game->mlx_win, game->img, 0, 0);
+}
+
+void    draw_gun(t_game *game)
+{
+	t_texture *gun;
+	int gx, gy;
+	int color;
+	int start_x;
+	int start_y;
+
+	// choose gun texture
+	if (game->shooting)
+		gun = &game->gun_fire;
+	else
+		gun = &game->gun_idle;
+
+	if (!gun || !gun->img || !gun->addr)
+		return;
+
+	// bottom-center position (no scaling)
+	start_x = (SCREEN_WIDTH / 2) - (gun->width / 2);
+	start_y = SCREEN_HEIGHT - gun->height;
+
+	// draw gun pixel by pixel
+	gy = 0;
+	while (gy < gun->height)
+	{
+		gx = 0;
+		while (gx < gun->width)
+		{
+			color = get_tex_pixel_color(gun, gx, gy);
+			// skip transparent pixels (black = transparent)
+			if ((color & 0x00FFFFFF) != 0x000000)
+				my_mlx_pixel_put(game, start_x + gx, start_y + gy, color);
+			gx++;
+		}
+		gy++;
+	}
 }

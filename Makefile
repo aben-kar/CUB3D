@@ -19,7 +19,7 @@ SRC = main.c \
 	$(PARSER_DIR)/validation_map_utils.c \
 	$(PARSER_DIR)/validation_map.c \
 	$(RAYCASTING_DIR)/init_game.c \
-	$(RAYCASTING_DIR)/draw_map.c \
+	$(RAYCASTING_DIR)/draw_map_gun.c \
 	$(RAYCASTING_DIR)/player_rotation.c \
 	$(RAYCASTING_DIR)/player_movment.c \
 	$(RAYCASTING_DIR)/init_player.c \

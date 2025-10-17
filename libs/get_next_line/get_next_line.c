@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*read_and_store(int fd, char *rem, char *buffer)
+char	*read_and_store(int fd, char *rem, char *buffer, t_gc **gc)
 {
 	ssize_t	byte;
 	int		i;
@@ -22,7 +22,7 @@ char	*read_and_store(int fd, char *rem, char *buffer)
 	while (byte > 0)
 	{
 		buffer[byte] = '\0';
-		rem = ft_strjoin_get(rem, buffer);
+		rem = ft_strjoin_get(rem, buffer, gc);
 		if (!rem)
 			return (NULL);
 		if (rem[i] && rem[i] == '\n')
@@ -34,7 +34,7 @@ char	*read_and_store(int fd, char *rem, char *buffer)
 	return (rem);
 }
 
-char	*add_line(char *rem)
+char	*add_line(char *rem, t_gc **gc)
 {
 	int		i;
 	char	*line;
@@ -46,7 +46,7 @@ char	*add_line(char *rem)
 		i++;
 	if (rem[i] == '\n')
 		i++;
-	line = ft_calloc(i + 1, 1);
+	line = ft_calloc_gc(i + 1, 1, gc);
 	if (!line)
 		return (NULL);
 	i = 0;
@@ -60,7 +60,7 @@ char	*add_line(char *rem)
 	return (line);
 }
 
-char	*update_rem(char *rem)
+char	*update_rem(char *rem, t_gc **gc)
 {
 	int		i;
 	char	*new_rem;
@@ -72,38 +72,38 @@ char	*update_rem(char *rem)
 		i++;
 	if (!rem[i])
 	{
-		free(rem);
+		// free(rem);
 		return (NULL);
 	}
-	new_rem = ft_strdup(rem + i);
+	new_rem = ft_strdup_gc(rem + i, gc);
 	if (!new_rem)
 	{
-		free(rem);
+		// free(rem);
 		return (NULL);
 	}
-	free(rem);
+	// free(rem);
 	return (new_rem);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, t_gc **gc)
 {
 	static char	*rem;
 	char		*buffer;
 	char		*line;
 
-	buffer = ft_calloc(BUFFER_SIZE + 1, 1);
+	buffer = ft_calloc_gc(BUFFER_SIZE + 1, 1, gc);
 	if (!buffer)
 		return (NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 	{
-		free(buffer);
+		// free(buffer);
 		return (NULL);
 	}
-	rem = read_and_store(fd, rem, buffer);
-	free(buffer);
+	rem = read_and_store(fd, rem, buffer, gc);
+	// free(buffer);
 	if (!rem)
 		return (NULL);
-	line = add_line(rem);
-	rem = update_rem(rem);
+	line = add_line(rem, gc);
+	rem = update_rem(rem, gc);
 	return (line);
 }

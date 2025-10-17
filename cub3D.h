@@ -189,5 +189,6 @@ void draw_wall_column(t_game *game, int x);
 void cast_single_ray(t_game *game, double camera_x);
 int	get_tex_pixel_color(t_texture *tex, int x, int y);
 void	draw_gun(t_game *game);
+void	destroy_textures(t_game *game);
 
 #endif

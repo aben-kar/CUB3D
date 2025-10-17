@@ -63,3 +63,19 @@ void	init_textures(t_game *game)
 			&game->gun_fire.line_len, &game->gun_fire.endian);
 
 }
+
+void	destroy_textures(t_game *game)
+{
+	if (game->north.img)
+		mlx_destroy_image(game->mlx, game->north.img);
+	if (game->south.img)
+		mlx_destroy_image(game->mlx, game->south.img);
+	if (game->east.img)
+		mlx_destroy_image(game->mlx, game->east.img);
+	if (game->west.img)
+		mlx_destroy_image(game->mlx, game->west.img);
+	if (game->gun_idle.img)
+		mlx_destroy_image(game->mlx, game->gun_idle.img);
+	if (game->gun_fire.img)
+		mlx_destroy_image(game->mlx, game->gun_fire.img);
+}
