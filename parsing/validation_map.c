@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-char **map_copier(t_data *data, t_game *game)
+char **map_copier(t_data *data, t_game *game) // norme
 {
     char **copier_line;
     int line = 0;

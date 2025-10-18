@@ -46,7 +46,7 @@ void check_multiple_player(t_data *data, t_game *game)
         print_error_and_exit("The map must contain one player starting position", game);
 }
 
-void is_map_closed(char **map, t_game *game)
+void is_map_closed(char **map, t_game *game) // norme
 {
     if (!map || !map[0])
         return;

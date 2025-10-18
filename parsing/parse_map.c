@@ -63,9 +63,8 @@ static char *skip_empty_lines(int fd)
 
 char *map(char *map_joined, char *line, t_game *game)
 {
-	int i = 0;
-	char *tmp;
-	char *new_joined;
+	int		i;
+	char	*new_joined;
 
 	if (!is_map_line(line))
 	{
@@ -73,20 +72,16 @@ char *map(char *map_joined, char *line, t_game *game)
 		free(map_joined);
 		print_error_and_exit("Invalid map line", game);
 	}
+	i = 0;
 	while (line[i])
 	{
 		if (line[i] == ' ')
 			line[i] = '1';
 		i++;
 	}
-	tmp = map_joined;
 	new_joined = ft_strjoin(map_joined, line);
 	if (!new_joined)
-	{
-		free(tmp); // MAYBE SHOULD FREE
 		print_error_and_exit("Memory allocation error in map join", game);
-	}
-	free(tmp);
 	return (new_joined);
 }
 

@@ -99,35 +99,39 @@ void parse_color(t_data *data, char **str, t_game *game)
     }
 }
 
-void parse_config_file(t_data *data, char *line, t_game *game)
+static void	check_invalid_config(char **split, t_data *data, t_game *game)
 {
-    if (!line || !line[0])
-        return;
+	if (!all_config_parsed(data)
+		&& ft_strncmp(split[0], "NO", 3) != 0
+		&& ft_strncmp(split[0], "SO", 3) != 0
+		&& ft_strncmp(split[0], "WE", 3) != 0
+		&& ft_strncmp(split[0], "EA", 3) != 0
+		&& ft_strncmp(split[0], "F", 2) != 0
+		&& ft_strncmp(split[0], "C", 2) != 0)
+	{
+		free_split(split);
+		print_error_and_exit("Invalid config line", game);
+	}
+}
 
-    char **split;
-    split = ft_split(line, " ");
-    if (!split)
-        return;
-    if (!split[0])
-    {
-        free_split(split);
-        return;
-    }
-    parse_texture(data, split, game);
-    parse_color(data, split, game);
+void	parse_config_file(t_data *data, char *line, t_game *game)
+{
+	char	**split;
 
-    if (!all_config_parsed(data) &&
-        ft_strncmp(split[0], "NO", 3) != 0 &&
-        ft_strncmp(split[0], "SO", 3) != 0 &&
-        ft_strncmp(split[0], "WE", 3) != 0 &&
-        ft_strncmp(split[0], "EA", 3) != 0 &&
-        ft_strncmp(split[0], "F", 2) != 0 &&
-        ft_strncmp(split[0], "C", 2) != 0)
-    {
-        free_split(split);
-        print_error_and_exit("Invalid config line", game);
-    }
-    free_split(split);
+	if (!line || !line[0])
+		return ;
+	split = ft_split(line, " ");
+	if (!split)
+		return ;
+	if (!split[0])
+	{
+		free_split(split);
+		return ;
+	}
+	parse_texture(data, split, game);
+	parse_color(data, split, game);
+	check_invalid_config(split, data, game);
+	free_split(split);
 }
 
 void parse_texture_and_color(t_data *data, int fd, t_game *game)
@@ -157,5 +161,4 @@ void parse_texture_and_color(t_data *data, int fd, t_game *game)
             break;
         line = get_next_line(fd);
     }
-    // free(line);
 }

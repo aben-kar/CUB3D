@@ -12,7 +12,7 @@
 
 #include "../cub3D.h"
 
-void free_split(char **split)
+void    free_split(char **split)
 {
     int i;
 
@@ -53,50 +53,64 @@ void check_is_rgb_digit(char **rgb_values, t_game *game)
     }
 }
 
-
-
-int extract_rgb_color(char *line, t_game *game)
+static void	check_virgule_count(char *line, t_game *game)
 {
-    if (!line || !line[0])
-        return (0);
-    char **rgb_values;
-    int r, g, b;
-    int color;
-    int count_virgule = 0;
-    char *cleand;
+	int	i;
+	int	count;
 
-    int i = 0;
-    while (line[i])
-    {
-        if (line[i] == ',')
-            count_virgule++;
-        i++;
-    }
-    // free(line);
-    if (count_virgule > 2)
-        print_error_and_exit("Invalid color format", game);
+	i = 0;
+	count = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			count++;
+		i++;
+	}
+	if (count > 2)
+		print_error_and_exit("Invalid color format", game);
+}
 
-    cleand = ft_strtrim(line, "\n");
-    if (!cleand)
-        print_error_and_exit("Memory allocation error", game);
-    rgb_values = ft_split(cleand, ",");
-    free (cleand);
-    if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2] || rgb_values[3] != NULL)
-    {
-        free_split(rgb_values);
-        print_error_and_exit("Invalid color format", game);
-    }
-    check_is_rgb_digit(rgb_values, game);
-    r = ft_atoi(rgb_values[0]);
-    g = ft_atoi(rgb_values[1]);
-    b = ft_atoi(rgb_values[2]);
+static char	**split_rgb_values(char *line, t_game *game)
+{
+	char	*cleand;
+	char	**rgb_values;
 
-    if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-    {
-        free_split(rgb_values);
-        print_error_and_exit("Color values must be between 0 and 255", game);
-    }
-    color = (r << 16) | (g << 8) | b;
-    free_split(rgb_values);
-    return (color);
+	cleand = ft_strtrim(line, "\n");
+	if (!cleand)
+		print_error_and_exit("Memory allocation error", game);
+	rgb_values = ft_split(cleand, ",");
+	free(cleand);
+	if (!rgb_values || !rgb_values[0] || !rgb_values[1]
+		|| !rgb_values[2] || rgb_values[3] != NULL)
+	{
+		free_split(rgb_values);
+		print_error_and_exit("Invalid color format", game);
+	}
+	return (rgb_values);
+}
+
+int	extract_rgb_color(char *line, t_game *game)
+{
+	char	**rgb;
+	int		r;
+	int		g;
+	int		b;
+	int		color;
+
+	if (!line || !line[0])
+		return (0);
+	check_virgule_count(line, game);
+	rgb = split_rgb_values(line, game);
+	check_is_rgb_digit(rgb, game);
+	r = ft_atoi(rgb[0]);
+	g = ft_atoi(rgb[1]);
+	b = ft_atoi(rgb[2]);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	{
+		free_split(rgb);
+		print_error_and_exit("Color values must be between 0 and 255", game);
+	}
+	color = (r << 16) | (g << 8) | b;
+	free_split(rgb);
+	return (color);
 }
