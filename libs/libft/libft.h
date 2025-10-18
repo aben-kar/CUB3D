@@ -35,7 +35,7 @@ void	ft_putstr_fd(char *s, int fd);
 int		ft_atoi(const char *s);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
-int     ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(char *s1, char *s2);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);

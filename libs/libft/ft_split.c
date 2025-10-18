@@ -96,7 +96,6 @@ char	**ft_split(char const *s, char *c)
 			if (!prr[i[1]])
 				return (NULL);
 		}
-		// prr[len_word] = "\0";
 	}
 	prr[len_word] = NULL;
 	return (prr);

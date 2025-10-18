@@ -12,30 +12,29 @@
 
 #include "../cub3D.h"
 
-int is_map_line(char *line)
+int	is_map_line(char *line)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (line[i] && line[i] == ' ')
 		i++;
-
 	if (!line[i] || line[i] == '\n')
-		return 0;
-
+		return (0);
 	while (line[i])
 	{
 		if (line[i] == '\n')
-			break;
+			break ;
 		if (!ft_strchr("01NSEW ", line[i]))
-			return 0;
+			return (0);
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
-static char *skip_empty_lines(int fd)
+static char	*skip_empty_lines(int fd)
 {
-	char *line;
+	char	*line;
 
 	line = get_next_line(fd);
 	while (line && line[0] == '\n')
@@ -51,7 +50,7 @@ static char *skip_empty_lines(int fd)
 //     int i = 0;
 
 //     if (!data->map)
-//         return;
+//         return ;
 //     while (data->map[i])
 //     {
 //         free(data->map[i]);
@@ -61,7 +60,7 @@ static char *skip_empty_lines(int fd)
 //     data->map = NULL;
 // }
 
-char *map(char *map_joined, char *line, t_game *game)
+char	*map(char *map_joined, char *line, t_game *game)
 {
 	int		i;
 	char	*new_joined;
@@ -85,10 +84,10 @@ char *map(char *map_joined, char *line, t_game *game)
 	return (new_joined);
 }
 
-void parse_map(t_data *data, int fd, t_game *game)
+void	parse_map(t_data *data, int fd, t_game *game)
 {
-	char *line;
-	char *map_joined;
+	char	*line;
+	char	*map_joined;
 
 	map_joined = NULL;
 	line = skip_empty_lines(fd);
@@ -100,7 +99,7 @@ void parse_map(t_data *data, int fd, t_game *game)
 			free(map_joined);
 			print_error_and_exit("Empty line found inside the map", game);
 		}
-		map_joined = map(map_joined, line, game); // INTERESTING
+		map_joined = map(map_joined, line, game);
 		free(line);
 		line = get_next_line(fd);
 	}

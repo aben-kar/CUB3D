@@ -12,129 +12,103 @@
 
 #include "../cub3D.h"
 
-bool is_player(char position)
+static void	check_row_top(char **map, t_game *game)
 {
-    return (position == 'N'
-        || position == 'S'
-        || position == 'W'
-        || position == 'E');
+	int	i;
+
+	i = 0;
+	while (map[0][i])
+	{
+		if (map[0][i] != '1' && map[0][i] != '?')
+			print_error_and_exit("Map not closed", game);
+		if (map[0][i] == '?' && map[1][i] && map[1][i] != '1'
+			&& map[1][i] != '?')
+			print_error_and_exit("Map not closed", game);
+		i++;
+	}
 }
 
-void check_multiple_player(t_data *data, t_game *game)
+static void	check_row_bottom(char **map, int rows, t_game *game)
 {
-    int i;
-    int j;
-    int player;
+	int	i;
 
-    if (!data->map || !data->map[0])
-        return;
-    i = 0;
-    player = 0;
-    while (data->map[i])
-    {
-        j = 0;
-        while (data->map[i][j])
-        {
-            if (data->map[i][j] == 'N' || data->map[i][j] == 'S' ||
-                     data->map[i][j] == 'E' || data->map[i][j] == 'W')
-                player++;
-            j++;
-        }
-        i++;    
-    }
-    if (player > 1)
-        print_error_and_exit("The map must contain one player starting position", game);
+	i = 0;
+	while (map[rows - 1][i])
+	{
+		if (map[rows - 1][i] != '1' && map[rows - 1][i] != '?')
+			print_error_and_exit("Map not closed", game);
+		if (map[rows - 1][i] == '?' && map[rows - 2][i] && map[rows
+			- 2][i] != '1' && map[rows - 2][i] != '?')
+			print_error_and_exit("Map not closed", game);
+		i++;
+	}
 }
 
-void is_map_closed(char **map, t_game *game) // norme
+static void	check_row_sides(char **map, int i, t_game *game)
 {
-    if (!map || !map[0])
-        return;
-    
-    int i;
-    int rows;
-    int first_row_len;
-    int last_row_len;
-    
-    rows = 0;
-    first_row_len = ft_strlen(map[0]);
-    
-    while (map[rows])
-        rows++;
-        
-    i = 0;
-    while (i < first_row_len)
-    {
-        if (map[0][i] != '1' && map[0][i] != '?')
-            print_error_and_exit("Map not closed", game);
-        else
-        {
-            if (map[0][i] == '?')
-            {
-                if ((map[1][i] != '1' && map[1][i] != '?') && map[1][i])
-                    print_error_and_exit("Map not closed", game);
-            }
-        }
-        i++;
-    }
-    
-    i = 0;
-    last_row_len = ft_strlen(map[rows - 1]);
-    while (i < last_row_len)
-    {
-        if (map[rows - 1][i] != '1' && map[rows - 1][i] != '?')
-            print_error_and_exit("Map not closed", game);
-        else
-        {
-            if (map[rows - 1][i] == '?')
-            {
-                if ((map[rows - 2][i] != '1' && map[rows - 2][i] != '?') && map[rows - 2][i])
-                    print_error_and_exit("Map not closed", game);
-            }
-        }
-        i++;
-    }
+	int	k;
+	int	len;
 
-    i = 0;
-    int player = 0;
-    while (i < rows)
-    {
-        int j = 0;
-        while (map[i][j])
-        {
-            if (is_player(map[i][j]))
-                player++;
-            j++;
-        }
-        
-        if (map[i][0] != '1')
-            print_error_and_exit("Map not closed", game);
-        else
-        {
-            int k = 0;
-            while (map[i][k])
-            {
-                if (map[i][k] == '?')
-                {
-                    if ((map[i][k - 1] != '1' && map[i][k - 1] != '?') && k - 1 >= 0)
-                        print_error_and_exit("Map not closed", game);
-                    else if (i - 1 >= 0)
-                    {
-                        if ((map[i - 1][k] != '1' && map[i - 1][k] != '?') && map[i - 1][k])
-                            print_error_and_exit("Map not closed", game);
-                    }
-                }
-                else
-                {
-                    int len = ft_strlen(map[i]);
-                    if (map[i][len - 1] != '1' && map[i][len - 1] != '?')
-                        print_error_and_exit("Map not closed", game);
-                }
-                k++; 
-            }
-        }    
-        i++;
-    }
-    if (player != 1)
-        print_error_and_exit("The map must contain one player starting position", game);
+	k = 0;
+	len = ft_strlen(map[i]);
+	while (map[i][k])
+	{
+		if (map[i][k] == '?')
+		{
+			if (k - 1 >= 0 && map[i][k - 1] != '1' && map[i][k - 1] != '?')
+				print_error_and_exit("Map not closed", game);
+			if (i - 1 >= 0 && map[i - 1][k] && map[i - 1][k] != '1' && map[i
+				- 1][k] != '?')
+				print_error_and_exit("Map not closed", game);
+		}
+		k++;
+	}
+	if (map[i][0] != '1' && map[i][0] != '?')
+		print_error_and_exit("Map not closed", game);
+	if (map[i][len - 1] != '1' && map[i][len - 1] != '?')
+		print_error_and_exit("Map not closed", game);
+}
+
+static int	count_players(char **map)
+{
+	int	i;
+	int	j;
+	int	player;
+
+	player = 0;
+	i = 0;
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			if (is_player(map[i][j]))
+				player++;
+			j++;
+		}
+		i++;
+	}
+	return (player);
+}
+
+void	is_map_closed(char **map, t_game *game)
+{
+	int	i;
+	int	rows;
+
+	if (!map || !map[0])
+		return ;
+	rows = 0;
+	while (map[rows])
+		rows++;
+	check_row_top(map, game);
+	check_row_bottom(map, rows, game);
+	i = 0;
+	while (i < rows)
+	{
+		check_row_sides(map, i, game);
+		i++;
+	}
+	if (count_players(map) != 1)
+		print_error_and_exit("The map must contain one player", game);
 }

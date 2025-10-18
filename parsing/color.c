@@ -12,45 +12,44 @@
 
 #include "../cub3D.h"
 
-void    free_split(char **split)
+void	free_split(char **split)
 {
-    int i;
+	int	i;
 
-    if (!split)
-        return;
-
-    i = 0;
-    while (split[i])
-    {
-        free(split[i]);
-        i++;
-    }
-    free(split);
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }
 
-void check_is_rgb_digit(char **rgb_values, t_game *game)
+void	check_is_rgb_digit(char **rgb_values, t_game *game)
 {
-    int i;
+	int	i;
+	int	j;
 
-    if (!rgb_values || !*rgb_values)
-        return;
-    i = 0;
-    while (i < 3)
-    {
-        int j;
-
-        j = 0;
-        while (rgb_values[i][j])
-        {
-            if (!ft_isdigit(rgb_values[i][j]))
-            {
-                free_split(rgb_values);
-                print_error_and_exit("RGB values must contain only digits", game);
-            }
-            j++;
-        }
-        i++;
-    }
+	if (!rgb_values || !*rgb_values)
+		return ;
+	i = 0;
+	while (i < 3)
+	{
+		j = 0;
+		while (rgb_values[i][j])
+		{
+			if (!ft_isdigit(rgb_values[i][j]))
+			{
+				free_split(rgb_values);
+				print_error_and_exit("RGB values must contain only digits",
+					game);
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 static void	check_virgule_count(char *line, t_game *game)
@@ -80,8 +79,8 @@ static char	**split_rgb_values(char *line, t_game *game)
 		print_error_and_exit("Memory allocation error", game);
 	rgb_values = ft_split(cleand, ",");
 	free(cleand);
-	if (!rgb_values || !rgb_values[0] || !rgb_values[1]
-		|| !rgb_values[2] || rgb_values[3] != NULL)
+	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2]
+		|| rgb_values[3] != NULL)
 	{
 		free_split(rgb_values);
 		print_error_and_exit("Invalid color format", game);

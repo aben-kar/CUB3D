@@ -95,7 +95,6 @@ char	**ft_split_gc(char const *s, char *c, t_game *game)
 			if (!prr[i[1]])
 				return (NULL);
 		}
-		// prr[len_word] = "\0";
 	}
 	prr[len_word] = NULL;
 	return (prr);

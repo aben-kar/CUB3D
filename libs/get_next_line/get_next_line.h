@@ -21,7 +21,6 @@
 # include "../libft/libft.h"
 # include "../../cub3D.h"
 
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 10
 # endif

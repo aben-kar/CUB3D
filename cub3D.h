@@ -11,34 +11,34 @@
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-#define CUB3D_H
+# define CUB3D_H
 
-#include "libs/minilibx-linux/mlx.h"
+# include "libs/minilibx-linux/mlx.h"
 # include <X11/keysym.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <math.h>
-#include "garbage_collector/gc.h"
-#include "libs/libft/libft.h"
-#include "libs/get_next_line/get_next_line_bonus.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <math.h>
+# include "garbage_collector/gc.h"
+# include "libs/libft/libft.h"
+# include "libs/get_next_line/get_next_line_bonus.h"
 
 
-#define SCREEN_WIDTH 1000
-#define SCREEN_HEIGHT 500
-#define KEY_ESC 65307
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-#define KEY_LEFT 65361
-#define KEY_RIGHT 65363
-#define FOV 0.66
+# define SCREEN_WIDTH 1000
+# define SCREEN_HEIGHT 500
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+# define FOV 0.66
 // gun
-#define GUN_TRANSPARENT 0x000000
-#define GUN_SCALE 3
+# define GUN_TRANSPARENT 0x000000
+# define GUN_SCALE 3
 
 typedef struct s_data t_data;
 
@@ -165,6 +165,7 @@ void is_map_valid(t_data *data, t_game *game);
 void check_multiple_player(t_data *data, t_game *game);
 void is_map_closed(char **map, t_game *game);
 bool is_player(char position);
+void	parse_texture(t_data *data, char **str, t_game *game);
 
 // function raycasting
 void init_game(t_game *game);
@@ -174,7 +175,6 @@ void    init_textures(t_game *game);
 int close_window(t_game *game);
 int key_press(int keycode, t_game *game);
 int render_frame(t_game *game);
-// void rotation_player(int key, t_player *player);
 void movment_player(int key, t_game *game);
 void rotate_player_right(t_player *player);
 void rotate_player_left(t_player *player);
@@ -186,13 +186,11 @@ void raycast_3d(t_game *game);
 void my_mlx_pixel_put(t_game *game, int x, int y, int color);
 
 
-// void ray_mlx_pixel_put(t_game *game, int x, int y, int color);
 void draw_wall_column(t_game *game, int x);
 void cast_single_ray(t_game *game, double camera_x);
 int	get_tex_pixel_color(t_texture *tex, int x, int y);
 void	draw_gun(t_game *game);
 void	destroy_textures(t_game *game);
 void cleanup_and_exit(t_game *game, int exit_code);
-// char	**ft_split(char const *s, char *c);
 
 #endif

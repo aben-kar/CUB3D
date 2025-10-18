@@ -12,7 +12,8 @@
 
 #include "../cub3D.h"
 
-char	*ft_substr_gc(const char *s, unsigned int start, size_t len, t_game *game)
+char	*ft_substr_gc(const char *s, unsigned int start,
+	size_t len, t_game *game)
 {
 	char	*subs;
 	size_t	i;

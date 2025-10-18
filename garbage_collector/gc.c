@@ -30,7 +30,7 @@ void	*gc_alloc(size_t size, t_game *game)
 		return (NULL);
 	}
 	new_node->ptr = ptr;
-	new_node->next = game->gc; // insert at head
+	new_node->next = game->gc;
 	game->gc = new_node;
 	return (ptr);
 }
@@ -40,7 +40,7 @@ void	gc_free_all(t_game *game)
 	t_gc	*tmp;
 
 	if (!game)
-		return;
+		return ;
 	while (game->gc)
 	{
 		tmp = game->gc;

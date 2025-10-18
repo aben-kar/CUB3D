@@ -16,6 +16,7 @@ SRC = main.c \
 	$(PARSER_DIR)/texture.c \
 	$(PARSER_DIR)/color.c \
 	$(PARSER_DIR)/parse_map.c \
+	$(PARSER_DIR)/parse_utils.c \
 	$(PARSER_DIR)/validation_map_utils.c \
 	$(PARSER_DIR)/validation_map.c \
 	$(RAYCASTING_DIR)/init_game.c \

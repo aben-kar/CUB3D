@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim_gc.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/18 20:31:41 by zaakrab           #+#    #+#             */
+/*   Updated: 2025/10/18 20:31:42 by zaakrab          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3D.h"
 
 char	*ft_strtrim_gc(char const *s1, char const *set, t_game *game)
@@ -28,6 +40,5 @@ char	*ft_strtrim_gc(char const *s1, char const *set, t_game *game)
 		return (NULL);
 	ft_memcpy(dest, s1 + i, j - i + 1);
 	dest[j - i + 1] = '\0';
-
 	return (dest);
 }
