@@ -150,6 +150,13 @@ typedef struct s_data
     char **map;
 } t_data;
 
+// map_copier helper struct
+typedef struct s_mapinfo
+{
+	char	**src;
+	int		lines;
+	int		cols;
+}	t_mapinfo;
 
 // Function parsing
 void parsing_cub(t_data *data, int fd, t_game *game);

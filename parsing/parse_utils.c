@@ -18,34 +18,26 @@ bool	is_player(char position)
 		|| position == 'E');
 }
 
+static void	set_texture(char **str, char **path, char *name, t_game *game)
+{
+	(void)name;
+	if (*path)
+		print_error_and_exit("Duplicate texture", game);
+	*path = ft_strdup_gc(str[1], game);
+}
+
 void	parse_texture(t_data *data, char **str, t_game *game)
 {
 	if (!str || !*str)
 		return ;
 	if (ft_strncmp(str[0], "NO", 3) == 0 && str[1] && !str[2])
-	{
-		if (data->path_no)
-			print_error_and_exit("Duplicate NO texture", game);
-		data->path_no = ft_strdup_gc(str[1], game);
-	}
+		set_texture(str, &data->path_no, "NO", game);
 	else if (ft_strncmp(str[0], "SO", 3) == 0 && str[1] && !str[2])
-	{
-		if (data->path_so)
-			print_error_and_exit("Duplicate SO texture", game);
-		data->path_so = ft_strdup_gc(str[1], game);
-	}
+		set_texture(str, &data->path_so, "SO", game);
 	else if (ft_strncmp(str[0], "WE", 3) == 0 && str[1] && !str[2])
-	{
-		if (data->path_we)
-			print_error_and_exit("Duplicate WE texture", game);
-		data->path_we = ft_strdup_gc(str[1], game);
-	}
+		set_texture(str, &data->path_we, "WE", game);
 	else if (ft_strncmp(str[0], "EA", 3) == 0 && str[1] && !str[2])
-	{
-		if (data->path_ea)
-			print_error_and_exit("Duplicate EA texture", game);
-		data->path_ea = ft_strdup_gc(str[1], game);
-	}
+		set_texture(str, &data->path_ea, "EA", game);
 }
 
 void	check_multiple_player(t_data *data, t_game *game)

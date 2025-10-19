@@ -30,35 +30,53 @@ static void	copy_map_row(char *dest, char *src, int cols)
 	dest[cols] = '\0';
 }
 
-char	**map_copier(t_data *data, t_game *game)
+static int	get_max_cols(char **map)
 {
-	char	**copier_line;
-	int		line;
-	int		cols;
-	int		i;
+	int	i;
+	int	max;
 
-	line = 0;
-	cols = 0;
-	while (data->map[line])
-	{
-		if ((int)ft_strlen(data->map[line]) > cols)
-			cols = ft_strlen(data->map[line]);
-		line++;
-	}
-	copier_line = (char **)gc_alloc((line + 1) * sizeof(char *), game);
-	if (!copier_line)
-		return (NULL);
 	i = 0;
-	while (i < line)
+	max = 0;
+	while (map[i])
 	{
-		copier_line[i] = (char *)gc_alloc((cols + 1) * sizeof(char), game);
-		if (!copier_line[i])
-			print_error_and_exit("Memory allocation error in map_copier", game);
-		copy_map_row(copier_line[i], data->map[i], cols);
+		if ((int)ft_strlen(map[i]) > max)
+			max = ft_strlen(map[i]);
 		i++;
 	}
-	copier_line[i] = NULL;
-	return (copier_line);
+	return (max);
+}
+
+static void	alloc_rows(char **dst, t_mapinfo info, t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < info.lines)
+	{
+		dst[i] = gc_alloc((info.cols + 1) * sizeof(char), game);
+		if (!dst[i])
+			print_error_and_exit("Memory allocation error in map_copier", game);
+		copy_map_row(dst[i], info.src[i], info.cols);
+		i++;
+	}
+	dst[i] = NULL;
+}
+
+char	**map_copier(t_data *data, t_game *game)
+{
+	char		**copy;
+	t_mapinfo	info;
+
+	info.lines = 0;
+	while (data->map[info.lines])
+		info.lines++;
+	info.cols = get_max_cols(data->map);
+	info.src = data->map;
+	copy = gc_alloc((info.lines + 1) * sizeof(char *), game);
+	if (!copy)
+		return (NULL);
+	alloc_rows(copy, info, game);
+	return (copy);
 }
 
 void	is_map_valid(t_data *data, t_game *game)
