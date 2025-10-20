@@ -104,11 +104,10 @@ typedef struct s_texture
 
 typedef struct s_texture_data
 {
-    int tex_x;
-    int tex_y;
+    int y;
+    int color;
     double step;
     double tex_pos;
-    double wall_x;
 } t_texture_data;
 
 
@@ -144,6 +143,7 @@ typedef struct s_game
     t_texture	gun_idle;
     t_texture	gun_fire;
     int			shooting;
+    int     draw_color; // current color used by draw functions
     // gc
     t_gc        *gc;
 }   t_game;
