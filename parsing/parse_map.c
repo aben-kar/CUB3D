@@ -53,7 +53,8 @@ char	*map(char *map_joined, char *line, t_game *game)
 	if (!is_map_line(line))
 	{
 		free(line);
-		free(map_joined);
+		if (map_joined)
+			free(map_joined);
 		print_error_and_exit("Invalid map line", game);
 	}
 	i = 0;
@@ -65,7 +66,13 @@ char	*map(char *map_joined, char *line, t_game *game)
 	}
 	new_joined = ft_strjoin(map_joined, line);
 	if (!new_joined)
+	{
+		if (map_joined)
+			free(map_joined);
 		print_error_and_exit("Memory allocation error in map join", game);
+	}
+	if (map_joined)
+		free(map_joined);
 	return (new_joined);
 }
 
@@ -81,7 +88,8 @@ void	parse_map(t_data *data, int fd, t_game *game)
 		if (line[0] == '\n')
 		{
 			free(line);
-			free(map_joined);
+			if (map_joined)
+				free(map_joined);
 			print_error_and_exit("Empty line found inside the map", game);
 		}
 		map_joined = map(map_joined, line, game);

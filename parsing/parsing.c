@@ -15,7 +15,6 @@
 void	print_error_and_exit(const char *msg, t_game *game)
 {
 	printf("Error\n%s\n", msg);
-	exit(1);
 	cleanup_and_exit(game, 1);
 }
 
