@@ -1,12 +1,13 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/06 23:45:29 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/19 17:57:50 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +102,16 @@ typedef struct s_texture
     int     endian;
 }   t_texture;
 
+typedef struct s_texture_data
+{
+    int tex_x;
+    int tex_y;
+    double step;
+    double tex_pos;
+    double wall_x;
+} t_texture_data;
+
+
 typedef struct s_game
 {
     void    *mlx;
@@ -137,7 +148,14 @@ typedef struct s_game
     t_gc        *gc;
 }   t_game;
 
-
+typedef struct s_data_gun
+{
+    int gx;
+    int gy;
+	int color;
+	int start_x;
+	int start_y;
+} t_data_gun;
 
 typedef struct s_data
 {
@@ -183,6 +201,8 @@ int close_window(t_game *game);
 int key_press(int keycode, t_game *game);
 int render_frame(t_game *game);
 void movment_player(int key, t_game *game);
+int is_valid_position(t_game *game, double x, double y);
+int is_valid_position_with_buffer(t_game *game, double x, double y);
 void rotate_player_right(t_player *player);
 void rotate_player_left(t_player *player);
 int key_release(int key, t_game *game);

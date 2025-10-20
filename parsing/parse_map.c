@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 23:18:43 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/16 12:29:34 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/19 14:23:11 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,6 @@ static char	*skip_empty_lines(int fd)
 	}
 	return (line);
 }
-
-// void free_map(t_data *data)
-// {
-//     int i = 0;
-
-//     if (!data->map)
-//         return ;
-//     while (data->map[i])
-//     {
-//         free(data->map[i]);
-//         i++;
-//     }
-//     free(data->map);
-//     data->map = NULL;
-// }
 
 char	*map(char *map_joined, char *line, t_game *game)
 {

@@ -20,13 +20,16 @@ SRC = main.c \
 	$(PARSER_DIR)/validation_map_utils.c \
 	$(PARSER_DIR)/validation_map.c \
 	$(RAYCASTING_DIR)/init_game.c \
-	$(RAYCASTING_DIR)/draw_map_gun.c \
+	$(RAYCASTING_DIR)/draw_mini_map.c \
+	$(RAYCASTING_DIR)/draw_gun.c \
+	$(RAYCASTING_DIR)/clean_mlx.c \
 	$(RAYCASTING_DIR)/player_rotation.c \
 	$(RAYCASTING_DIR)/player_movment.c \
+	$(RAYCASTING_DIR)/player_movment_utils.c \
 	$(RAYCASTING_DIR)/init_player.c \
 	$(RAYCASTING_DIR)/init_textures.c \
 	$(RAYCASTING_DIR)/raycasting.c \
-	$(RAYCASTING_DIR)/raycasting_utils.c \
+	$(RAYCASTING_DIR)/put_textures_on_wall.c \
 	$(GC_DIR)/gc.c \
 	$(GC_DIR)/ft_calloc_gc.c \
 	$(GC_DIR)/ft_split_gc.c \

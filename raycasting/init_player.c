@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:23:04 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/16 12:30:10 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/20 13:16:37 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,55 +53,11 @@ int key_release(int key, t_game *game)
 
     return 0;
 }
-// GUN ANIMATION
-int	mouse_press(int button, int x, int y, t_game *game)
-{
-	(void)x;
-	(void)y;
-	if (button == 1) // Left click
-		game->shooting = 1;
-	return (0);
-}
-
-int	mouse_release(int button, int x, int y, t_game *game)
-{
-	(void)x;
-	(void)y;
-	if (button == 1)
-		game->shooting = 0;
-	return (0);
-}
-
-int mouse_move(int x, int y, t_game *game)
-{
-    static int last_x = -1;
-    double rot_amount;
-
-    (void)y;
-
-    if (last_x == -1)
-        last_x = x;
-
-    int delta_x = x - last_x;
-    last_x = x;
-
-    rot_amount = delta_x * 0.002;
-
-    game->player->angle += rot_amount;
-    game->player->dir_x = cos(game->player->angle);
-    game->player->dir_y = sin(game->player->angle);
-    game->player->plane_x = -game->player->dir_y * FOV;
-    game->player->plane_y = game->player->dir_x * FOV;
-
-    mlx_mouse_move(game->mlx, game->mlx_win, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-    last_x = SCREEN_WIDTH / 2;
-
-    return (0);
-}
 
 int render_frame(t_game *game)
 {
-    if (!game) return 0;
+    if (!game)
+        return 0;
 
     if (game->mv_forward)
         movment_player(KEY_W, game);
@@ -117,14 +73,11 @@ int render_frame(t_game *game)
         movment_player(KEY_RIGHT, game);
 
     game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-    game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel,
-                                    &game->line_length, &game->endian);
+    game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel, &game->line_length, &game->endian);
     raycast_3d(game);
     draw_mini_map(game);
     draw_gun(game);
     mlx_put_image_to_window(game->mlx, game->mlx_win, game->img, 0, 0);
-    
-    // 4. Destroy image (bach maneb9awch n leak memory)
     mlx_destroy_image(game->mlx, game->img);
 
     return 0;
@@ -142,8 +95,8 @@ char find_position_player(t_game *game)
             if (game->data->map[i][j] == 'N' || game->data->map[i][j] == 'S' ||
                 game->data->map[i][j] == 'E' || game->data->map[i][j] == 'W')
             {
-                game->player->x = j + 0.5; // Center dyal cell
-                game->player->y = i + 0.5; // Center dyal cell
+                game->player->x = j + 0.5;
+                game->player->y = i + 0.5;
                 player_char = game->data->map[i][j];
                 return (player_char);
             }
@@ -169,7 +122,6 @@ void init_player(t_game *game)
     game->player->dir_y = sin(game->player->angle);
     game->player->plane_x = -game->player->dir_y * FOV;
     game->player->plane_y = game->player->dir_x * FOV;
-    // TO
-    game->player->move_speed = 0.005;
-    game->player->rot_speed = 0.003; 
+    game->player->move_speed = 0.008;
+    game->player->rot_speed = 0.004; 
 }
