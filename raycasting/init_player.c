@@ -68,14 +68,14 @@ int	render_frame(t_game *game)
 		movment_player(KEY_LEFT, game);
 	if (game->rot_right)
 		movment_player(KEY_RIGHT, game);
-	game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel,
-			&game->line_length, &game->endian);
+	// game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	// game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel,
+	// 		&game->line_length, &game->endian);
 	raycast_3d(game);
 	draw_mini_map(game);
 	draw_gun(game);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img, 0, 0);
-	mlx_destroy_image(game->mlx, game->img);
+	// mlx_destroy_image(game->mlx, game->img);
 	return (0);
 }
 

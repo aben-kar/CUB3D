@@ -16,6 +16,8 @@ void	cleanup_and_exit(t_game *game, int exit_code)
 {
 	if (!game)
 		exit(exit_code);
+	if (game->img)  // ← ADD THIS
+        mlx_destroy_image(game->mlx, game->img);
 	destroy_textures(game);
 	if (game->mlx_win)
 		mlx_destroy_window(game->mlx, game->mlx_win);

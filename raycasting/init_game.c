@@ -23,6 +23,8 @@ void	init_mlx(t_game *game)
 			SCREEN_WIDTH, SCREEN_HEIGHT, "CUB3D");
 	if (!game->mlx_win)
 		print_error_and_exit("Failed to create window", game);
+	if (game->img) // new
+        mlx_destroy_image(game->mlx, game->img); // new
 	game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!game->img)
 		print_error_and_exit("Failed to create image", game);
@@ -30,6 +32,7 @@ void	init_mlx(t_game *game)
 			&game->line_length, &game->endian);
 	if (!game->addr)
 		print_error_and_exit("Failed to get image data address", game);
+	ft_memset(game->addr, 0, SCREEN_HEIGHT * game->line_length);
 }
 
 void	init_mlx_game(t_game *game)

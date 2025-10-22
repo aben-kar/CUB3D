@@ -22,6 +22,16 @@ int	get_tex_pixel_color(t_texture *tex, int x, int y)
 	return (*(unsigned int *)pixel);
 }
 
+void zero_texture_structs(t_game *game)
+{
+    ft_memset(&game->north, 0, sizeof(t_texture));
+    ft_memset(&game->south, 0, sizeof(t_texture));
+    ft_memset(&game->east, 0, sizeof(t_texture));
+    ft_memset(&game->west, 0, sizeof(t_texture));
+    ft_memset(&game->gun_idle, 0, sizeof(t_texture));
+    ft_memset(&game->gun_fire, 0, sizeof(t_texture));
+}
+
 void	init_wall_textures(t_game *game)
 {
 	game->north.img = mlx_xpm_file_to_image(game->mlx, game->data->path_no,
@@ -74,6 +84,7 @@ void	init_textures(t_game *game)
 {
 	if (!game)
 		return ;
+	zero_texture_structs(game);
 	init_wall_textures(game);
 	init_gun_textures(game);
 }

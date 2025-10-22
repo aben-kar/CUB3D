@@ -45,5 +45,5 @@ int main(int ac, char **av)
     game.player = &player;
     game.ray = &ray;
     init_game(&game);
-    return 0;
+    close_window(&game);
 }
