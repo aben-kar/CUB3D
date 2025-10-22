@@ -5,8 +5,7 @@ CFLAGS = -Wall -Wextra -Werror
 # -fsanitize=address -g3
 
 LIBFT_DIR = libs/libft
-MLX_DIR = libs/minilibx-linux
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+MLX_FLAGS = -lmlx -lXext -lX11 -lm
 PARSER_DIR = parsing
 RAYCASTING_DIR = raycasting
 GC_DIR = garbage_collector
@@ -44,7 +43,6 @@ SRC = main.c \
 OBJ = $(SRC:.c=.o)
 
 INCLUDES = -I. -I$(PARSER_DIR) -I$(RAYCASTING_DIR) -I$(GC_DIR)
-
 HEADER = cub3D.h
 
 all: $(NAME)

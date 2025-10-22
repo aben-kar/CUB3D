@@ -14,7 +14,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "libs/minilibx-linux/mlx.h"
+# include <mlx.h>
 # include <X11/keysym.h>
 # include <stdio.h>
 # include <unistd.h>
