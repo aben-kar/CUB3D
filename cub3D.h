@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/14 15:11:51 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/19 17:57:50 by acben-ka         ###   ########.fr       */
+/*   Created: 2025/10/22 22:40:39 by acben-ka          #+#    #+#             */
+/*   Updated: 2025/10/22 23:02:46 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +25,6 @@
 # include "libs/libft/libft.h"
 # include "libs/get_next_line/get_next_line_bonus.h"
 
-
 # define SCREEN_WIDTH 1000
 # define SCREEN_HEIGHT 500
 # define KEY_ESC 65307
@@ -37,187 +35,163 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define FOV 0.66
-// gun
 # define GUN_TRANSPARENT 0x000000
 # define GUN_SCALE 3
 
-typedef struct s_data t_data;
+typedef struct s_data	t_data;
 
-typedef struct s_ray
+typedef struct	s_ray
 {
-    // Ray direction
-    double ray_dir_x;           // Direction X dyal ray
-    double ray_dir_y;           // Direction Y dyal ray
-    
-    // Map position (cell li fih player)
-    int map_x;              // X coordinate f map
-    int map_y;              // Y coordinate f map
-    
-    // Side distance (distance mn player l next grid line)
-    double side_dist_x;     // Distance l vertical grid line
-    double side_dist_y;     // Distance l horizontal grid line
-    
-    // Delta distance (distance bin grid lines)
-    double delta_dist_x;    // Distance bin vertical lines
-    double delta_dist_y;    // Distance bin horizontal lines
-    
-    // Step direction (-1 or +1)
-    int step_x;             // Direction f X (-1 = shimale, +1 = limen)
-    int step_y;             // Direction f Y (-1 = lfou9, +1 = louta7)
-    
-    // Wall hit info
-    int hit;                // Wach l9a wall? (0 = no, 1 = yes)
-    int side;               // Ashmen side hit? (0 = vertical, 1 = horizontal)
-    
-    // Distance to wall
-    double perp_wall_dist;  // Perpendicular distance l wall
-    
-    // Wall rendering info
-    int line_height;        // Height dyal wall line f screen
-    int draw_start;         // Fin tبدا ترسم wall (pixel Y)
-    int draw_end;           // Fin تسالي ترسم wall (pixel Y)
-    
-} t_ray;
+    double	ray_dir_x;
+    double	ray_dir_y;
+    int		map_x;
+    int		map_y;
+    double	side_dist_x;
+    double	side_dist_y;
+    double	delta_dist_x;
+    double	delta_dist_y;
+    int		step_x;
+    int		step_y;
+    int		hit;
+    int		side;
+    double	perp_wall_dist;
+    int		line_height;
+    int		draw_start;
+    int		draw_end;
+}	t_ray;
 
-typedef struct s_player {
-    double x;          // Position x dyal player
-    double y;          // Position y dyal player
-    double dir_x;      // Direction vector x
-    double dir_y;      // Direction vector y
-    double plane_x;    // Camera plane x (FOV)
-    double plane_y;    // Camera plane y (FOV)
-    double move_speed; // Vitesse dyal movement
-    double rot_speed;  // Vitesse dyal rotation
-    double angle;      // Angle dyal player
-} t_player;
-
-typedef struct s_texture
+typedef struct	s_player
 {
-    void    *img;
-    char    *addr;
-    int     width;
-    int     height;
-    int     bpp;
-    int     line_len;
-    int     endian;
-}   t_texture;
+    double	x;
+    double	y;
+    double	dir_x;
+    double	dir_y;
+    double	plane_x;
+    double	plane_y;
+    double	move_speed;
+    double	rot_speed;
+    double	angle;
+}	t_player;
 
-typedef struct s_texture_data
+typedef struct	s_texture
 {
-    int y;
-    int color;
-    double step;
-    double tex_pos;
-} t_texture_data;
-
-
-typedef struct s_game
-{
-    void    *mlx;
-    void    *mlx_win;
     void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-    int     map_rows;
-    double  player_x;
-    double  player_y;
-    //////////
-    int mv_forward;
-    int mv_backward;
-    int mv_left;
-    int mv_right;
-    int rot_left;
-    int rot_right;
-    ////////////
-    t_data *data;
-    t_player *player;
-    t_ray *ray;
-	// wall texture
+    char	*addr;
+    int		width;
+    int		height;
+    int		bpp;
+    int		line_len;
+    int		endian;
+}	t_texture;
+
+typedef struct _texture_data
+{
+    int		y;
+    int		color;
+    double	step;
+    double	tex_pos;
+}	t_texture_data;
+
+typedef struct	s_game
+{
+    void		*mlx;
+    void		*mlx_win;
+    void		*img;
+    char		*addr;
+    int			bits_per_pixel;
+    int			line_length;
+    int			endian;
+    int			map_rows;
+    double		player_x;
+    double		player_y;
+    int			mv_forward;
+    int			mv_backward;
+    int			mv_left;
+    int			mv_right;
+    int			rot_left;
+    int			rot_right;
+    t_data		*data;
+    t_player	*player;
+    t_ray		*ray;
     t_texture	north;
     t_texture	south;
     t_texture	east;
     t_texture	west;
-	// gun texture:
     t_texture	gun_idle;
     t_texture	gun_fire;
     int			shooting;
-    int     draw_color; // current color used by draw functions
-    // gc
-    t_gc        *gc;
-}   t_game;
+    int			draw_color;
+    t_gc		*gc;
+}	t_game;
 
-typedef struct s_data_gun
+typedef struct	s_data_gun
 {
-    int gx;
-    int gy;
-	int color;
-	int start_x;
-	int start_y;
-} t_data_gun;
+    int	gx;
+    int	gy;
+    int	color;
+    int	start_x;
+    int	start_y;
+}	t_data_gun;
 
-typedef struct s_data
+typedef struct	s_data
 {
-    char *path_no;
-    char *path_so;
-    char *path_we;
-    char *path_ea;
-    int floor_color;
-    int ceiling_color;
-    char **map;
-} t_data;
+    char	*path_no;
+    char	*path_so;
+    char	*path_we;
+    char	*path_ea;
+    int		floor_color;
+    int		ceiling_color;
+    char	**map;
+}	t_data;
 
-// map_copier helper struct
 typedef struct s_mapinfo
 {
-	char	**src;
-	int		lines;
-	int		cols;
+    char	**src;
+    int	lines;
+    int		cols;
 }	t_mapinfo;
 
-// Function parsing
-void parsing_cub(t_data *data, int fd, t_game *game);
-void parse_texture_and_color(t_data *data, int fd, t_game *game);
-void parse_config_file(t_data *data, char *line, t_game *game);
-int all_config_parsed(t_data *data);
-int extract_rgb_color(char *line, t_game *game);
-void free_split(char **split);
-void print_error_and_exit(const char *msg, t_game *game);
-void parse_map(t_data *data, int fd, t_game *game);
-int is_map_line(char *line);
-void is_map_valid(t_data *data, t_game *game);
-void check_multiple_player(t_data *data, t_game *game);
-void is_map_closed(char **map, t_game *game);
-bool is_player(char position);
+/* parsing */
+void	parsing_cub(t_data *data, int fd, t_game *game);
+void	parse_texture_and_color(t_data *data, int fd, t_game *game);
+void	parse_config_file(t_data *data, char *line, t_game *game);
+int		all_config_parsed(t_data *data);
+int		extract_rgb_color(char *line, t_game *game);
+void	free_split(char **split);
+void	print_error_and_exit(const char *msg, t_game *game);
+void	parse_map(t_data *data, int fd, t_game *game);
+int		is_map_line(char *line);
+void	is_map_valid(t_data *data, t_game *game);
+void	check_multiple_player(t_data *data, t_game *game);
+void	is_map_closed(char **map, t_game *game);
+bool	is_player(char position);
 void	parse_texture(t_data *data, char **str, t_game *game);
 
-// function raycasting
-void init_game(t_game *game);
-void draw_mini_map(t_game *game);
-void init_player(t_game *game);
-void    init_textures(t_game *game);
-int close_window(t_game *game);
-int key_press(int keycode, t_game *game);
-int render_frame(t_game *game);
-void movment_player(int key, t_game *game);
-int is_valid_position(t_game *game, double x, double y);
-int is_valid_position_with_buffer(t_game *game, double x, double y);
-void rotate_player_right(t_player *player);
-void rotate_player_left(t_player *player);
-int key_release(int key, t_game *game);
-int	mouse_press(int button, int x, int y, t_game *game);
-int	mouse_release(int button, int x, int y, t_game *game);
-int mouse_move(int x, int y, t_game *game);
-void raycast_3d(t_game *game);
-void my_mlx_pixel_put(t_game *game, int x, int y, int color);
+/* raycasting */
+void	init_game(t_game *game);
+void	draw_mini_map(t_game *game);
+void	init_player(t_game *game);
+void	init_textures(t_game *game);
+int		close_window(t_game *game);
+int		key_press(int keycode, t_game *game);
+int		render_frame(t_game *game);
+void	movment_player(int key, t_game *game);
+int		is_valid_position(t_game *game, double x, double y);
+int		is_valid_position_with_buffer(t_game *game, double x, double y);
+void	rotate_player_right(t_player *player);
+void	rotate_player_left(t_player *player);
+int		key_release(int key, t_game *game);
+int		mouse_press(int button, int x, int y, t_game *game);
+int		mouse_release(int button, int x, int y, t_game *game);
+int		mouse_move(int x, int y, t_game *game);
+void	raycast_3d(t_game *game);
+void	my_mlx_pixel_put(t_game *game, int x, int y, int color);
 
-
-void draw_wall_column(t_game *game, int x);
-void cast_single_ray(t_game *game, double camera_x);
-int	get_tex_pixel_color(t_texture *tex, int x, int y);
+void	draw_wall_column(t_game *game, int x);
+void	cast_single_ray(t_game *game, double camera_x);
+int		get_tex_pixel_color(t_texture *tex, int x, int y);
 void	draw_gun(t_game *game);
 void	destroy_textures(t_game *game);
-void cleanup_and_exit(t_game *game, int exit_code);
+void	cleanup_and_exit(t_game *game, int exit_code);
 
 #endif
