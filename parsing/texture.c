@@ -102,14 +102,13 @@ void	parse_texture_and_color(t_data *data, int fd, t_game *game)
 			line = get_next_line(fd);
 			continue ;
 		}
-		cleand = ft_strtrim(line, "\n");
+		cleand = ft_strtrim_gc(line, "\n", game);
 		if (!cleand)
 		{
 			free(line);
 			print_error_and_exit("Memory allocation error", game);
 		}
 		parse_config_file(data, cleand, game);
-		free(cleand);
 		free(line);
 		if (all_config_parsed(data))
 			break ;

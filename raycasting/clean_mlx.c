@@ -14,6 +14,7 @@
 
 void	cleanup_and_exit(t_game *game, int exit_code)
 {
+	get_next_line(-1);
 	if (!game)
 		exit(exit_code);
 	if (game->img)  // ← ADD THIS
