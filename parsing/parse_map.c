@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 23:18:43 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/19 14:23:11 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/25 22:00:58 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ void	parse_map(t_data *data, int fd, t_game *game)
 	free(map_joined);
 	if (!data->map)
 		print_error_and_exit("Memory allocation error in parse_map", game);
+	close(fd);
 }

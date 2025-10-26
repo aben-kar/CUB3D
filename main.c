@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:19 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/19 14:32:18 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/25 22:01:02 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int main(int ac, char **av)
         return 1;
     }
     parsing_cub(&data, fd, &game);
-    close(fd);
-    
     game.data = &data;
     game.player = &player;
     game.ray = &ray;

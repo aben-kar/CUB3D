@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 22:40:39 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/22 23:02:46 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/25 22:05:40 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <math.h>
 # include "garbage_collector/gc.h"
 # include "libs/libft/libft.h"
-# include "libs/get_next_line/get_next_line_bonus.h"
+# include "libs/get_next_line/get_next_line.h"
 
 # define SCREEN_WIDTH 1000
 # define SCREEN_HEIGHT 500
@@ -154,7 +154,7 @@ typedef struct s_mapinfo
 /* parsing */
 void	parsing_cub(t_data *data, int fd, t_game *game);
 void	parse_texture_and_color(t_data *data, int fd, t_game *game);
-void	parse_config_file(t_data *data, char *line, t_game *game);
+void	parse_config_file(t_data *data, char *line, t_game *game, char *line1);
 int		all_config_parsed(t_data *data);
 int		extract_rgb_color(char *line, t_game *game);
 void	free_split(char **split);

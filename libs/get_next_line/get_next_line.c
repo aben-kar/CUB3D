@@ -5,105 +5,126 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/06 15:36:07 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/09/25 21:22:19 by acben-ka         ###   ########.fr       */
+/*   Created: 2024/12/01 16:48:42 by wel-mjiy          #+#    #+#             */
+/*   Updated: 2025/10/25 22:21:20 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_and_store(int fd, char *rem, char *buffer)
+void	*ft_callocr(size_t nmemb, size_t size)
 {
-	ssize_t	byte;
-	int		i;
+	size_t	total_size;
+	char	*p;
+	size_t	i;
 
+	if (size && SIZE_MAX / size < nmemb)
+		return (NULL);
+	total_size = nmemb * size;
+	if (nmemb == 0 || size == 0)
+		total_size = 1;
+	p = (char *)malloc(total_size);
+	if (!p)
+		return (NULL);
 	i = 0;
-	byte = read(fd, buffer, BUFFER_SIZE);
-	while (byte > 0)
+	while (i < total_size)
 	{
-		buffer[byte] = '\0';
-		rem = ft_strjoin_get(rem, buffer);
-		if (!rem)
-			return (NULL);
-		if (rem[i] && rem[i] == '\n')
+		p[i] = 0;
+		i++;
+	}
+	return ((void *)p);
+}
+
+char	*get_line(char *buffer)
+{
+	int		i;
+	char	*one_line;
+
+	if (!buffer)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	one_line = malloc(i + 2);
+	if (!one_line)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
+		one_line[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] == '\n')
+		one_line[i++] = '\n';
+	one_line[i] = '\0';
+	return (one_line);
+}
+
+char	*ft_read(int fd, char *nbuffer)
+{
+	char	*set_data;
+	int		byteread;
+
+	if (nbuffer && *nbuffer == '\0')
+		return (NULL);
+	set_data = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!set_data)
+		return (NULL);
+	while (!ft_strcherr(nbuffer, '\n'))
+	{
+		byteread = read(fd, set_data, BUFFER_SIZE);
+		if (byteread == 0)
 			break ;
-		byte = read(fd, buffer, BUFFER_SIZE);
+		if (byteread == -1)
+		{
+			free(set_data);
+			return (NULL);
+		}
+		set_data[byteread] = 0;
+		nbuffer = ft_strjoinr(nbuffer, set_data);
 	}
-	if (byte < 0 || (!rem && byte == 0))
-		return (NULL);
-	return (rem);
+	free(set_data);
+	return (nbuffer);
 }
 
-char	*add_line(char *rem)
+void	update_buffer(char **buffer)
 {
-	int		i;
-	char	*line;
+	char	*temp;
+	char	*new_buffer;
 
-	i = 0;
-	if (!rem)
-		return (NULL);
-	while (rem[i] && rem[i] != '\n')
-		i++;
-	if (rem[i] == '\n')
-		i++;
-	line = ft_calloc(i + 1, 1);
-	if (!line)
-		return (NULL);
-	i = 0;
-	while (rem[i] && rem[i] != '\n')
-	{
-		line[i] = rem[i];
-		i++;
-	}
-	if (rem[i] == '\n')
-		line[i] = '\n';
-	return (line);
-}
-
-char	*update_rem(char *rem)
-{
-	int		i;
-	char	*new_rem;
-
-	i = 0;
-	while (rem[i] && rem[i] != '\n')
-		i++;
-	if (rem[i] == '\n')
-		i++;
-	if (!rem[i])
-	{
-		free(rem);
-		return (NULL);
-	}
-	new_rem = ft_strdup(rem + i);
-	if (!new_rem)
-	{
-		free(rem);
-		return (NULL);
-	}
-	free(rem);
-	return (new_rem);
+	temp = *buffer;
+	while (*temp && *temp != '\n')
+		temp++;
+	if (*temp == '\n')
+		temp++;
+	new_buffer = ft_strdupr(temp);
+	free(*buffer);
+	*buffer = new_buffer;
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*rem;
-	char		*buffer;
+	static char	*buffer;
 	char		*line;
 
-	buffer = ft_calloc(BUFFER_SIZE + 1, 1);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	line = NULL;
+	buffer = ft_read(fd, buffer);
 	if (!buffer)
 		return (NULL);
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	line = get_line(buffer);
+	if (!line)
 	{
 		free(buffer);
+		buffer = NULL;
 		return (NULL);
 	}
-	rem = read_and_store(fd, rem, buffer);
-	free(buffer);
-	if (!rem)
-		return (NULL);
-	line = add_line(rem);
-	rem = update_rem(rem);
+	update_buffer(&buffer);
+	if (!buffer || *buffer == '\0')
+	{
+		free(buffer);
+		buffer = NULL;
+	}
 	return (line);
 }
