@@ -16,7 +16,7 @@ void	*ft_calloc_gc(size_t nelem, size_t size, t_game *game)
 {
 	void	*arr;
 
-	if (size != 0 && nelem > SIZE_MAX / size)
+	if (size != 0 && nelem > 18446744073709551615UL / size)
 		return (NULL);
 	arr = gc_alloc(nelem * size, game);
 	if (arr == NULL)

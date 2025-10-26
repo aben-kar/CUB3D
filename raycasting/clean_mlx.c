@@ -12,12 +12,40 @@
 
 #include "../cub3D.h"
 
+void	cleanup_gnl(int fd)
+{
+	char	*line;
+
+	if (fd < 0)
+		return ;
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	// close(fd);
+}
+
+// void	cleanup_gnl(int fd)
+// {
+// 	char	*line;
+
+// 	if (fd < 0)
+// 		return ;
+// 	line = get_next_line(fd);
+// 	if (line)
+// 		free(line);
+// 	close(fd);
+// }
+
 void	cleanup_and_exit(t_game *game, int exit_code)
 {
-	get_next_line(-1);
+	if (game && game->map_fd >= 0)
+		cleanup_gnl(game->map_fd);
 	if (!game)
 		exit(exit_code);
-	if (game->img)  // ← ADD THIS
+	if (game->img)
         mlx_destroy_image(game->mlx, game->img);
 	destroy_textures(game);
 	if (game->mlx_win)

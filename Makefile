@@ -38,8 +38,8 @@ SRC = main.c \
 	$(GC_DIR)/ft_strjoin_gc.c \
 	$(GC_DIR)/ft_strtrim_gc.c \
 	$(GC_DIR)/ft_substr_gc.c \
-	libs/get_next_line/get_next_line.c \
-	libs/get_next_line/get_next_line_utils.c
+	libs/get_next_line/get_next_line_bonus.c \
+	libs/get_next_line/get_next_line_utils_bonus.c
 OBJ = $(SRC:.c=.o)
 
 INCLUDES = -I. -I$(PARSER_DIR) -I$(RAYCASTING_DIR) -I$(GC_DIR)

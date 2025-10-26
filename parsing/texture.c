@@ -94,6 +94,7 @@ void	parse_texture_and_color(t_data *data, int fd, t_game *game)
 	char	*line;
 	char	*cleand;
 
+	game->map_fd = fd;
 	line = get_next_line(fd);
 	printf("%s", line);
 	while (line)

@@ -23,7 +23,7 @@
 # include <math.h>
 # include "garbage_collector/gc.h"
 # include "libs/libft/libft.h"
-# include "libs/get_next_line/get_next_line.h"
+# include "libs/get_next_line/get_next_line_bonus.h"
 
 # define SCREEN_WIDTH 1000
 # define SCREEN_HEIGHT 500
@@ -121,6 +121,7 @@ typedef struct	s_game
     t_texture	gun_fire;
     int			shooting;
     int			draw_color;
+    int         map_fd;
     t_gc		*gc;
 }	t_game;
 
@@ -192,6 +193,7 @@ void	cast_single_ray(t_game *game, double camera_x);
 int		get_tex_pixel_color(t_texture *tex, int x, int y);
 void	draw_gun(t_game *game);
 void	destroy_textures(t_game *game);
+void	cleanup_gnl(int fd);
 void	cleanup_and_exit(t_game *game, int exit_code);
 
 #endif
