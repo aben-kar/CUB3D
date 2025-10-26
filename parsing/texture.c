@@ -63,7 +63,12 @@ static void	check_invalid_config(char **split, t_data *data, t_game *game, char 
 		&& ft_strncmp(split[0], "F", 2) != 0 && ft_strncmp(split[0], "C",
 			2) != 0)
 	{
-		free(line);
+		while (line)
+		{
+			free(line);
+			line = get_next_line(game->map_fd);
+		}
+		close(game->map_fd);
 		free_split(split);
 		print_error_and_exit("Invalid config lineeeee", game);
 	}
