@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/19 16:57:00 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/28 16:17:31 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:23:16 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	cleanup_and_exit(t_game *game, int exit_code)
 {
 	if (!game)
 		exit(exit_code);
+	get_next_line(-1);
 	if (game->img)
 		mlx_destroy_image(game->mlx, game->img);
 	destroy_textures(game);

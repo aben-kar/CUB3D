@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 22:40:39 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/28 17:10:32 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:20:10 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct s_game
 	int			shooting;
 	int			draw_color;
 	int			map_fd;
+	char		*current_gnl_line;
 	t_gc		*gc;
 }	t_game;
 

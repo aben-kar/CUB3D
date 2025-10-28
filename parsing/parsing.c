@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:16:08 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/28 15:48:01 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:20:10 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	print_error_and_exit(const char *msg, t_game *game)
 {
 	printf("Error\n   %s\n", msg);
+	if (game && game->current_gnl_line)
+	{
+		free(game->current_gnl_line);
+		game->current_gnl_line = NULL;
+	}
 	cleanup_and_exit(game, 1);
 }
 

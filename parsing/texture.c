@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/28 17:21:39 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 20:21:37 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ void	check_invalid_config(
 		&& ft_strncmp(split[0], "F", 2) != 0 && ft_strncmp(split[0], "C",
 			2) != 0)
 	{
+		game->current_gnl_line = NULL;
 		while (line)
 		{
 			free(line);
 			line = get_next_line(game->map_fd);
 		}
 		close(game->map_fd);
-		free_split(split);
 		print_error_and_exit("Invalid config line", game);
 	}
 }
@@ -84,18 +84,14 @@ void	parse_config_file(t_data *data, char *line, t_game *game, char *line1)
 
 	if (!line || !line[0])
 		return ;
-	split = ft_split(line, " ");
+	split = ft_split_gc(line, " ", game);
 	if (!split)
 		return ;
 	if (!split[0])
-	{
-		free_split(split);
 		return ;
-	}
 	parse_texture(data, split, game);
 	parse_color(data, split, game);
 	check_invalid_config(split, data, game, line1);
-	free_split(split);
 }
 
 void	parse_texture_and_color(t_data *data, int fd, t_game *game)
@@ -104,12 +100,15 @@ void	parse_texture_and_color(t_data *data, int fd, t_game *game)
 	char	*cleand;
 
 	game->map_fd = fd;
+	game->current_gnl_line = NULL;
 	line = get_next_line(fd);
 	while (line)
 	{
+		game->current_gnl_line = line;
 		if (line[0] == '\n')
 		{
 			free(line);
+			game->current_gnl_line = NULL;
 			line = get_next_line(fd);
 			continue ;
 		}
@@ -117,12 +116,16 @@ void	parse_texture_and_color(t_data *data, int fd, t_game *game)
 		if (!cleand)
 		{
 			free(line);
+			game->current_gnl_line = NULL;
+			get_next_line(-1);
 			print_error_and_exit("Memory allocation error", game);
 		}
 		parse_config_file(data, cleand, game, line);
 		free(line);
+		game->current_gnl_line = NULL;
 		if (all_config_parsed(data))
 			break ;
 		line = get_next_line(fd);
 	}
+	game->current_gnl_line = NULL;
 }
