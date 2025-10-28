@@ -16,6 +16,7 @@ SRC = main.c \
 	$(PARSER_DIR)/color.c \
 	$(PARSER_DIR)/parse_map.c \
 	$(PARSER_DIR)/parse_utils.c \
+	$(PARSER_DIR)/parse_config.c \
 	$(PARSER_DIR)/validation_map_utils.c \
 	$(PARSER_DIR)/validation_map.c \
 	$(PARSER_DIR)/parse_map_utils.c \

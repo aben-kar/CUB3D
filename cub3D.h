@@ -161,6 +161,7 @@ int		extract_rgb_color(char *line, t_game *game);
 void	free_split(char **split);
 void	print_error_and_exit(const char *msg, t_game *game);
 void	parse_map(t_data *data, int fd, t_game *game);
+void	parse_color(t_data *data, char **str, t_game *game);
 int		is_map_line(char *line);
 void	is_map_valid(t_data *data, t_game *game);
 void	check_multiple_player(t_data *data, t_game *game);
