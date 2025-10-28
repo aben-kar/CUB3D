@@ -55,42 +55,6 @@ void	parse_color(t_data *data, char **str, t_game *game)
 	}
 }
 
-// void	parse_texture_and_color(t_data *data, int fd, t_game *game)
-// {
-// 	char	*line;
-// 	char	*cleand;
-
-// 	game->map_fd = fd;
-// 	game->current_gnl_line = NULL;
-// 	line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		game->current_gnl_line = line;
-// 		if (line[0] == '\n')
-// 		{
-// 			free(line);
-// 			game->current_gnl_line = NULL;
-// 			line = get_next_line(fd);
-// 			continue ;
-// 		}
-// 		cleand = ft_strtrim_gc(line, "\n", game);
-// 		if (!cleand)
-// 		{
-// 			free(line);
-// 			game->current_gnl_line = NULL;
-// 			get_next_line(-1);
-// 			print_error_and_exit("Memory allocation error", game);
-// 		}
-// 		parse_config_file(data, cleand, game, line);
-// 		free(line);
-// 		game->current_gnl_line = NULL;
-// 		if (all_config_parsed(data))
-// 			break ;
-// 		line = get_next_line(fd);
-// 	}
-// 	game->current_gnl_line = NULL;
-// }
-
 static void	handle_empty_line(char **line, t_game *game)
 {
 	free(*line);
