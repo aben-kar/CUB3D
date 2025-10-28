@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 22:40:39 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/25 22:05:40 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:10:32 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,119 +40,118 @@
 
 typedef struct s_data	t_data;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
-    double	ray_dir_x;
-    double	ray_dir_y;
-    int		map_x;
-    int		map_y;
-    double	side_dist_x;
-    double	side_dist_y;
-    double	delta_dist_x;
-    double	delta_dist_y;
-    int		step_x;
-    int		step_y;
-    int		hit;
-    int		side;
-    double	perp_wall_dist;
-    int		line_height;
-    int		draw_start;
-    int		draw_end;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	double	perp_wall_dist;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
 }	t_ray;
 
-typedef struct	s_player
+typedef struct s_player
 {
-    double	x;
-    double	y;
-    double	dir_x;
-    double	dir_y;
-    double	plane_x;
-    double	plane_y;
-    double	move_speed;
-    double	rot_speed;
-    double	angle;
+	double	x;
+	double	y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	move_speed;
+	double	rot_speed;
+	double	angle;
 }	t_player;
 
-typedef struct	s_texture
+typedef struct s_texture
 {
-    void	*img;
-    char	*addr;
-    int		width;
-    int		height;
-    int		bpp;
-    int		line_len;
-    int		endian;
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bpp;
+	int		line_len;
+	int		endian;
 }	t_texture;
 
-typedef struct _texture_data
+typedef struct s_texture_data
 {
-    int		y;
-    int		color;
-    double	step;
-    double	tex_pos;
+	int		y;
+	int		color;
+	double	step;
+	double	tex_pos;
 }	t_texture_data;
 
-typedef struct	s_game
+typedef struct s_game
 {
-    void		*mlx;
-    void		*mlx_win;
-    void		*img;
-    char		*addr;
-    int			bits_per_pixel;
-    int			line_length;
-    int			endian;
-    int			map_rows;
-    double		player_x;
-    double		player_y;
-    int			mv_forward;
-    int			mv_backward;
-    int			mv_left;
-    int			mv_right;
-    int			rot_left;
-    int			rot_right;
-    t_data		*data;
-    t_player	*player;
-    t_ray		*ray;
-    t_texture	north;
-    t_texture	south;
-    t_texture	east;
-    t_texture	west;
-    t_texture	gun_idle;
-    t_texture	gun_fire;
-    int			shooting;
-    int			draw_color;
-    int         map_fd;
-    t_gc		*gc;
+	void		*mlx;
+	void		*mlx_win;
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	int			map_rows;
+	double		player_x;
+	double		player_y;
+	int			mv_forward;
+	int			mv_backward;
+	int			mv_left;
+	int			mv_right;
+	int			rot_left;
+	int			rot_right;
+	t_data		*data;
+	t_player	*player;
+	t_ray		*ray;
+	t_texture	north;
+	t_texture	south;
+	t_texture	east;
+	t_texture	west;
+	t_texture	gun_idle;
+	t_texture	gun_fire;
+	int			shooting;
+	int			draw_color;
+	int			map_fd;
+	t_gc		*gc;
 }	t_game;
 
-typedef struct	s_data_gun
+typedef struct s_data_gun
 {
-    int	gx;
-    int	gy;
-    int	color;
-    int	start_x;
-    int	start_y;
+	int	gx;
+	int	gy;
+	int	color;
+	int	start_x;
+	int	start_y;
 }	t_data_gun;
 
-typedef struct	s_data
+typedef struct s_data
 {
-    char	*path_no;
-    char	*path_so;
-    char	*path_we;
-    char	*path_ea;
-    int		floor_color;
-    int		ceiling_color;
-    char	**map;
+	char	*path_no;
+	char	*path_so;
+	char	*path_we;
+	char	*path_ea;
+	int		floor_color;
+	int		ceiling_color;
+	char	**map;
 }	t_data;
 
 typedef struct s_mapinfo
 {
-    char	**src;
-    int	lines;
-    int		cols;
+	char	**src;
+	int		lines;
+	int		cols;
 }	t_mapinfo;
 
-/* parsing */
 void	parsing_cub(t_data *data, int fd, t_game *game);
 void	parse_texture_and_color(t_data *data, int fd, t_game *game);
 void	parse_config_file(t_data *data, char *line, t_game *game, char *line1);
@@ -167,8 +166,8 @@ void	check_multiple_player(t_data *data, t_game *game);
 void	is_map_closed(char **map, t_game *game);
 bool	is_player(char position);
 void	parse_texture(t_data *data, char **str, t_game *game);
-
-/* raycasting */
+void	check_map_line(char *map_joined, char *line, t_game *game);
+void	check_empty_line_in_map(char *map_joined, char *line, t_game *game);
 void	init_game(t_game *game);
 void	draw_mini_map(t_game *game);
 void	init_player(t_game *game);
@@ -195,5 +194,6 @@ void	draw_gun(t_game *game);
 void	destroy_textures(t_game *game);
 void	cleanup_gnl(int fd);
 void	cleanup_and_exit(t_game *game, int exit_code);
+void	zero_texture_structs(t_game *game);
 
 #endif

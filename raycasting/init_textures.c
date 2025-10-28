@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 12:30:28 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/20 15:28:09 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:16:53 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,6 @@ int	get_tex_pixel_color(t_texture *tex, int x, int y)
 		return (0);
 	pixel = tex->addr + (y * tex->line_len + x * (tex->bpp / 8));
 	return (*(unsigned int *)pixel);
-}
-
-void zero_texture_structs(t_game *game)
-{
-    ft_memset(&game->north, 0, sizeof(t_texture));
-    ft_memset(&game->south, 0, sizeof(t_texture));
-    ft_memset(&game->east, 0, sizeof(t_texture));
-    ft_memset(&game->west, 0, sizeof(t_texture));
-    ft_memset(&game->gun_idle, 0, sizeof(t_texture));
-    ft_memset(&game->gun_fire, 0, sizeof(t_texture));
 }
 
 void	init_wall_textures(t_game *game)

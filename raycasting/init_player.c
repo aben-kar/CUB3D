@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/02 20:23:04 by aben-kar          #+#    #+#             */
-/*   Updated: 2025/10/20 15:24:43 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:14:46 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,10 @@ int	render_frame(t_game *game)
 		movment_player(KEY_LEFT, game);
 	if (game->rot_right)
 		movment_player(KEY_RIGHT, game);
-	// game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	// game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel,
-	// 		&game->line_length, &game->endian);
 	raycast_3d(game);
 	draw_mini_map(game);
 	draw_gun(game);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->img, 0, 0);
-	// mlx_destroy_image(game->mlx, game->img);
 	return (0);
 }
 

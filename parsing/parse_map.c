@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 23:18:43 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/25 22:00:58 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/27 18:47:56 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,19 @@ char	*map(char *map_joined, char *line, t_game *game)
 	int		i;
 	char	*new_joined;
 
-	if (!is_map_line(line))
-	{
-		free(line);
-		if (map_joined)
-			free(map_joined);
-		print_error_and_exit("Invalid map line", game);
-	}
-	i = 0;
-	while (line[i])
+	check_map_line(map_joined, line, game);
+	i = -1;
+	while (line[++i])
 	{
 		if (line[i] == ' ')
 			line[i] = '1';
-		i++;
 	}
 	new_joined = ft_strjoin(map_joined, line);
 	if (!new_joined)
 	{
 		if (map_joined)
 			free(map_joined);
+		get_next_line(-1);
 		print_error_and_exit("Memory allocation error in map join", game);
 	}
 	if (map_joined)
@@ -85,22 +79,22 @@ void	parse_map(t_data *data, int fd, t_game *game)
 	line = skip_empty_lines(fd);
 	while (line)
 	{
-		if (line[0] == '\n')
-		{
-			free(line);
-			if (map_joined)
-				free(map_joined);
-			print_error_and_exit("Empty line found inside the map", game);
-		}
+		check_empty_line_in_map(map_joined, line, game);
 		map_joined = map(map_joined, line, game);
 		free(line);
 		line = get_next_line(fd);
 	}
 	if (!map_joined)
+	{
+		get_next_line(-1);
 		print_error_and_exit("No valid map found", game);
+	}
 	data->map = ft_split_gc(map_joined, "\n", game);
 	free(map_joined);
 	if (!data->map)
+	{
+		get_next_line(-1);
 		print_error_and_exit("Memory allocation error in parse_map", game);
+	}
 	close(fd);
 }

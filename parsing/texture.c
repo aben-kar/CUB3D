@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:47:44 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/26 14:57:29 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:21:39 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ void	parse_color(t_data *data, char **str, t_game *game)
 	}
 }
 
-static void	check_invalid_config(char **split, t_data *data, t_game *game, char *line)
+void	check_invalid_config(
+	char **split,
+	t_data *data,
+	t_game *game,
+	char *line)
 {
 	if (!all_config_parsed(data) && ft_strncmp(split[0], "NO", 3) != 0
 		&& ft_strncmp(split[0], "SO", 3) != 0 && ft_strncmp(split[0], "WE",
@@ -70,7 +74,7 @@ static void	check_invalid_config(char **split, t_data *data, t_game *game, char 
 		}
 		close(game->map_fd);
 		free_split(split);
-		print_error_and_exit("Invalid config lineeeee", game);
+		print_error_and_exit("Invalid config line", game);
 	}
 }
 
@@ -101,18 +105,15 @@ void	parse_texture_and_color(t_data *data, int fd, t_game *game)
 
 	game->map_fd = fd;
 	line = get_next_line(fd);
-	printf("%s", line);
 	while (line)
-	{	
+	{
 		if (line[0] == '\n')
 		{
 			free(line);
 			line = get_next_line(fd);
-			printf("Empty line found, skipping...\n");
 			continue ;
 		}
 		cleand = ft_strtrim_gc(line, "\n", game);
-		
 		if (!cleand)
 		{
 			free(line);

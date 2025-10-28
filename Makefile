@@ -1,7 +1,7 @@
 NAME = cub3D
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g3
 # -fsanitize=address -g3
 
 LIBFT_DIR = libs/libft
@@ -18,6 +18,7 @@ SRC = main.c \
 	$(PARSER_DIR)/parse_utils.c \
 	$(PARSER_DIR)/validation_map_utils.c \
 	$(PARSER_DIR)/validation_map.c \
+	$(PARSER_DIR)/parse_map_utils.c \
 	$(RAYCASTING_DIR)/init_game.c \
 	$(RAYCASTING_DIR)/draw_mini_map.c \
 	$(RAYCASTING_DIR)/draw_gun.c \

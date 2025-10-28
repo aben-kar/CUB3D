@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:49:10 by acben-ka          #+#    #+#             */
-/*   Updated: 2025/10/16 12:34:28 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:31:41 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ static char	**split_rgb_values(char *line, t_game *game)
 	if (!rgb_values || !rgb_values[0] || !rgb_values[1] || !rgb_values[2]
 		|| rgb_values[3] != NULL)
 	{
-		free_split(rgb_values);
+		if (rgb_values)
+			free_split(rgb_values);
 		print_error_and_exit("Invalid color format", game);
 	}
 	return (rgb_values);

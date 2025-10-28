@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:07:04 by zaakrab           #+#    #+#             */
-/*   Updated: 2024/11/30 14:07:06 by zaakrab          ###   ########.fr       */
+/*   Updated: 2025/10/28 16:38:33 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char	*ft_strjoin_gnl(char *line, char *buff)
 	}
 	if (!line || !buff)
 		return (NULL);
-	str = malloc(sizeof(char) * ((ft_strlen_gnl(line) + ft_strlen_gnl(buff)) + 1));
+	str = malloc(sizeof(char)
+			* (ft_strlen_gnl(line) + ft_strlen_gnl(buff) + 1));
 	if (str == NULL)
 		return (NULL);
 	j = 0;

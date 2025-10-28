@@ -6,7 +6,7 @@
 /*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/29 18:05:00 by achraf            #+#    #+#             */
-/*   Updated: 2025/10/20 14:50:56 by acben-ka         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:10:20 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	init_mlx(t_game *game)
 			SCREEN_WIDTH, SCREEN_HEIGHT, "CUB3D");
 	if (!game->mlx_win)
 		print_error_and_exit("Failed to create window", game);
-	if (game->img) // new
-        mlx_destroy_image(game->mlx, game->img); // new
+	if (game->img)
+		mlx_destroy_image(game->mlx, game->img);
 	game->img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!game->img)
 		print_error_and_exit("Failed to create image", game);

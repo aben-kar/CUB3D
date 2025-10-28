@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaakrab <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: acben-ka <acben-ka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 14:06:27 by zaakrab           #+#    #+#             */
-/*   Updated: 2024/12/01 14:23:31 by zaakrab          ###   ########.fr       */
+/*   Updated: 2025/10/28 16:29:44 by acben-ka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,23 @@ char	*jib_line_mgad_hh(char *line)
 
 char	*get_next_line(int fd)
 {
-	static char			*lines[1024];
-	char				*next_line;
+	static char	*lines[1024];
+	char		*next_line;
+	int			i;
 
 	if (fd < 0 || (size_t)BUFFER_SIZE <= 0 || fd >= 1024)
+	{
+		i = -1;
+		while (++i < 1024)
+		{
+			if (lines[i] != NULL)
+			{
+				free(lines[i]);
+				lines[i] = NULL;
+			}
+		}
 		return (NULL);
+	}
 	lines[fd] = jib_line_hh(fd, lines[fd]);
 	if (lines[fd] == NULL)
 		return (NULL);
